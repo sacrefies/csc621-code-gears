@@ -1,0 +1,41 @@
+As a clerk I want to be able to check if a customer exists in the system.
+	If the customer does not exist in the system I want to be able to add them to the system.
+
+As a clerk I want to be able to add a vehicle to the system.
+
+As a clerk I want to be able to check whther or not there is an open garage.
+	If a garage is open I want to be able to assign a vehicle to that garage.
+
+As a clerk I want to be able to check if a mechanic is busy or not.
+	If the mechanic is not busy I want to be able to assign him to a job.
+
+As a clerk I want to be able to make an appointment.
+
+As a clerk I want to be able to cancel an appointment.
+
+As a clerk I want to be able to reschedule an appointment.
+
+As a clerk I want to be able to check how much a particular service costs.
+
+As a clerk I want to be able to calculate the total cost of a job.
+
+As a clerk I want to be able to create an invoice for the job.
+
+As a clerk I want to be able to check if a customer has paid for their service.
+
+As a clerk, once I have received the customer's payment, I want to be able to update the invoice
+	to reflect the payment.
+
+As a mechanic I want to be able to check the number of parts in the inventory.
+
+As a mechanic I want to be able to update my status as busy or available.
+
+As a mechanic I want to be able to update my job's status as "in progress" or "completed".
+
+As a mechanic I want to be able to update the needed services on a vehicle.
+
+As a mechanic I want to be able to update the availability of a garage.
+
+As a mechanic I want to be able to assign a job to myself if I am not already assigned to one.
+
+
