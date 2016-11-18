@@ -18,7 +18,7 @@ $q = $db->query("
 <html>
 <head>
 	<title>Servicing</title>
-	<link rel="stylesheet" href="css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
 	<h1>In Service</h1>
