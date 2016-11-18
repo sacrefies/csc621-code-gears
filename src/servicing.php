@@ -3,7 +3,8 @@
 require 'common.php';
 
 $q = $db->query("
-	SELECT customer.name as customer, est_completion,
+	SELECT in_service_id as id,
+	       customer.name as customer, est_completion,
 	       vehicle.year, vehicle.make, vehicle.model,
 	       mechanic.name as mechanic, garage.name as garage, in_service.service as service
 	FROM in_service
@@ -22,9 +23,15 @@ $q = $db->query("
 </head>
 <body>
 	<h1>In Service</h1>
+	<form>
+	<p>
+		<button formmethod="get" formaction="update-service.php">Update</button>
+		<button formmethod="post" formaction="move-to-invoicing.php">Move to invoicing</button>
+	</p>
 	<table>
 	<thead>
 	<tr>
+	<th></th>
 	<th>Customer</th>
 	<th>Vehicle</th>
 	<th>Est Completion</th>
@@ -36,6 +43,7 @@ $q = $db->query("
 	<tbody>
 	<?php while ($row = $q->fetch()) { ?>
 		<tr>
+		<td><input type="radio" name="in_service_id" value="<?= $row['id'] ?>"></td>
 		<td><?= $row['customer']; ?></td>
 		<td><?= $row['year'] . ' ' . $row['make'] . ' ' . $row['model'] ?></td>
 		<td><?= $row['est_completion']; ?></td>
