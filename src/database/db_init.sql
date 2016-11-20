@@ -1,34 +1,3 @@
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
---     http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
-
-
--- This SQL script is compatible with MySQL only.
--- This SQL is for database initilization for the deplyment.
-
-drop table if exists in_service;
-drop table if exists customer;
-drop table if exists vehicle;
-drop table if exists employee;
-drop table if exists garage;
-
-create table in_service (
-	in_service_id integer primary key auto_increment,
-	customer_id integer references customer(customer_id),
-	vehicle_id integer references vehicle(vehicle_id),
-	est_completion date,
-	mechanic integer references employee(employee_id),
-	garage_id integer references garage(garage_id),
-	service text
-);
 
 create table customer (
 	customer_id integer primary key auto_increment,
@@ -59,6 +28,22 @@ create table garage (
 	zipcode text
 );
 
+create table service (
+	service_id integer primary key auto_increment,
+	customer_id integer references customer(customer_id),
+	vehicle_id integer references vehicle(vehicle_id),
+	mechanic integer references employee(employe_id),
+	garage_id integer references garage(garage_id),
+	est_completion datetime,
+	description text
+);
+
+create table task (
+	task_id integer primary key auto_increment,
+	service_id integer references service(service_id),
+	description text
+);
+
 insert into customer (customer_id, name, phone, zipcode) values
 (1, 'Greg Lewis', 1234567890, 19104),
 (2, 'Sophie Linn', 1245987349, 45873),
@@ -79,7 +64,7 @@ insert into garage (garage_id, name, zipcode) values
 (2, 'Garage 2', 19104),
 (3, 'Garage 3', 45873);
 
-insert into in_service (customer_id, vehicle_id, est_completion, mechanic, garage_id, service) values
+insert into service (customer_id, vehicle_id, est_completion, mechanic, garage_id, description) values
 (1, 1, '2016-11-2', 1, 2, 'Oil change'),
 (2, 2, '2016-11-10', 2, 3, 'Brake repair'),
 (3, 3, '2016-11-12', 3, 1, 'Inspection');

@@ -1,13 +1,15 @@
 <?php
 
 require 'common.php';
+$db = db();
 
 $q = $db->query("
-	SELECT in_service_id as id,
+	SELECT service_id as id,
 	       customer.name as customer, est_completion,
 	       vehicle.year, vehicle.make, vehicle.model,
-	       mechanic.name as mechanic, garage.name as garage, in_service.service as service
-	FROM in_service
+	       mechanic.name as mechanic, garage.name as garage,
+	       service.description as service
+	FROM service
 	JOIN customer USING (customer_id)
 	JOIN vehicle USING (vehicle_id)
 	JOIN employee AS mechanic ON mechanic = mechanic.employee_id
