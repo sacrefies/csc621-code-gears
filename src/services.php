@@ -8,7 +8,7 @@ $q = $db->query("
 	       customer.name as customer, est_completion,
 	       vehicle.year, vehicle.make, vehicle.model,
 	       mechanic.name as mechanic, garage.name as garage,
-	       service.description as service
+	       service.summary as summary
 	FROM service
 	JOIN customer USING (customer_id)
 	JOIN vehicle USING (vehicle_id)
@@ -43,17 +43,17 @@ $q = $db->query("
 	</tr>
 	</thead>
 	<tbody>
-	<?php while ($row = $q->fetch()) { ?>
+	<?php while ($row = $q->fetch()): ?>
 		<tr>
-		<td><input type="radio" name="in_service_id" value="<?= $row['id'] ?>"></td>
+		<td><input type="radio" name="service_id" value="<?= $row['id'] ?>"></td>
 		<td><?= $row['customer']; ?></td>
-		<td><?= $row['year'] . ' ' . $row['make'] . ' ' . $row['model'] ?></td>
-		<td><?= $row['est_completion']; ?></td>
-		<td><?= $row['mechanic']; ?></td>
-		<td><?= $row['garage']; ?></td>
-		<td><?= $row['service']; ?></td>
+		<td><?= "$row[year] $row[make] $row[model]" ?></td>
+		<td><?= $row['est_completion'] ?></td>
+		<td><?= $row['mechanic'] ?></td>
+		<td><?= $row['garage'] ?></td>
+		<td><?= $row['summary'] ?></td>
 		</tr>
-	<?php } ?>
+	<?php endwhile; ?>
 	</tbody>
 	</table>
 </body>

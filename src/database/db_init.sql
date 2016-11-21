@@ -35,13 +35,27 @@ create table service (
 	mechanic integer references employee(employe_id),
 	garage_id integer references garage(garage_id),
 	est_completion datetime,
-	description text
+	summary text
 );
 
 create table task (
 	task_id integer primary key auto_increment,
 	service_id integer references service(service_id),
-	description text
+	description text,
+	start_time datetime,
+	end_time datetime,
+	cost_usd decimal(7, 2)
+);
+
+create table inventory (
+	inventory_id integer primary key auto_increment,
+	name text,
+	quantity integer,
+	unit_price_usd decimal(7, 2),
+	car_make text,
+	car_model text,
+	car_year integer,
+	car_trim text
 );
 
 insert into customer (customer_id, name, phone, zipcode) values
@@ -64,8 +78,14 @@ insert into garage (garage_id, name, zipcode) values
 (2, 'Garage 2', 19104),
 (3, 'Garage 3', 45873);
 
-insert into service (customer_id, vehicle_id, est_completion, mechanic, garage_id, description) values
+insert into service (customer_id, vehicle_id, est_completion, mechanic, garage_id, summary) values
 (1, 1, '2016-11-2', 1, 2, 'Oil change'),
 (2, 2, '2016-11-10', 2, 3, 'Brake repair'),
 (3, 3, '2016-11-12', 3, 1, 'Inspection');
+
+insert into task (service_id, description, start_time, end_time, cost_usd) values
+(1, 'Oil change', '2016-11-2 3:00:00', '2016-11-2 4:00:00', '30.00'),
+(2, 'Brake repair', '2016-11-10 3:00:00', '2016-11-10 4:00:00', '50.00'),
+(3, 'Tire inspection', '2016-11-12 1:00:00', '2016-11-12 2:00:00', '10.00'),
+(3, 'Engine inspection', '2016-11-12 2:00:00', '2016-11-12 3:00:00', '10.00');
 
