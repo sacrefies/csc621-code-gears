@@ -1,15 +1,91 @@
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
---     http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
 
+create table customer (
+	customer_id integer primary key auto_increment,
+	name text,
+	phone text,
+	zipcode text
+);
 
--- This SQL script is compatible with MySQL only.
--- This SQL is for database initilization for the deplyment.
+create table vehicle (
+	vehicle_id integer primary key auto_increment,
+	owner integer references customer(customer_id),
+	year text,
+	make text,
+	model text,
+	trim text
+);
+
+create table employee (
+	employee_id integer primary key auto_increment,
+	name text,
+	phone text,
+	position enum('manager', 'mechanic')
+);
+
+create table garage (
+	garage_id integer primary key auto_increment,
+	name text,
+	zipcode text
+);
+
+create table service (
+	service_id integer primary key auto_increment,
+	customer_id integer references customer(customer_id),
+	vehicle_id integer references vehicle(vehicle_id),
+	mechanic integer references employee(employe_id),
+	garage_id integer references garage(garage_id),
+	est_completion datetime,
+	summary text
+);
+
+create table task (
+	task_id integer primary key auto_increment,
+	service_id integer references service(service_id),
+	description text,
+	start_time datetime,
+	end_time datetime,
+	cost_usd decimal(7, 2)
+);
+
+create table inventory (
+	inventory_id integer primary key auto_increment,
+	name text,
+	quantity integer,
+	unit_price_usd decimal(7, 2),
+	car_make text,
+	car_model text,
+	car_year integer,
+	car_trim text
+);
+
+insert into customer (customer_id, name, phone, zipcode) values
+(1, 'Greg Lewis', 1234567890, 19104),
+(2, 'Sophie Linn', 1245987349, 45873),
+(3, 'Juan Alvarez', 4523487190, 32132);
+
+insert into vehicle (vehicle_id, owner, year, make, model, trim) values
+(1, 1, 2016, 'Toyota', 'Camry', null),
+(2, 2, 2010, 'Chevy', 'Cruze', null),
+(3, 3, 2014, 'Honda', 'Civic', null);
+
+insert into employee (employee_id, name, phone, position) values
+(1, 'Tod',  4574892381, 'mechanic'),
+(2, 'Greg', 5487359012, 'mechanic'),
+(3, 'Bob',  2349129384, 'mechanic');
+
+insert into garage (garage_id, name, zipcode) values
+(1, 'Garage 1', 32132),
+(2, 'Garage 2', 19104),
+(3, 'Garage 3', 45873);
+
+insert into service (customer_id, vehicle_id, est_completion, mechanic, garage_id, summary) values
+(1, 1, '2016-11-2', 1, 2, 'Oil change'),
+(2, 2, '2016-11-10', 2, 3, 'Brake repair'),
+(3, 3, '2016-11-12', 3, 1, 'Inspection');
+
+insert into task (service_id, description, start_time, end_time, cost_usd) values
+(1, 'Oil change', '2016-11-2 3:00:00', '2016-11-2 4:00:00', '30.00'),
+(2, 'Brake repair', '2016-11-10 3:00:00', '2016-11-10 4:00:00', '50.00'),
+(3, 'Tire inspection', '2016-11-12 1:00:00', '2016-11-12 2:00:00', '10.00'),
+(3, 'Engine inspection', '2016-11-12 2:00:00', '2016-11-12 3:00:00', '10.00');
+
