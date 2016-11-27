@@ -14376,7 +14376,7 @@ for the entities to share capabilities.
 <XPD:ATTR name="Left" type="integer">276</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">256</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">199</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">240</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">270</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Model">1AiL1wvsR0u9TmshuZ8PDAAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="ONZHhAPRIEKq2OeSLB5J+gAA">
@@ -14406,7 +14406,7 @@ for the entities to share capabilities.
 <XPD:OBJ name="OwnedViews[5]" type="UMLAssociationView" guid="PfceLygBSk2g13KktGkGTgAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">322,495;235,692</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">313,525;237,692</XPD:ATTR>
 <XPD:REF name="Model">ThIm/XSTBUeoBmy/ErHu7gAA</XPD:REF>
 <XPD:REF name="Head">N8/6LZYaEEKUGkxLTYS8zwAA</XPD:REF>
 <XPD:REF name="Tail">wN1sH7cWWECFMN2/qTm9qgAA</XPD:REF>
@@ -14494,7 +14494,7 @@ for the entities to share capabilities.
 <XPD:OBJ name="OwnedViews[6]" type="UMLGeneralizationView" guid="1wLkSA1FGU2yCYdrHs2aggAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">276,375;158,376</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">276,385;158,379</XPD:ATTR>
 <XPD:REF name="Model">XEbESi0CWE+jyED9hMkGEQAA</XPD:REF>
 <XPD:REF name="Head">aM3siVwwQkKuvUT/i6D3tgAA</XPD:REF>
 <XPD:REF name="Tail">wN1sH7cWWECFMN2/qTm9qgAA</XPD:REF>
@@ -14581,8 +14581,8 @@ for the entities to share capabilities.
 <XPD:ATTR name="FillColor" type="string">$008080FF</XPD:ATTR>
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">308</XPD:ATTR>
-<XPD:ATTR name="Top" type="integer">580</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">420</XPD:ATTR>
+<XPD:ATTR name="Top" type="integer">656</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">136</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">60</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
@@ -14614,7 +14614,7 @@ for the entities to share capabilities.
 <XPD:OBJ name="OwnedViews[10]" type="UMLAssociationView" guid="aJg16yp6yUuEo8xb38IsZwAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">347,639;299,692</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">420,715;324,759</XPD:ATTR>
 <XPD:REF name="Model">Kj6jtWJCxEunjEDVLo2aWQAA</XPD:REF>
 <XPD:REF name="Head">N8/6LZYaEEKUGkxLTYS8zwAA</XPD:REF>
 <XPD:REF name="Tail">CZutD2V05U62YFSgyOOt4AAA</XPD:REF>
@@ -14698,7 +14698,7 @@ for the entities to share capabilities.
 <XPD:OBJ name="OwnedViews[11]" type="UMLAssociationView" guid="jlWx6XinxUyxValGICTJIAAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">375,580;375,495</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">476,656;426,525</XPD:ATTR>
 <XPD:REF name="Model">6zpIn5F7kEqz8XGHMBpMtgAA</XPD:REF>
 <XPD:REF name="Head">wN1sH7cWWECFMN2/qTm9qgAA</XPD:REF>
 <XPD:REF name="Tail">CZutD2V05U62YFSgyOOt4AAA</XPD:REF>
@@ -15008,7 +15008,7 @@ for the entities to share capabilities.
 <XPD:OBJ name="OwnedViews[19]" type="UMLAssociationView" guid="yx55VhuVAUSQeyJMHCMmIwAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">233,247;276,286</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">233,254;276,295</XPD:ATTR>
 <XPD:REF name="Model">zh9o4AmTmkWwWVACzo3fCQAA</XPD:REF>
 <XPD:REF name="Head">wN1sH7cWWECFMN2/qTm9qgAA</XPD:REF>
 <XPD:REF name="Tail">c2+JK4g5e028TQbZ7C7A5AAA</XPD:REF>
@@ -15115,14 +15115,14 @@ the latest worksheet
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">692</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">420</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">206</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">220</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">390</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Model">+2uZGmfii0C/QtY4+NNVogAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="lES46FliJ0e9fPxmHbqGRgAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="SKkU4tYsvUi57vjIKz1vNwAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">196</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">210</XPD:ATTR>
 <XPD:ATTR name="Text" type="string">Job</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="rTPOFn7egUuz8q81TVdoAAAA">
@@ -15146,7 +15146,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[23]" type="UMLAssociationView" guid="LvxU7n2gxEa72PB0MYPuWgAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">692,603;556,588;474,492</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">692,602;556,588;474,498</XPD:ATTR>
 <XPD:REF name="Model">41DGSWvxukav/cCs9ls14AAA</XPD:REF>
 <XPD:REF name="Head">wN1sH7cWWECFMN2/qTm9qgAA</XPD:REF>
 <XPD:REF name="Tail">eQ1dGQfCn0GZcZaKKFz2MgAA</XPD:REF>
@@ -15230,7 +15230,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[24]" type="UMLAssociationView" guid="ocyHkdc1Gk61dGYGwBKwVAAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">897,398;887,420</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">900,398;890,420</XPD:ATTR>
 <XPD:REF name="Model">tIP5m8kpOEiEWpZ5F6JTCgAA</XPD:REF>
 <XPD:REF name="Head">eQ1dGQfCn0GZcZaKKFz2MgAA</XPD:REF>
 <XPD:REF name="Tail">IWfUvDyfdkCnTy0K2x554AAA</XPD:REF>
@@ -15314,7 +15314,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[25]" type="UMLAssociationView" guid="mSqptbOzRE6V1Z72Gpgb1AAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">897,398;887,420</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">900,398;890,420</XPD:ATTR>
 <XPD:REF name="Model">g05Vb3xfIEOZQ2+WMo7pHQAA</XPD:REF>
 <XPD:REF name="Head">eQ1dGQfCn0GZcZaKKFz2MgAA</XPD:REF>
 <XPD:REF name="Tail">IWfUvDyfdkCnTy0K2x554AAA</XPD:REF>
@@ -15398,7 +15398,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[26]" type="UMLAssociationView" guid="zX1QJOMMOU6wdnaqZe84zwAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">607,409;608,448;692,523</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">607,409;608,448;692,520</XPD:ATTR>
 <XPD:REF name="Model">1haMZvPq8US2W61aoST+pwAA</XPD:REF>
 <XPD:REF name="Head">eQ1dGQfCn0GZcZaKKFz2MgAA</XPD:REF>
 <XPD:REF name="Tail">oOC1m1TFR0q8NZQU+fxSTQAA</XPD:REF>
@@ -15482,7 +15482,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[27]" type="UMLGeneralizationView" guid="Y5d0p8WhNEa+5WKvIoK69gAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">771,420;737,124</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">776,420;738,124</XPD:ATTR>
 <XPD:REF name="Model">dQVB9oduCEOM+CGYGB0HxAAA</XPD:REF>
 <XPD:REF name="Head">PlwXqv8/xEauWa3Jt+GE1gAA</XPD:REF>
 <XPD:REF name="Tail">eQ1dGQfCn0GZcZaKKFz2MgAA</XPD:REF>
@@ -15788,7 +15788,7 @@ the latest worksheet
 <XPD:REF name="Associations[2]">FfG0WkCklkqg8WkmxygfnwAA</XPD:REF>
 <XPD:REF name="Associations[3]">VWNa25dnSkqFn8weqqlYwwAA</XPD:REF>
 <XPD:REF name="Associations[4]">bnZlyxhc0kyXGkIJ5zpGBgAA</XPD:REF>
-<XPD:ATTR name="#Attributes" type="integer">3</XPD:ATTR>
+<XPD:ATTR name="#Attributes" type="integer">5</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="eRunYhBbkEKPn8kc7NGqMQAA">
 <XPD:ATTR name="Name" type="string">mileage</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
@@ -15807,6 +15807,18 @@ the latest worksheet
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">Customer</XPD:ATTR>
 <XPD:REF name="Type_">SmZoDtrnski8XTcC6yaI7AAA</XPD:REF>
+<XPD:REF name="Owner">1AiL1wvsR0u9TmshuZ8PDAAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Attributes[3]" type="UMLAttribute" guid="RPOn8lm77k6AMcj5jtU0+QAA">
+<XPD:ATTR name="Name" type="string">customerVehicleId</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">Integer</XPD:ATTR>
+<XPD:REF name="Owner">1AiL1wvsR0u9TmshuZ8PDAAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Attributes[4]" type="UMLAttribute" guid="UqdqVmR/E0OesSoMaNiJDwAA">
+<XPD:ATTR name="Name" type="string">vin</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">String</XPD:ATTR>
 <XPD:REF name="Owner">1AiL1wvsR0u9TmshuZ8PDAAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
@@ -21027,7 +21039,7 @@ the latest worksheet
 <XPD:ATTR name="Left" type="integer">356</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">428</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">199</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">300</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">330</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Model">7GMk2FFVpECMo1HtnHQD5gAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="pEknSWBMrkipMT/VCz4hSQAA">
@@ -21057,7 +21069,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[24]" type="UMLAssociationView" guid="Ol/Cgpg7T0awxsfCcRYafQAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">241,489;356,536</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">241,494;356,547</XPD:ATTR>
 <XPD:REF name="Model">V9fKzyr9VkCAWHbzXPOIYwAA</XPD:REF>
 <XPD:REF name="Head">87GwggFhu0K6msS8zPpUAAAA</XPD:REF>
 <XPD:REF name="Tail">RWgGlIRIb0ufE4SycgxhDAAA</XPD:REF>
@@ -21145,7 +21157,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[25]" type="UMLGeneralizationView" guid="L4rRiaCLjEmDk/icGa+zGAAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">432,428;387,144</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">430,428;387,144</XPD:ATTR>
 <XPD:REF name="Model">yp+FUvo300yiOH8wjrjC/AAA</XPD:REF>
 <XPD:REF name="Head">qTYsWMOpPEGK50/z7NKaOgAA</XPD:REF>
 <XPD:REF name="Tail">87GwggFhu0K6msS8zPpUAAAA</XPD:REF>
@@ -21205,7 +21217,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[27]" type="UMLAssociationView" guid="igsBHcviUk2/RJ1dzKriRwAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">402,792;418,727</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">403,792;412,757</XPD:ATTR>
 <XPD:REF name="Model">1eHBqtKjvEyrHXzClmhWRgAA</XPD:REF>
 <XPD:REF name="Head">87GwggFhu0K6msS8zPpUAAAA</XPD:REF>
 <XPD:REF name="Tail">VRNJ7i1gMUiP5CbvsfrY/QAA</XPD:REF>
@@ -21410,7 +21422,7 @@ the latest worksheet
 <XPD:ATTR name="#Associations" type="integer">2</XPD:ATTR>
 <XPD:REF name="Associations[0]">rU4WIntMJUCIdHtBGQJhZgAA</XPD:REF>
 <XPD:REF name="Associations[1]">Otay3eXrB0Oia4Nl+3oyUwAA</XPD:REF>
-<XPD:ATTR name="#Attributes" type="integer">6</XPD:ATTR>
+<XPD:ATTR name="#Attributes" type="integer">8</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="bVvdOPOt0UuT//AZ1o0K4gAA">
 <XPD:ATTR name="Name" type="string">appointment</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
@@ -21448,6 +21460,18 @@ the latest worksheet
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">Float</XPD:ATTR>
 <XPD:ATTR name="InitialValue" type="string">-1.0</XPD:ATTR>
+<XPD:REF name="Owner">7GMk2FFVpECMo1HtnHQD5gAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Attributes[6]" type="UMLAttribute" guid="Dld/ip+QOEaNyebTsn30kwAA">
+<XPD:ATTR name="Name" type="string">createTime</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">Timestamp</XPD:ATTR>
+<XPD:REF name="Owner">7GMk2FFVpECMo1HtnHQD5gAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Attributes[7]" type="UMLAttribute" guid="C0Y85Xl0+kmvMKlfwim7JgAA">
+<XPD:ATTR name="Name" type="string">updateTime</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">DateTime</XPD:ATTR>
 <XPD:REF name="Owner">7GMk2FFVpECMo1HtnHQD5gAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
