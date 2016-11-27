@@ -14786,7 +14786,7 @@ for the entities to share capabilities.
 <XPD:ATTR name="Left" type="integer">884</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">24</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">206</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">345</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">375</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Model">3l6Gd4Dmzk20BcsM7xwwygAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="N5ubRZxF9kiq6SA+JUNPbgAA">
@@ -14816,7 +14816,7 @@ for the entities to share capabilities.
 <XPD:OBJ name="OwnedViews[13]" type="UMLAssociationView" guid="pgYwXmTktkKZby7ZgX71HQAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">985,368;984,824;324,826</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">985,398;984,824;324,826</XPD:ATTR>
 <XPD:REF name="Model">sIugyYhSZk2rpt5ZLVkptgAA</XPD:REF>
 <XPD:REF name="Head">N8/6LZYaEEKUGkxLTYS8zwAA</XPD:REF>
 <XPD:REF name="Tail">IWfUvDyfdkCnTy0K2x554AAA</XPD:REF>
@@ -14904,7 +14904,7 @@ for the entities to share capabilities.
 <XPD:OBJ name="OwnedViews[14]" type="UMLGeneralizationView" guid="wsuyGnFBkEKkZdN46v/xLAAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">884,146;802,106</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">884,155;802,111</XPD:ATTR>
 <XPD:REF name="Model">v0iXCSURAkGTFstgrfdowAAA</XPD:REF>
 <XPD:REF name="Head">PlwXqv8/xEauWa3Jt+GE1gAA</XPD:REF>
 <XPD:REF name="Tail">IWfUvDyfdkCnTy0K2x554AAA</XPD:REF>
@@ -15230,7 +15230,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[24]" type="UMLAssociationView" guid="ocyHkdc1Gk61dGYGwBKwVAAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">907,368;883,420</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">897,398;887,420</XPD:ATTR>
 <XPD:REF name="Model">tIP5m8kpOEiEWpZ5F6JTCgAA</XPD:REF>
 <XPD:REF name="Head">eQ1dGQfCn0GZcZaKKFz2MgAA</XPD:REF>
 <XPD:REF name="Tail">IWfUvDyfdkCnTy0K2x554AAA</XPD:REF>
@@ -15314,7 +15314,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[25]" type="UMLAssociationView" guid="mSqptbOzRE6V1Z72Gpgb1AAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">907,368;883,420</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">897,398;887,420</XPD:ATTR>
 <XPD:REF name="Model">g05Vb3xfIEOZQ2+WMo7pHQAA</XPD:REF>
 <XPD:REF name="Head">eQ1dGQfCn0GZcZaKKFz2MgAA</XPD:REF>
 <XPD:REF name="Tail">IWfUvDyfdkCnTy0K2x554AAA</XPD:REF>
@@ -16927,7 +16927,7 @@ the latest worksheet
 <XPD:REF name="Associations[2]">2M40u2Mym0O73JxGabSN3wAA</XPD:REF>
 <XPD:REF name="Associations[3]">jRFL1dq35km/n5PxDm7n/QAA</XPD:REF>
 <XPD:REF name="Associations[4]">FUvpnS02p0OObQsq4ZVyzwAA</XPD:REF>
-<XPD:ATTR name="#Attributes" type="integer">9</XPD:ATTR>
+<XPD:ATTR name="#Attributes" type="integer">11</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="Gb80DjxXIkaQn/3TUQUhMAAA">
 <XPD:ATTR name="Name" type="string">appId</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
@@ -16983,6 +16983,18 @@ the latest worksheet
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">Invoice</XPD:ATTR>
 <XPD:REF name="Type_">7GMk2FFVpECMo1HtnHQD5gAA</XPD:REF>
+<XPD:REF name="Owner">3l6Gd4Dmzk20BcsM7xwwygAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Attributes[9]" type="UMLAttribute" guid="wvkFHdWsBkmx+gejvfA+LgAA">
+<XPD:ATTR name="Name" type="string">createTime</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">DateTime</XPD:ATTR>
+<XPD:REF name="Owner">3l6Gd4Dmzk20BcsM7xwwygAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Attributes[10]" type="UMLAttribute" guid="EC843zhb9kqAaxQnNEHE7wAA">
+<XPD:ATTR name="Name" type="string">updateTime</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">DateTime</XPD:ATTR>
 <XPD:REF name="Owner">3l6Gd4Dmzk20BcsM7xwwygAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
@@ -17162,14 +17174,14 @@ the latest worksheet
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">336</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">204</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">206</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">390</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">220</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">375</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Model">+2uZGmfii0C/QtY4+NNVogAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="Ai5jSyOF+UecXupTCxAfqQAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="lUogBVnyZkG9AvBafIDWSwAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">196</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">210</XPD:ATTR>
 <XPD:ATTR name="Text" type="string">Job</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="afKALHqgC0WQ2dc7yGZpLwAA">
@@ -17197,7 +17209,7 @@ the latest worksheet
 <XPD:ATTR name="Left" type="integer">620</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">168</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">178</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">255</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">270</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Model">unBDshBTcUyLzusWXEVdrQAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="+oZl9ebhuke/y5yMUva42gAA">
@@ -17295,7 +17307,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[4]" type="UMLAssociationView" guid="sDv3PfMLh0+eQzSmJ+7uugAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">541,359;620,329</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">555,354;620,332</XPD:ATTR>
 <XPD:REF name="Model">fKAf9YTz6Umz7BSWqHx+owAA</XPD:REF>
 <XPD:REF name="Head">2ByCDg6ZI0aI+Ot0MYwkywAA</XPD:REF>
 <XPD:REF name="Tail">WrbXPBU0o0KaVrTTvvnYvQAA</XPD:REF>
@@ -17417,7 +17429,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[6]" type="UMLGeneralizationView" guid="z2MiFeiHJk+Ryla9wGbiMAAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">430,593;425,728</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">434,578;426,728</XPD:ATTR>
 <XPD:REF name="Model">dQVB9oduCEOM+CGYGB0HxAAA</XPD:REF>
 <XPD:REF name="Head">us8JWlvvUkSjRn/kBS7H0gAA</XPD:REF>
 <XPD:REF name="Tail">WrbXPBU0o0KaVrTTvvnYvQAA</XPD:REF>
@@ -17706,7 +17718,7 @@ the latest worksheet
 <XPD:ATTR name="Left" type="integer">40</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">36</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">206</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">345</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">375</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Model">3l6Gd4Dmzk20BcsM7xwwygAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="4zOcfzf94kOHPGjd9RCKtwAA">
@@ -17736,7 +17748,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[13]" type="UMLAssociationView" guid="E3Q6UxufSECb/nKREfvaNAAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">245,274;336,332</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">245,280;336,331</XPD:ATTR>
 <XPD:REF name="Model">tIP5m8kpOEiEWpZ5F6JTCgAA</XPD:REF>
 <XPD:REF name="Head">WrbXPBU0o0KaVrTTvvnYvQAA</XPD:REF>
 <XPD:REF name="Tail">nDT4GQtzIUmaxEiPdlcxwwAA</XPD:REF>
@@ -17824,7 +17836,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[14]" type="UMLGeneralizationView" guid="ES1dFuxIb0OFVUsx0MrhZwAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">226,380;397,728</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">236,410;397,728</XPD:ATTR>
 <XPD:REF name="Model">v0iXCSURAkGTFstgrfdowAAA</XPD:REF>
 <XPD:REF name="Head">us8JWlvvUkSjRn/kBS7H0gAA</XPD:REF>
 <XPD:REF name="Tail">nDT4GQtzIUmaxEiPdlcxwwAA</XPD:REF>
@@ -17963,7 +17975,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[17]" type="UMLAssociationView" guid="Mjcsnlh/vkCAY83zkE99xAAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">928,374;797,327</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">928,376;797,332</XPD:ATTR>
 <XPD:REF name="Model">v/9iRgS+1UmuDqisofqyywAA</XPD:REF>
 <XPD:REF name="Head">2ByCDg6ZI0aI+Ot0MYwkywAA</XPD:REF>
 <XPD:REF name="Tail">fOGK0frdQU6N7Tihx5C7xgAA</XPD:REF>
@@ -18085,7 +18097,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[19]" type="UMLAssociationView" guid="VMblWexTNE6W/pU3zZEXwAAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">722,552;541,454</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">725,552;555,454</XPD:ATTR>
 <XPD:REF name="Model">TXyMRv6+Bkadeivhii+efgAA</XPD:REF>
 <XPD:REF name="Head">WrbXPBU0o0KaVrTTvvnYvQAA</XPD:REF>
 <XPD:REF name="Tail">XwQ8TU7OmkChqd3pfvGJHAAA</XPD:REF>
@@ -18169,7 +18181,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[20]" type="UMLAssociationView" guid="Z+eOZ+e8TE2jUQZ65cH47AAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">769,552;738,422</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">769,552;741,437</XPD:ATTR>
 <XPD:REF name="Model">tDFkdYLjy0mncHq5gyK1bwAA</XPD:REF>
 <XPD:REF name="Head">2ByCDg6ZI0aI+Ot0MYwkywAA</XPD:REF>
 <XPD:REF name="Tail">XwQ8TU7OmkChqd3pfvGJHAAA</XPD:REF>
@@ -18371,7 +18383,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[23]" type="UMLAssociationView" guid="Yyx9HB13sEKNqEFRR5166QAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">142,552;142,380</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">142,552;142,410</XPD:ATTR>
 <XPD:REF name="Model">Z8dxJhThIUSYbmfptyUmmwAA</XPD:REF>
 <XPD:REF name="Head">nDT4GQtzIUmaxEiPdlcxwwAA</XPD:REF>
 <XPD:REF name="Tail">5bZuI8YHdUy6Dt+KKpwMjgAA</XPD:REF>
@@ -18681,7 +18693,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[30]" type="UMLAssociationView" guid="93DXP3BQKUyQCiWEnKiATAAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">436,204;435,136</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">438,204;436,136</XPD:ATTR>
 <XPD:REF name="Model">3qOe7Ef9B0KtBI5M5z1+IAAA</XPD:REF>
 <XPD:REF name="Head">5SVW8V95BEiUv54t33ZcdwAA</XPD:REF>
 <XPD:REF name="Tail">WrbXPBU0o0KaVrTTvvnYvQAA</XPD:REF>
@@ -18766,7 +18778,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[31]" type="UMLAssociationView" guid="uW048CotZEiWEkgxmTJQpgAA">
 <XPD:ATTR name="FontFace" type="string">Consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">704,701;541,515</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">704,698;555,521</XPD:ATTR>
 <XPD:REF name="Model">1haMZvPq8US2W61aoST+pwAA</XPD:REF>
 <XPD:REF name="Head">WrbXPBU0o0KaVrTTvvnYvQAA</XPD:REF>
 <XPD:REF name="Tail">+u53DvDXskK7ikDW17YIdwAA</XPD:REF>
@@ -18932,11 +18944,10 @@ the latest worksheet
 <XPD:ATTR name="Name" type="string">getJobsByCustomerVehicle</XPD:ATTR>
 <XPD:REF name="Owner">+2uZGmfii0C/QtY4+NNVogAA</XPD:REF>
 </XPD:OBJ>
-<XPD:ATTR name="#TypedFeatures" type="integer">4</XPD:ATTR>
+<XPD:ATTR name="#TypedFeatures" type="integer">3</XPD:ATTR>
 <XPD:REF name="TypedFeatures[0]">UKoH+FLF2ESFN/iDNi8bOQAA</XPD:REF>
 <XPD:REF name="TypedFeatures[1]">icF0Acld1kWC6CydP41oZgAA</XPD:REF>
 <XPD:REF name="TypedFeatures[2]">frE9M6K+n0ichrFHkizXFwAA</XPD:REF>
-<XPD:REF name="TypedFeatures[3]">B/4ofrnXv0OliCe3AM/tqwAA</XPD:REF>
 <XPD:ATTR name="#Associations" type="integer">7</XPD:ATTR>
 <XPD:REF name="Associations[0]">0b4bs4ZxCki3Sp5UkJD+7QAA</XPD:REF>
 <XPD:REF name="Associations[1]">5rFepzMnLUCp/wOASY7mlAAA</XPD:REF>
@@ -18945,7 +18956,7 @@ the latest worksheet
 <XPD:REF name="Associations[4]">PWt6TL9yE0SKR0KmDgQOfAAA</XPD:REF>
 <XPD:REF name="Associations[5]">15+9h2/26kyVPanKbQm1jQAA</XPD:REF>
 <XPD:REF name="Associations[6]">A97X7NbmqUKhRFWL/O3PyAAA</XPD:REF>
-<XPD:ATTR name="#Attributes" type="integer">11</XPD:ATTR>
+<XPD:ATTR name="#Attributes" type="integer">10</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="3TQh10UlY0iQ5WlvG771pwAA">
 <XPD:ATTR name="Name" type="string">jobType</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
@@ -18999,23 +19010,18 @@ the latest worksheet
 <XPD:ATTR name="InitialValue" type="string">null</XPD:ATTR>
 <XPD:REF name="Owner">+2uZGmfii0C/QtY4+NNVogAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Attributes[8]" type="UMLAttribute" guid="fo8dMOEiNUaqB3pmamNQvgAA">
-<XPD:ATTR name="Name" type="string">startTime</XPD:ATTR>
-<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">Timestamp</XPD:ATTR>
-<XPD:REF name="Owner">+2uZGmfii0C/QtY4+NNVogAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="Attributes[9]" type="UMLAttribute" guid="2k76So7ALUGr5p7SuIx7iQAA">
-<XPD:ATTR name="Name" type="string">endTime</XPD:ATTR>
-<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">Timestamp</XPD:ATTR>
-<XPD:REF name="Owner">+2uZGmfii0C/QtY4+NNVogAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="Attributes[10]" type="UMLAttribute" guid="lEJmMQLDAUWVwTPmoIPLSQAA">
+<XPD:OBJ name="Attributes[8]" type="UMLAttribute" guid="lEJmMQLDAUWVwTPmoIPLSQAA">
 <XPD:ATTR name="Name" type="string">vehicle</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">CustomerVehicle</XPD:ATTR>
 <XPD:REF name="Type_">1AiL1wvsR0u9TmshuZ8PDAAA</XPD:REF>
+<XPD:REF name="Owner">+2uZGmfii0C/QtY4+NNVogAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Attributes[9]" type="UMLAttribute" guid="B663oasfDES+sVTvDq4+hwAA">
+<XPD:ATTR name="Name" type="string">createTime</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">Timestamp</XPD:ATTR>
+<XPD:ATTR name="InitialValue" type="string">Now()</XPD:ATTR>
 <XPD:REF name="Owner">+2uZGmfii0C/QtY4+NNVogAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
@@ -19080,7 +19086,7 @@ the latest worksheet
 <XPD:REF name="Associations[0]">D10elfA/W0WMfLCftjl0JAAA</XPD:REF>
 <XPD:REF name="Associations[1]">OodSTslJTUGwPX77FFS2+wAA</XPD:REF>
 <XPD:REF name="Associations[2]">roYxTICFTESZPKMdTooPjgAA</XPD:REF>
-<XPD:ATTR name="#Attributes" type="integer">4</XPD:ATTR>
+<XPD:ATTR name="#Attributes" type="integer">6</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="9HUxDk/TR0aSoK9/TIRWrgAA">
 <XPD:ATTR name="Name" type="string">vehicleMileage</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
@@ -19104,6 +19110,18 @@ the latest worksheet
 <XPD:ATTR name="Name" type="string">tasks</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">List&lt;Task&gt;</XPD:ATTR>
+<XPD:REF name="Owner">unBDshBTcUyLzusWXEVdrQAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Attributes[4]" type="UMLAttribute" guid="D6bPhoxpc0alRoCE8h733gAA">
+<XPD:ATTR name="Name" type="string">startTime</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">Timestamp</XPD:ATTR>
+<XPD:REF name="Owner">unBDshBTcUyLzusWXEVdrQAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Attributes[5]" type="UMLAttribute" guid="FTzUI5EdmE6tQW/rstXLtgAA">
+<XPD:ATTR name="Name" type="string">endTime</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">Timestamp</XPD:ATTR>
 <XPD:REF name="Owner">unBDshBTcUyLzusWXEVdrQAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
@@ -19211,7 +19229,7 @@ the latest worksheet
 <XPD:REF name="Owner">Swc8IxGSPUy23WwNX+3uwgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Operations[4]" type="UMLOperation" guid="2UsmFo+VUEGK39IQQp8yAAAA">
-<XPD:ATTR name="Name" type="string">calcAmoutCost</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">calcAmountCost</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">Swc8IxGSPUy23WwNX+3uwgAA</XPD:REF>
 </XPD:OBJ>
@@ -19806,7 +19824,7 @@ the latest worksheet
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">528</XPD:ATTR>
-<XPD:ATTR name="Top" type="integer">40</XPD:ATTR>
+<XPD:ATTR name="Top" type="integer">48</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">115</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">90</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
@@ -20075,7 +20093,7 @@ the latest worksheet
 <XPD:ATTR name="Left" type="integer">36</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">260</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">206</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">349</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">375</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Model">3l6Gd4Dmzk20BcsM7xwwygAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="AI7QQ5HGe02kG35NFiDW+QAA">
@@ -20105,7 +20123,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[6]" type="UMLGeneralizationView" guid="X+qYEMgWv0SOq1JDv1hqagAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">241,288;342,144</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">226,260;248,212;322,144</XPD:ATTR>
 <XPD:REF name="Model">v0iXCSURAkGTFstgrfdowAAA</XPD:REF>
 <XPD:REF name="Head">qTYsWMOpPEGK50/z7NKaOgAA</XPD:REF>
 <XPD:REF name="Tail">RWgGlIRIb0ufE4SycgxhDAAA</XPD:REF>
@@ -20132,7 +20150,7 @@ the latest worksheet
 <XPD:ATTR name="FillColor" type="string">$008080FF</XPD:ATTR>
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">72</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">64</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">792</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">150</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">60</XPD:ATTR>
@@ -20165,7 +20183,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[8]" type="UMLAssociationView" guid="ac5VP4a+Skm8ZmuLaPhg4wAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">145,792;141,608</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">138,792;138,634</XPD:ATTR>
 <XPD:REF name="Model">Z8dxJhThIUSYbmfptyUmmwAA</XPD:REF>
 <XPD:REF name="Head">RWgGlIRIb0ufE4SycgxhDAAA</XPD:REF>
 <XPD:REF name="Tail">/EXSyzBgo0S4aff59EQi/QAA</XPD:REF>
@@ -20250,10 +20268,10 @@ the latest worksheet
 <XPD:ATTR name="FillColor" type="string">$004080FF</XPD:ATTR>
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">900</XPD:ATTR>
-<XPD:ATTR name="Top" type="integer">172</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">888</XPD:ATTR>
+<XPD:ATTR name="Top" type="integer">48</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">178</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">241</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">270</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Model">unBDshBTcUyLzusWXEVdrQAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="1ZxWRO0kG0+k2ODL+CFtXQAA">
@@ -20283,7 +20301,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[10]" type="UMLGeneralizationView" guid="ZsPghqSA+EKCcXHxf527jgAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">900,247;642,113</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">888,162;642,105</XPD:ATTR>
 <XPD:REF name="Model">zuT+5wHrf0yh9cf4ga/MXQAA</XPD:REF>
 <XPD:REF name="Head">zFLnILcaQkWkjVyesZVp5AAA</XPD:REF>
 <XPD:REF name="Tail">f4sZxsWoo0ukgHAUs0l7YAAA</XPD:REF>
@@ -20343,7 +20361,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[12]" type="UMLDependencyView" guid="oiGMlvV8xUGj5Hu+hrkF8QAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">856,851;856,888;144,888;145,851</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">856,851;856,888;140,888;139,851</XPD:ATTR>
 <XPD:REF name="Model">TpCJLKDOokW1eSkz9tB4ygAA</XPD:REF>
 <XPD:REF name="Head">/EXSyzBgo0S4aff59EQi/QAA</XPD:REF>
 <XPD:REF name="Tail">zQ31m7uuuUe4+ZGWeEYoaAAA</XPD:REF>
@@ -20369,7 +20387,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[13]" type="UMLAssociationView" guid="ctcBUjKTkkOEbhm7oaldWgAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">863,792;958,412</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">861,792;951,317</XPD:ATTR>
 <XPD:REF name="Model">tDFkdYLjy0mncHq5gyK1bwAA</XPD:REF>
 <XPD:REF name="Head">f4sZxsWoo0ukgHAUs0l7YAAA</XPD:REF>
 <XPD:REF name="Tail">zQ31m7uuuUe4+ZGWeEYoaAAA</XPD:REF>
@@ -20454,16 +20472,16 @@ the latest worksheet
 <XPD:ATTR name="FillColor" type="string">$004080FF</XPD:ATTR>
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">576</XPD:ATTR>
-<XPD:ATTR name="Top" type="integer">204</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">206</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">604</XPD:ATTR>
+<XPD:ATTR name="Top" type="integer">180</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">220</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">390</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Model">+2uZGmfii0C/QtY4+NNVogAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="93L6MUBdD0K1hPUAyURuPQAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="T0t7dRK8nUSZGtg2N3Ir0gAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">196</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">210</XPD:ATTR>
 <XPD:ATTR name="Text" type="string">Job</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="PEccwQGRe0inLte93CQRBgAA">
@@ -20487,7 +20505,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[15]" type="UMLAssociationView" guid="cWBNF/fPT0G3LejbdZELegAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">781,363;900,322</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">823,294;888,246</XPD:ATTR>
 <XPD:REF name="Model">fKAf9YTz6Umz7BSWqHx+owAA</XPD:REF>
 <XPD:REF name="Head">f4sZxsWoo0ukgHAUs0l7YAAA</XPD:REF>
 <XPD:REF name="Tail">9B/26hBt002zKnMcAAsSFgAA</XPD:REF>
@@ -20575,7 +20593,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[16]" type="UMLAssociationView" guid="yzgbqAvRKEW/zENEloyHGAAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">241,427;576,405</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">241,400;292,376;604,375</XPD:ATTR>
 <XPD:REF name="Model">tIP5m8kpOEiEWpZ5F6JTCgAA</XPD:REF>
 <XPD:REF name="Head">9B/26hBt002zKnMcAAsSFgAA</XPD:REF>
 <XPD:REF name="Tail">RWgGlIRIb0ufE4SycgxhDAAA</XPD:REF>
@@ -20663,7 +20681,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[17]" type="UMLAssociationView" guid="0RWyGSTpH0eTcuP0v83+EAAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">844,792;760,593</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">847,792;776,569</XPD:ATTR>
 <XPD:REF name="Model">TXyMRv6+Bkadeivhii+efgAA</XPD:REF>
 <XPD:REF name="Head">9B/26hBt002zKnMcAAsSFgAA</XPD:REF>
 <XPD:REF name="Tail">zQ31m7uuuUe4+ZGWeEYoaAAA</XPD:REF>
@@ -20747,7 +20765,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[18]" type="UMLGeneralizationView" guid="glIiqRE+GEec5449IiE/RwAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">576,294;430,144</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">604,282;441,144</XPD:ATTR>
 <XPD:REF name="Model">dQVB9oduCEOM+CGYGB0HxAAA</XPD:REF>
 <XPD:REF name="Head">qTYsWMOpPEGK50/z7NKaOgAA</XPD:REF>
 <XPD:REF name="Tail">9B/26hBt002zKnMcAAsSFgAA</XPD:REF>
@@ -20775,7 +20793,7 @@ the latest worksheet
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">1164</XPD:ATTR>
-<XPD:ATTR name="Top" type="integer">36</XPD:ATTR>
+<XPD:ATTR name="Top" type="integer">48</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">213</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">225</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
@@ -20807,7 +20825,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[20]" type="UMLAssociationView" guid="mLvuCimn40Cb0hNkBa6dgQAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">1164,202;1077,246</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">1164,168;1065,175</XPD:ATTR>
 <XPD:REF name="Model">v/9iRgS+1UmuDqisofqyywAA</XPD:REF>
 <XPD:REF name="Head">f4sZxsWoo0ukgHAUs0l7YAAA</XPD:REF>
 <XPD:REF name="Tail">jgK8ISPDUE6yECmKO/suxAAA</XPD:REF>
@@ -20895,7 +20913,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[21]" type="UMLAssociationView" guid="0wt0XkX+x0CRCUgRJl5T4wAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">920,821;1272,820;1270,260</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">920,821;1272,820;1270,272</XPD:ATTR>
 <XPD:REF name="Model">/jZ60iDGo0mD6MXBYFM7iwAA</XPD:REF>
 <XPD:REF name="Head">jgK8ISPDUE6yECmKO/suxAAA</XPD:REF>
 <XPD:REF name="Tail">zQ31m7uuuUe4+ZGWeEYoaAAA</XPD:REF>
@@ -20979,7 +20997,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[22]" type="UMLGeneralizationView" guid="a34JAMdJXkuxSD8GrFAImgAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">1164,138;642,89</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">1271,48;1272,8;588,8;587,48</XPD:ATTR>
 <XPD:REF name="Model">qAP2nf1YbEaOCN8YlCoPEAAA</XPD:REF>
 <XPD:REF name="Head">zFLnILcaQkWkjVyesZVp5AAA</XPD:REF>
 <XPD:REF name="Tail">jgK8ISPDUE6yECmKO/suxAAA</XPD:REF>
@@ -21006,10 +21024,10 @@ the latest worksheet
 <XPD:ATTR name="FillColor" type="string">$004080FF</XPD:ATTR>
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">364</XPD:ATTR>
-<XPD:ATTR name="Top" type="integer">456</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">356</XPD:ATTR>
+<XPD:ATTR name="Top" type="integer">428</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">199</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">285</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">300</XPD:ATTR>
 <XPD:ATTR name="WordWrap" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Model">7GMk2FFVpECMo1HtnHQD5gAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="pEknSWBMrkipMT/VCz4hSQAA">
@@ -21039,7 +21057,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[24]" type="UMLAssociationView" guid="Ol/Cgpg7T0awxsfCcRYafQAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">241,486;364,548</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">241,489;356,536</XPD:ATTR>
 <XPD:REF name="Model">V9fKzyr9VkCAWHbzXPOIYwAA</XPD:REF>
 <XPD:REF name="Head">87GwggFhu0K6msS8zPpUAAAA</XPD:REF>
 <XPD:REF name="Tail">RWgGlIRIb0ufE4SycgxhDAAA</XPD:REF>
@@ -21127,7 +21145,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[25]" type="UMLGeneralizationView" guid="L4rRiaCLjEmDk/icGa+zGAAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">439,456;388,144</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">432,428;387,144</XPD:ATTR>
 <XPD:REF name="Model">yp+FUvo300yiOH8wjrjC/AAA</XPD:REF>
 <XPD:REF name="Head">qTYsWMOpPEGK50/z7NKaOgAA</XPD:REF>
 <XPD:REF name="Tail">87GwggFhu0K6msS8zPpUAAAA</XPD:REF>
@@ -21187,7 +21205,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[27]" type="UMLAssociationView" guid="igsBHcviUk2/RJ1dzKriRwAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">404,792;420,740</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">402,792;418,727</XPD:ATTR>
 <XPD:REF name="Model">1eHBqtKjvEyrHXzClmhWRgAA</XPD:REF>
 <XPD:REF name="Head">87GwggFhu0K6msS8zPpUAAAA</XPD:REF>
 <XPD:REF name="Tail">VRNJ7i1gMUiP5CbvsfrY/QAA</XPD:REF>
@@ -21271,7 +21289,7 @@ the latest worksheet
 <XPD:OBJ name="OwnedViews[28]" type="UMLDependencyView" guid="E+HyBbX1N0+3iyDYutRfbgAA">
 <XPD:ATTR name="FontFace" type="string">consolas</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">10</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">328,821;221,821</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">328,821;213,821</XPD:ATTR>
 <XPD:REF name="Model">gTDYHihY8ESDHIHIdjwWUAAA</XPD:REF>
 <XPD:REF name="Head">/EXSyzBgo0S4aff59EQi/QAA</XPD:REF>
 <XPD:REF name="Tail">VRNJ7i1gMUiP5CbvsfrY/QAA</XPD:REF>
@@ -21340,7 +21358,7 @@ the latest worksheet
 <XPD:REF name="Views[3]">OF2+0DHID0+kRr7rRbM3yAAA</XPD:REF>
 <XPD:ATTR name="#Generalizations" type="integer">1</XPD:ATTR>
 <XPD:REF name="Generalizations[0]">yp+FUvo300yiOH8wjrjC/AAA</XPD:REF>
-<XPD:ATTR name="#Operations" type="integer">8</XPD:ATTR>
+<XPD:ATTR name="#Operations" type="integer">10</XPD:ATTR>
 <XPD:OBJ name="Operations[0]" type="UMLOperation" guid="cObRbCLVPEGm5T3osh9wGAAA">
 <XPD:ATTR name="Name" type="string">create</XPD:ATTR>
 <XPD:ATTR name="OwnerScope" type="UMLScopeKind">skClassifier</XPD:ATTR>
@@ -21379,12 +21397,20 @@ the latest worksheet
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">7GMk2FFVpECMo1HtnHQD5gAA</XPD:REF>
 </XPD:OBJ>
+<XPD:OBJ name="Operations[8]" type="UMLOperation" guid="reumXv9zjk6rgO3DUU8TKAAA">
+<XPD:ATTR name="Name" type="string">getLaborTasks</XPD:ATTR>
+<XPD:REF name="Owner">7GMk2FFVpECMo1HtnHQD5gAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Operations[9]" type="UMLOperation" guid="g+crpedRXUmC2mIwWkMsJQAA">
+<XPD:ATTR name="Name" type="string">getPartTasks</XPD:ATTR>
+<XPD:REF name="Owner">7GMk2FFVpECMo1HtnHQD5gAA</XPD:REF>
+</XPD:OBJ>
 <XPD:ATTR name="#TypedFeatures" type="integer">1</XPD:ATTR>
 <XPD:REF name="TypedFeatures[0]">xlbITcLJJ0KahKRHWNMpMQAA</XPD:REF>
 <XPD:ATTR name="#Associations" type="integer">2</XPD:ATTR>
 <XPD:REF name="Associations[0]">rU4WIntMJUCIdHtBGQJhZgAA</XPD:REF>
 <XPD:REF name="Associations[1]">Otay3eXrB0Oia4Nl+3oyUwAA</XPD:REF>
-<XPD:ATTR name="#Attributes" type="integer">7</XPD:ATTR>
+<XPD:ATTR name="#Attributes" type="integer">6</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="bVvdOPOt0UuT//AZ1o0K4gAA">
 <XPD:ATTR name="Name" type="string">appointment</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
@@ -21410,21 +21436,14 @@ the latest worksheet
 <XPD:ATTR name="TypeExpression" type="string">Timestamp</XPD:ATTR>
 <XPD:REF name="Owner">7GMk2FFVpECMo1HtnHQD5gAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Attributes[4]" type="UMLAttribute" guid="B/4ofrnXv0OliCe3AM/tqwAA">
-<XPD:ATTR name="Name" type="string">job</XPD:ATTR>
-<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">Job</XPD:ATTR>
-<XPD:REF name="Type_">+2uZGmfii0C/QtY4+NNVogAA</XPD:REF>
-<XPD:REF name="Owner">7GMk2FFVpECMo1HtnHQD5gAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="Attributes[5]" type="UMLAttribute" guid="26mvqkV8i0Gs2u0DApdG2wAA">
+<XPD:OBJ name="Attributes[4]" type="UMLAttribute" guid="26mvqkV8i0Gs2u0DApdG2wAA">
 <XPD:ATTR name="Name" type="string">taxRate</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">Float</XPD:ATTR>
 <XPD:ATTR name="InitialValue" type="string">-1.0</XPD:ATTR>
 <XPD:REF name="Owner">7GMk2FFVpECMo1HtnHQD5gAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Attributes[6]" type="UMLAttribute" guid="m3t0mTB4zkOy4Cayps2+UQAA">
+<XPD:OBJ name="Attributes[5]" type="UMLAttribute" guid="m3t0mTB4zkOy4Cayps2+UQAA">
 <XPD:ATTR name="Name" type="string">discount</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">Float</XPD:ATTR>
