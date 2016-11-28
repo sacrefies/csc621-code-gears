@@ -18,8 +18,8 @@
 declare(strict_types = 1);
 namespace gears\models;
 
-require 'StatefulEntity.php';
 require 'State.php';
+require 'Transitive.php';
 
 use InvalidArgumentException;
 
@@ -28,7 +28,7 @@ use InvalidArgumentException;
  * Class StatefulEntity is a base class for the entities which have states.
  * @package gears\models
  */
-abstract class StatefulEntity extends StaticEntity {
+abstract class StatefulEntity extends StaticEntity implements Transitive {
 
     /**
      * @var int The entity's current state.
