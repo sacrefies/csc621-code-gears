@@ -46,4 +46,5 @@ final class Settings {
     }
 
     public static $CURR_USER_SESS_KEY = 'current_user_object';
+    public static $SITE_ROOT_VAR_NAME = 'SITEROOT';
 }
