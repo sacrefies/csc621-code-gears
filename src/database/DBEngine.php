@@ -18,7 +18,7 @@
 declare(strict_types = 1);
 namespace gears\database;
 
-require "{$_SERVER['SITEROOT']}/conf/Settings.php";
+require __DIR__.'/../conf/Settings.php';
 
 use gears\conf\Settings;
 use RuntimeException;
@@ -59,7 +59,7 @@ class DBEngine {
     /**
      * DBEngine constructor.
      */
-    private function __construct() {
+    protected function __construct() {
         $this->connStr = Settings::getDBConnString();
         $this->user = Settings::$DB_USER;
         $this->pass = Settings::$DB_PASSWORD;
@@ -88,13 +88,13 @@ class DBEngine {
      * @throws RuntimeException When the connection cannot be established.
      */
     public function open() {
-        if (null !== $this->conn) {
-            return;
+        if ($this->conn) {
+            return $this->conn;
         }
-
         try {
             $this->conn = new PDO($this->connStr, $this->user, $this->pass);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $this->conn;
         } catch (PDOException $e) {
             throw new RuntimeException('Bad database connection', $e);
         }
@@ -105,7 +105,7 @@ class DBEngine {
      */
     public function close() {
         try {
-            if (null !== $this->stmt) {
+            if ($this->stmt) {
                 $this->stmt->closeCursor();
                 $this->stmt = null;
             }
@@ -113,7 +113,7 @@ class DBEngine {
             // pass
         }
         try {
-            if (null !== $this->conn) {
+            if ($this->conn) {
                 $this->conn = null;
             }
         } catch (PDOException $e) {
@@ -131,12 +131,14 @@ class DBEngine {
      */
     public function fetchAll(string $sql, array $params = array()) {
         try {
+            if ($this->stmt) {
+                $this->stmt->closeCursor();
+            }
             $this->stmt = $this->conn->prepare($sql);
-            $this->stmt->closeCursor();
             if ($params) {
-                $this->stmt->execute();
-            } else {
                 $this->stmt->execute($params);
+            } else {
+                $this->stmt->execute();
             }
             return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -155,12 +157,14 @@ class DBEngine {
      */
     public function query(string $sql, array $params = array()) {
         try {
+            if ($this->stmt) {
+                $this->stmt->closeCursor();
+            }
             $this->stmt = $this->conn->prepare($sql);
-            $this->stmt->closeCursor();
             if ($params) {
-                $this->stmt->execute();
-            } else {
                 $this->stmt->execute($params);
+            } else {
+                $this->stmt->execute();
             }
         } catch (PDOException $e) {
             $this->stmt = null;
@@ -178,12 +182,14 @@ class DBEngine {
      */
     public function execute(string $sql, array $params = array()) {
         try {
+            if ($this->stmt) {
+                $this->stmt->closeCursor();
+            }
             $this->stmt = $this->conn->prepare($sql);
-            $this->stmt->closeCursor();
             if ($params) {
-                $this->stmt->execute();
-            } else {
                 $this->stmt->execute($params);
+            } else {
+                $this->stmt->execute();
             }
             return $this->stmt->rowCount();
         } catch (PDOException $e) {
