@@ -32,4 +32,16 @@ abstract class StaticEntity implements Persisted {
     public static function getTableName() {
         return strtolower(basename(str_replace('\\', '/', get_called_class())));
     }
+
+    /**
+     * Create an instance of this entity from a database row.
+     *
+     * @param array $row The data row in the database.
+     *
+     * @return Persisted An instance of this entity.
+     * @throws \LogicException This method in StaticEntity class is not implemented.
+     */
+    protected static function createInstanceFromRow(array $row) {
+        throw new \LogicException('Not implemented yet');
+    }
 }
