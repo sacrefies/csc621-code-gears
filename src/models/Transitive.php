@@ -34,7 +34,7 @@ interface Transitive extends Persisted {
      *
      * @return int The current object state
      */
-    public function getState();
+    public function getState() : int;
 
     /**
      * Set the specified state to the current object.
@@ -47,5 +47,5 @@ interface Transitive extends Persisted {
      * Check whether this object is at an finishing state.
      * @return bool Returns true if this object is at an finishing state.
      */
-    public function isFinished();
+    public function isFinished() : bool;
 }

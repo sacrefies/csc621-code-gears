@@ -133,7 +133,7 @@ class DBEngine {
         try {
             $this->stmt = $this->conn->prepare($sql);
             $this->stmt->closeCursor();
-            if (empty($params)) {
+            if ($params) {
                 $this->stmt->execute();
             } else {
                 $this->stmt->execute($params);
@@ -157,7 +157,7 @@ class DBEngine {
         try {
             $this->stmt = $this->conn->prepare($sql);
             $this->stmt->closeCursor();
-            if (empty($params)) {
+            if ($params) {
                 $this->stmt->execute();
             } else {
                 $this->stmt->execute($params);
@@ -180,7 +180,7 @@ class DBEngine {
         try {
             $this->stmt = $this->conn->prepare($sql);
             $this->stmt->closeCursor();
-            if (empty($params)) {
+            if ($params) {
                 $this->stmt->execute();
             } else {
                 $this->stmt->execute($params);

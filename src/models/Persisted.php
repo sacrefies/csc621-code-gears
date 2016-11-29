@@ -30,14 +30,14 @@ interface Persisted {
      *
      * @return int Returns 1 if update is successful; otherwise 0.
      */
-    public function update();
+    public function update() : int;
 
     /**
      * Delete the data row in the database which links to this object.
      *
      * @return int Returns 1 if removal is successful; otherwise 0.
      */
-    public function remove();
+    public function remove() : int;
 
     /**
      * Make a copy of this object. The new copy is a brand new entity which does not exist in the database yet.
@@ -77,46 +77,52 @@ interface Persisted {
     /**
      * Create and initialize a new instance of this entity from the database.
      *
-     * @param array $keyValues Multiple keys with their values to identify the data row in the database table.
+     * @param string $where The where clause to identify the row. This clause must be constructed with
+     *                      parameter placeholders: '?', e.g.: 'emp_id = ? AND emp_code = ?'
+     * @param array $values An array of the column values which are involved by $where. The sequence of the items must
+     *                      be align with the column sequence in $where.
      *
      * @return Persisted Returns an instance of this entity.
      */
-    public static function getInstanceFromKeys(array $keyValues);
+    public static function getInstanceFromKeys(string $where, array $values);
 
     /**
      * Get a list of instances of this entity
      *
-     * @param array $criteria The search criteria
-     * @param array $orderBy  columns to order
+     * @param string $where The where clause to identify the row(s). This clause must be constructed with
+     *                      parameter placeholders: '?', e.g.: 'emp_id = ? AND emp_code = ?'
+     * @param array $values An array of the column values which are involved by $where. The sequence of the items must
+     *                      be align with the column sequence in $where.
+     * @param string $orderBy  columns to order
      *
      * @return array A list of instances of this entity.
      */
-    public static function getList(array $criteria, array $orderBy);
+    public static function getList(string $where, array $values, string $orderBy) : array;
 
     /**
      * Get all existing instances from the database.
      *
-     * @param array $orderBy columns to order
+     * @param string $orderBy columns to order
      *
      * @return array A list of instances of this entity.
      */
-    public static function getAll(array $orderBy);
+    public static function getAll(string $orderBy = null) : array;
 
     /**
      * Get this entity's database table name.
      * @return string Returns the database table name.
      */
-    public static function getTableName();
+    public static function getTableName() : string;
 
     /**
      * Get the column name of the table of this entity.
      * @return array Returns this entity's table column names
      */
-    public static function getColumns();
+    public static function getColumns() : array;
 
     /**
      * Get the column names for UPDATE/INSERT SQL.
      * @return array Returns the column names for update/insertion
      */
-    public static function getUpdateColumns();
+    public static function getUpdateColumns() : array;
 }

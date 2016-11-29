@@ -31,7 +31,7 @@ abstract class StaticEntity implements Persisted {
     /**
      * @inheritdoc
      */
-    public static function getTableName() {
+    public static function getTableName():string {
         return strtolower(basename(str_replace('\\', '/', get_called_class())));
     }
 
@@ -51,14 +51,15 @@ abstract class StaticEntity implements Persisted {
      * Update the data row in the database which links to this object.
      *
      * @param array $values An array of the column values. The sequence of the items must be align with the column
-     *                      sequence from getUpdateColumns(). The last item of this array must be the value of the
-     *                      parameter $colId.
-     * @param string $colId The identifier column name. The value of this column must be included as the last item of
-     *                      the parameter $values.
+     *                      sequence from getUpdateColumns(). The last item(s) of this array must be the value of the
+     *                      parameter $where.
+     * @param string $where The where clause to identify the row. This clause must be constructed with
+     *                      parameter placeholders: '?', and the value of the columns involved must be included as the
+     *                      last item(s) of the parameter $values.
      *
      * @return int|-1 Returns the affected row count if update is successful; otherwise -1.
      */
-    protected function updateTable(string $colId, array $values): int {
+    protected function updateTable(string $where, array $values): int {
         $cols = '';
         $table = static::getTableName();
         $columns = static::getUpdateColumns();
@@ -66,7 +67,7 @@ abstract class StaticEntity implements Persisted {
             $cols = "$cols $col = ?,";
         }
         $cols = rtrim($cols);
-        $sql = "UPDATE $table SET $cols WHERE $colId = ?";
+        $sql = "UPDATE $table SET $cols WHERE $where";
         $db = DBEngine::getInstance();
         try {
             $db->open();
@@ -88,7 +89,7 @@ abstract class StaticEntity implements Persisted {
      */
     protected function insert(array $values):int {
         // ['phone_number', 'first_name', 'last_name', 'is_manager', 'state', 'emp_code'];
-        $c = count(self::getUpdateColumns());
+        $c = count(static::getUpdateColumns());
         $vals = '';
         for ($id = 0; $id < $c; $id++) {
             $vals = "$vals ?,";
@@ -98,6 +99,30 @@ abstract class StaticEntity implements Persisted {
         $table = self::getTableName();
         $sql = "INSERT INTO $table ($cols) VALUES ($vals)";
 
+        $db = DBEngine::getInstance();
+        try {
+            $db->open();
+        } catch (\Exception $e) {
+            return -1;
+        }
+        $rc = $db->execute($sql, $values);
+        $db->close();
+        return $rc;
+    }
+
+    /**
+     * Delete the data row which represents this instance from the table.
+     *
+     * @param string $where The where clause to identify the row to be updated. This clause must be constructed with
+     *                      parameter placeholders: '?', e.g.: 'emp_id = ? AND emp_code = ?'
+     * @param array $values An array of the column values which are involved by $where. The sequence of the items must
+     *                      be align with the column sequence in $where.
+     *
+     * @return int|-1 Returns the affected row count if update is successful; otherwise -1.
+     */
+    protected function delete(string $where, array $values): int {
+        $table = static::getTableName();
+        $sql = "DELETE FROM $table WHERE $where";
         $db = DBEngine::getInstance();
         try {
             $db->open();
