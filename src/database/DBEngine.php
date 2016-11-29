@@ -18,7 +18,7 @@
 declare(strict_types = 1);
 namespace gears\database;
 
-require __DIR__.'/../conf/Settings.php';
+require_once __DIR__.'/../conf/Settings.php';
 
 use gears\conf\Settings;
 use RuntimeException;

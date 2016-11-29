@@ -18,7 +18,12 @@
 declare(strict_types = 1);
 namespace gears;
 
+require_once __DIR__ . '/accounts/AccountController.php';
+require_once __DIR__ . '/accounts/Employee.php';
+
 use gears\accounts\AccountController;
+
+use gears\accounts\Employee;
 
 if (!AccountController::checkLogin()) {
     AccountController::redirectTo('/login.php');
@@ -41,3 +46,7 @@ if (!AccountController::checkLogin()) {
     <script src="/js/bootstrap.min.js" type="text/javascript"></script>
 </head>
 <body>
+<!-- Page header -->
+<div class="page-header">
+    <h2><?php $pageHeader ?></h2>
+</div>

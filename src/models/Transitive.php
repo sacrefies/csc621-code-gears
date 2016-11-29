@@ -18,7 +18,7 @@
 declare(strict_types = 1);
 namespace gears\models;
 
-require 'Persisted.php';
+require_once __DIR__ . '/Persisted.php';
 
 use gears\models\Persisted;
 

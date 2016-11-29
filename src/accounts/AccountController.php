@@ -18,8 +18,9 @@
 declare(strict_types = 1);
 namespace gears\accounts;
 
-require "{$_SERVER['SITEROOT']}/Controller.php";
-require "{$_SERVER['SITEROOT']}/conf/Settings.php";
+require_once __DIR__ . '/../Controller.php';
+require_once __DIR__ . '/../conf/Settings.php';
+require_once __DIR__ . '/Employee.php';
 
 use gears\Controller;
 use gears\conf\Settings;
@@ -36,8 +37,9 @@ final class AccountController {
      * Check whether the current accessor is a login user.
      * @return bool Returns true if the user has login; otherwise false.
      */
-    static public function checkLogin() {
+    static public function checkLogin():bool {
         if (!isset($_SESSION)) {
+            //session_save_path(__DIR__ . '/../');
             session_start();
         }
         return isset($_SESSION[Settings::$CURR_USER_SESS_KEY]) && !empty($_SESSION[Settings::$CURR_USER_SESS_KEY]);
@@ -60,11 +62,12 @@ final class AccountController {
      *
      * @return bool Returns true if login is successful; otherwise false.
      */
-    static public function login(string $empCode) {
-        if (isset($empCode) && !empty($empCode)) {
+    static public function login(string $empCode):bool {
+        if ($empCode) {
+            session_start();
             // get employee
             $emp = self::getEmployeeByCode($empCode);
-            if (isset($emp)) {
+            if ($emp) {
                 $_SESSION[Settings::$CURR_USER_SESS_KEY] = $emp;
                 return true;
             }
@@ -79,7 +82,17 @@ final class AccountController {
      *
      * @return Employee|null Returns an instance of Employee if the code exists in the database.
      */
-    static public function getEmployeeByCode(string $empCode) {
-        return null;
+    static public function getEmployeeByCode(string $empCode):Employee {
+        if (!$empCode) {
+            return null;
+        }
+        return Employee::getInstanceFromKeys('emp_code=?', [$empCode]);
+    }
+
+    static public function getEmployeeById(int $id) : Employee {
+        if (0 > $id) {
+            return null;
+        }
+        return Employee::getInstance($id);
     }
 }

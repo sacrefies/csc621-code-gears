@@ -18,8 +18,8 @@
 declare(strict_types = 1);
 namespace gears\accounts;
 
-require __DIR__ . '/../database/DBEngine.php';
-require __DIR__ . '/../models/StatefulEntity.php';
+require_once __DIR__ . '/../database/DBEngine.php';
+require_once __DIR__ . '/../models/StatefulEntity.php';
 
 use gears\database\DBEngine;
 use gears\models\Persisted;

@@ -18,10 +18,9 @@
 declare(strict_types = 1);
 namespace gears\models;
 
-require 'State.php';
-require 'Transitive.php';
-
-use InvalidArgumentException;
+require_once __DIR__ . '/State.php';
+require_once __DIR__ . '/Transitive.php';
+require_once __DIR__.'/StaticEntity.php';
 
 
 /**
@@ -40,7 +39,7 @@ abstract class StatefulEntity extends StaticEntity implements Transitive {
      *
      * @return int The current object state
      */
-    public function getState() {
+    public function getState() : int {
         return $this->state;
     }
 
@@ -63,7 +62,7 @@ abstract class StatefulEntity extends StaticEntity implements Transitive {
      * Check whether this object is at an finishing state.
      * @return bool Returns true if this object is at an finishing state.
      */
-    public function isFinished() {
+    public function isFinished() : bool {
         return ($this->state === State::CANCELLED || $this->state === State::DONE);
     }
 }

@@ -18,7 +18,7 @@
 declare(strict_types = 1);
 namespace gears;
 
-require "{$_SERVER['SITEROOT']}/accounts/AccountController.php";
+require_once __DIR__ . '/accounts/AccountController.php';
 
 use gears\accounts\AccountController;
 
@@ -31,6 +31,9 @@ if (isset($_POST['empCode'])) {
 }
 
 $title = 'Gears: Login';
+
+echo session_save_path();
+
 ?>
 
 <!DOCTYPE html>

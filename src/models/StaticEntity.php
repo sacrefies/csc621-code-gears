@@ -18,8 +18,8 @@
 declare(strict_types = 1);
 namespace gears\models;
 
-require __DIR__ . '/Persisted.php';
-require __DIR__ . '/../database/DBEngine.php';
+require_once __DIR__ . '/Persisted.php';
+require_once __DIR__ . '/../database/DBEngine.php';
 
 use gears\database\DBEngine;
 
