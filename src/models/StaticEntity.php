@@ -19,9 +19,6 @@ declare(strict_types = 1);
 namespace gears\models;
 
 require 'Persisted.php';
-require "{$_SERVER['SITEROOT']}/database/DBEngine.php";
-
-use gears\database\DBEngine;
 
 
 /**
@@ -29,29 +26,10 @@ use gears\database\DBEngine;
  * @package gears\models
  */
 abstract class StaticEntity implements Persisted {
-
     /**
-     * @var DBEngine|null The database engine.
+     * @inheritdoc
      */
-    protected $dbEngine;
-    /**
-     * @var string|null The database table name of this entity.
-     */
-    protected $table;
-    /**
-     * @var array|null The column names of a data row of this entity.
-     */
-    protected static $COLUMNS;
-    /**
-     * @var array|null The column names for update of this entity.
-     */
-    protected static $COLUMNS_UPDATE;
-
-    /**
-     * Get the table name of this entity.
-     * @return null|string The table's name.
-     */
-    public function getTable() {
-        return $this->table;
+    public static function getTableName() {
+        return strtolower(basename(str_replace('\\', '/', get_called_class())));
     }
 }

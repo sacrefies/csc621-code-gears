@@ -101,4 +101,22 @@ interface Persisted {
      * @return array A list of instances of this entity.
      */
     public static function getAll(array $orderBy);
+
+    /**
+     * Get this entity's database table name.
+     * @return string Returns the database table name.
+     */
+    public static function getTableName();
+
+    /**
+     * Get the column name of the table of this entity.
+     * @return array Returns this entity's table column names
+     */
+    public static function getColumns();
+
+    /**
+     * Get the column names for UPDATE/INSERT SQL.
+     * @return array Returns the column names for update/insertion
+     */
+    public static function getUpdateColumns();
 }

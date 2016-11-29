@@ -109,6 +109,10 @@ class DBEngine {
                 $this->stmt->closeCursor();
                 $this->stmt = null;
             }
+        } catch (PDOException $e) {
+            // pass
+        }
+        try {
             if (null !== $this->conn) {
                 $this->conn = null;
             }
