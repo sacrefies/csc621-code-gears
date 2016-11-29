@@ -58,7 +58,7 @@ abstract class StaticEntity implements Persisted {
      *
      * @return int|-1 Returns the affected row count if update is successful; otherwise -1.
      */
-    protected static function updateTable(string $colId, array $values): int {
+    protected function updateTable(string $colId, array $values): int {
         $cols = '';
         $table = static::getTableName();
         $columns = static::getUpdateColumns();
