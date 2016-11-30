@@ -95,8 +95,8 @@ abstract class StaticEntity implements Persisted {
             $vals = "$vals ?,";
         }
         $vals = rtrim($vals, ',');
-        $cols = implode(',', self::getUpdateColumns());
-        $table = self::getTableName();
+        $cols = implode(',', static::getUpdateColumns());
+        $table = static::getTableName();
         $sql = "INSERT INTO $table ($cols) VALUES ($vals)";
 
         $db = DBEngine::getInstance();
