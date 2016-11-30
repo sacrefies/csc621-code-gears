@@ -52,7 +52,7 @@ include __DIR__ . '/header.php';
             <div class="form-group">
                 <label for="empCode">Enter Employee Code:</label>
                 <input name="empCode" type="text" id="empCode" class="form-control" placeholder="Your Employee Code"
-                       required autofocus/>
+                       required autofocus pattern="^[a-zA-Z]{2}[0-9]{4}$"/>
             </div>
             <div class="form-group">
                 <input class="btn btn-primary" type="submit" name="submit" id="inputSubmit" value="Login"/>
