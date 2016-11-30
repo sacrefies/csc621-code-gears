@@ -31,49 +31,33 @@ if (isset($_POST['empCode'])) {
 }
 
 $title = 'Gears: Login';
+$activeMenu = 0;
+$pageHeader = 'Gears';
 
-echo session_save_path();
-
+include __DIR__ . '/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title><?php echo $title; ?></title>
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <!-- jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- Bootstrap core JS -->
-    <script src="js/bootstrap.min.js" type="text/javascript"></script>
-</head>
-<body>
-<div class="page-header" style="text-align:center">
-    <h1>Welcome to Gears!</h1>
+<div class="panel panel-default">
+    <div class="panel-heading">Employee Login</div>
+    <div class="panel-body">
+        <?php
+        if (!empty($error)) {
+            echo "<div class=\"alert alert-warning alert-dismissible\">\n";
+            echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n";
+            echo "<strong>Failed!</strong> $error\n";
+            echo "</div>\n";
+        }
+        ?>
+        <form action="<?php echo AccountController::getSelfScript(); ?>" method="POST">
+            <div class="form-group">
+                <label for="empCode">Enter Employee Code:</label>
+                <input name="empCode" type="text" id="empCode" class="form-control" placeholder="Your Employee Code"
+                       required autofocus/>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" name="submit" id="inputSubmit" value="Login"/>
+            </div>
+        </form>
+    </div>
 </div>
-<?php
-if (!empty($error)) {
-    echo "<div class=\"alert alert-warning alert-dismissible\">\n";
-    echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n";
-    echo "<strong>Failed!</strong> $error\n";
-    echo "</div>\n";
-}
-?>
-<div class="container">
-    <form action="<?php echo AccountController::getSelfScript(); ?>" method="POST">
-        <div class="form-group">
-            <label for="empCode">Enter Employee Code:</label>
-            <input name="empCode" type="text" id="empCode" class="form-control" placeholder="Your Employee Code"
-                   required autofocus/>
-        </div>
-        <div class="form-group">
-            <input class="btn btn-primary" type="submit" name="submit" id="inputSubmit" value="Login"/>
-        </div>
-    </form>
-</div>
-</body>
-</html>
+<?php include __DIR__.'/footer.php'; ?>

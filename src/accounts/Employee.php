@@ -149,9 +149,9 @@ class Employee extends StatefulEntity {
      *
      * @param int $id The unique of the data row in the database table.
      *
-     * @return Employee Returns an instance of this entity.
+     * @return Employee|null Returns an instance of this entity.
      */
-    public static function getInstance(int $id):Employee {
+    public static function getInstance(int $id) {
         $cols = implode(',', self::getColumns());
         $table = self::getTableName();
         $sql = "SELECT $cols FROM $table WHERE emp_id = :id";
@@ -162,9 +162,8 @@ class Employee extends StatefulEntity {
             return null;
         }
         $row = $db->query($sql, array(':id' => $id))->fetch(\PDO::FETCH_ASSOC);
-        $emp = self::createInstanceFromRow($row);
         $db->close();
-        return $emp;
+        return ($row) ? self::createInstanceFromRow($row) : null;
     }
 
     /**
@@ -177,7 +176,7 @@ class Employee extends StatefulEntity {
      *
      * @return Employee|null Returns an instance of this entity.
      */
-    public static function getInstanceFromKeys(string $where, array $values):Employee {
+    public static function getInstanceFromKeys(string $where, array $values) {
         $cols = implode(',', self::getColumns());
         $table = self::getTableName();
         $sql = "SELECT $cols FROM $table WHERE $where";
@@ -189,7 +188,7 @@ class Employee extends StatefulEntity {
         }
         $row = $db->query($sql, $values)->fetch(\PDO::FETCH_ASSOC);
         $db->close();
-        return self::createInstanceFromRow($row);
+        return ($row) ? self::createInstanceFromRow($row) : null;
     }
 
     /**
