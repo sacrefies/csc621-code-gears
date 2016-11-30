@@ -16,9 +16,14 @@
  */
 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace gears;
 ?>
+</div>
 
+<!-- jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- Bootstrap core JS -->
+<script src="/js/bootstrap.min.js" type="text/javascript"></script>
 </body>
 </html>

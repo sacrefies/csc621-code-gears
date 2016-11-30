@@ -39,7 +39,6 @@ final class AccountController {
      */
     static public function checkLogin():bool {
         if (!isset($_SESSION)) {
-            //session_save_path(__DIR__ . '/../');
             session_start();
         }
         return isset($_SESSION[Settings::$CURR_USER_SESS_KEY]) && !empty($_SESSION[Settings::$CURR_USER_SESS_KEY]);

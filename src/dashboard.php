@@ -21,7 +21,19 @@ namespace gears;
 require_once __DIR__ . '/accounts/AccountController.php';
 require_once __DIR__ . '/accounts/Employee.php';
 
+/**
+ * @var string A string variable to set the page title.
+ */
 $title = 'My Dashboard';
+/**
+ * @var string A string variable to set the nav bar header.
+ */
+$pageHeader = 'Dashboard';
+/**
+ * @var int An integer which indicates the current active nav menu tab.
+ *          0: dashboard, 1: appointment, 2: in-service, 3: checkout
+ */
+$activeMenu = 0;
 
 include __DIR__ . '/header.php';
 ?>
