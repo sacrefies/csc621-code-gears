@@ -37,20 +37,19 @@ final class AccountController {
      * Check whether the current accessor is a login user.
      * @return bool Returns true if the user has login; otherwise false.
      */
-    static public function checkLogin():bool {
-        if (!isset($_SESSION)) {
+    static public function isLogin():bool {
+        if (!isset($_SESSION) || session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        return isset($_SESSION[Settings::$CURR_USER_SESS_KEY]) && !empty($_SESSION[Settings::$CURR_USER_SESS_KEY]);
+        return (!self::isSessionExpired() && isset($_SESSION[Settings::$CURR_USER_SESS_KEY])
+            && !empty($_SESSION[Settings::$CURR_USER_SESS_KEY]));
     }
 
     /**
      * Logout the current user.
      */
     static public function logout() {
-        session_unset();
-        session_destroy();
-        session_start();
+        self::destroySession();
         self::redirectTo('/login.php');
     }
 
@@ -81,14 +80,21 @@ final class AccountController {
      *
      * @return Employee|null Returns an instance of Employee if the code exists in the database.
      */
-    static public function getEmployeeByCode(string $empCode):Employee {
+    static public function getEmployeeByCode(string $empCode) {
         if (!$empCode) {
             return null;
         }
-        return Employee::getInstanceFromKeys('emp_code=?', [$empCode]);
+        return Employee::getInstanceFromKeys('emp_code=?', array($empCode));
     }
 
-    static public function getEmployeeById(int $id) : Employee {
+    /**
+     * Get an instance of Employee by its employee code.
+     *
+     * @param int $id The employee's unique id;
+     *
+     * @return Employee|null Returns an instance of Employee if the id exists in the database.
+     */
+    static public function getEmployeeById(int $id) {
         if (0 > $id) {
             return null;
         }

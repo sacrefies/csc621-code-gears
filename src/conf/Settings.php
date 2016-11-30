@@ -47,7 +47,7 @@ final class Settings {
 
     public static $CURR_USER_SESS_KEY = 'current_user_object';
     /**
-     * @var int Site session time out duration.
+     * @var int Site session time out duration. 1800 === 30 minutes
      */
     public static $SESSION_TIMEOUT = 1800;
 }

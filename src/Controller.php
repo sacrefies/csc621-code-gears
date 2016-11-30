@@ -17,6 +17,8 @@
 
 declare(strict_types = 1);
 namespace gears;
+use gears\accounts\Employee;
+use gears\conf\Settings;
 
 
 /**
@@ -58,5 +60,39 @@ trait Controller {
             return '';
         }
         return htmlentities($_POST[$key]);
+    }
+
+    /**
+     * Kill current session
+     */
+    public static function destroySession() {
+        session_abort();
+        session_unset();
+        session_destroy();
+    }
+
+    /**
+     * Check whether the current user login session is expired.
+     * @return bool Returns true if user session is expired; otherwise false.
+     */
+    public static function isSessionExpired() : bool {
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > Settings::$SESSION_TIMEOUT)) {
+            self::destroySession();
+            return true;
+        }
+        // update last activity time stamp
+        $_SESSION['LAST_ACTIVITY'] = time();
+        return false;
+    }
+
+    /**
+     * Get the current user object stored in SESSION
+     * @return Employee|null Returns the current logon user.
+     */
+    public static function getLoginUser() : Employee {
+        if (null === $_SESSION || !isset($_SESSION[Settings::$CURR_USER_SESS_KEY]) || empty($_SESSION[Settings::$CURR_USER_SESS_KEY])) {
+            return null;
+        }
+        return $_SESSION[Settings::$CURR_USER_SESS_KEY];
     }
 }
