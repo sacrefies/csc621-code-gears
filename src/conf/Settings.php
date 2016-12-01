@@ -34,8 +34,8 @@ final class Settings {
     public static $DB_DRIVER = 'mysql';
     public static $DB_HOST = 'localhost';
     public static $DB_PORT = '3306';
-    public static $DB_USER = 'root';
-    public static $DB_PASSWORD = '';
+    public static $DB_USER = 'jason';
+    public static $DB_PASSWORD = 'Chilbi55@!';
 
     /**
      * Construct a database connection string with the static setting values.
