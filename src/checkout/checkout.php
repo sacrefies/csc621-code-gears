@@ -18,8 +18,8 @@
 declare(strict_types = 1);
 namespace gears\checkout;
 
-require_once __DIR__ . '/checkout/CheckoutController.php';
-require_once __DIR__ . '/checkout/invoice.php';
+require_once __DIR__ . '/CheckoutController.php';
+require_once __DIR__ . '/invoice.php';
 
 /**
  * @var string A string variable to set the page title.
@@ -35,7 +35,7 @@ $pageHeader = 'Checkout';
  */
 $activeMenu = 3;
 
-include __DIR__ . '/header.php';
+include __DIR__ . '/../header.php';
 ?>
 <!-- main content starts here -->
 <body>
@@ -102,16 +102,4 @@ echo "</table>";
 ?>
 <p id="output"></p>
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-<?php include __DIR__.'/footer.php'; ?>
+<?php include __DIR__ . '/../footer.php'; ?>
