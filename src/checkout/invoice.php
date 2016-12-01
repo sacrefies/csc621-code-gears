@@ -38,7 +38,7 @@ class Invoice extends StatefulEntity {
     /**
      * @var int
      */
-    public $invoiveId;
+    public $invoiceId;
     /**
      * @var int
      */
@@ -58,7 +58,7 @@ class Invoice extends StatefulEntity {
     /**
      * @var float
      */
-    public $amtDue = 20.00;
+    public $amtDue = 0.00;
     /**
      * @var float
      */
@@ -67,6 +67,10 @@ class Invoice extends StatefulEntity {
      * @var float
      */
     public $discRate = 0.00;
+    /**
+    * @var int
+    */
+    public $state;
 
 
     /**
@@ -102,9 +106,7 @@ class Invoice extends StatefulEntity {
         $vals = [$this->apptId, $this->createTime, $this->updateTime, $this->state,
                      $this->taxRate, $this->amtDue, $this->amtPayed, $this->discRate, $this->invoiceId];
         $where = 'invoice_id = ?';
-        $return = $this->updateTable($where, $vals);
-        //error_log(message);
-        return $return;
+        return $this->updateTable($where, $vals);
     }
 
     /**
@@ -324,7 +326,7 @@ class Invoice extends StatefulEntity {
         $inv->apptId = $appId;
         $inv->createTime = $row['create_time'];
         $inv->updateTime = $row['update_time'];
-        $inv->state = $row['state'];
+        $inv->state = (int)$row['state'];
         $inv->taxRate = (float)$row['tax_rate'];
         $inv->amtDue = (float)$row['amount_due'];
         $inv->amtPayed= (float)$row['amount_payed'];
@@ -332,11 +334,21 @@ class Invoice extends StatefulEntity {
         return $inv;
     }
 
-    public function calcAmtDue() {
-        $this->amtDue = $this->amtDue - $this->amtPayed;
-        if($this->amtDue < 0){
-            $this->amtDue = 0;
+    /**
+     * Update the amount payed and update the state to Payed if the invoice
+     *      is fully payed.
+     *
+     * @return int Returns 1 if update is successful; otherwise 0.
+     */
+    public function calcAmtDue():int {
+        if($this->amtDue === $this->amtPayed){
+            $this->state = State::PAYED;
         }
+        if($this->amtDue < $this->amtPayed){
+            $this->amtPayed = $this->amtDue;
+            $this->state = State::PAYED;
+        }
+        $this->updateTime = "" . date('Y-m-d H:i:s') . "";
         return self::update();
     }
 }

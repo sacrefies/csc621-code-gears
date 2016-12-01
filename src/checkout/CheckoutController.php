@@ -24,6 +24,7 @@ require_once __DIR__ . '/invoice.php';
 
 use gears\Controller;
 use gears\conf\Settings;
+use gears\models\State;
 
 
 /**
@@ -34,26 +35,53 @@ final class CheckoutController {
     use Controller;
 
     /**
-     * Get an instance of Invoice by its invoice id.
+     * Get an array of all pending Invoices.
      *
-     * @param string $id The invoice's id.
      *
-     * @return Invoice|null Returns an instance of Invoice if the id exists in the database.
+     * @return array Returns an array of all pending Invoices.
      */
-    static public function getAllInvoices():array {
-        return invoice::getAll();
+    static public function getAllPendingInvoices():array {
+        $invoices = invoice::getAll();
+        $pending = array();
+        foreach($invoices as $invoice) {
+            if($invoice->state === STATE::PENDING) {
+                $pending[] = $invoice;
+            }
+        }
+        return $pending;
     }
 
+    /**
+     * Get an array of all payed Invoices.
+     *
+     *
+     * @return array Returns an array of all payed Invoices.
+     */
+    static public function getAllPayedInvoices():array {
+        $invoices = invoice::getAll();
+        $payed = array();
+        foreach($invoices as $invoice) {
+            if($invoice->state === STATE::PAYED) {
+                $payed[] = $invoice;
+            }
+        }
+        return $payed;
+    }
+
+
+    /**
+     * Update the amount payed and update time of the invoice
+     *
+     * @param int $id The invoice's id.
+     *
+     * @param float $amt The amount to add to amount payed.
+     *
+     * @return int Returns 1 if update is successful; otherwise 0.
+     */
     static public function updateInvoice(int $id, float $amt) {
         $inv = self::getInvoiceByID($id);
-        if($inv->amtDue <= 0){
-            return 0;
-        }
-        else {
-            $inv->amtPayed = $inv->amtPayed + $amt;
-            $return = $inv->calcAmtDue();
-            return $return;
-        }
+        $inv->amtPayed = $inv->amtPayed + $amt;
+        return $inv->calcAmtDue();    
     }
 
     /**

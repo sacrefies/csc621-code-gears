@@ -81,9 +81,10 @@ include __DIR__ . '/../header.php';
 /*$invoice = invoice::createNew();
 
 $invoice->apptId = 1;
-$invoice->update();*/
+$invoice->amtDue = 20.00;
+$invoice->calcAmtDue();*/
 
-$invoices = CheckoutController::getAllInvoices();
+$invoices = CheckoutController::getAllPendingInvoices();
 
 echo "<table class='table'>";
 echo "<tr>";
