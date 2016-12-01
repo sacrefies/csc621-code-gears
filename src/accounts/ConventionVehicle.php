@@ -147,7 +147,7 @@ class ConventionVehicle extends StaticEntity {
      *
      * @param int $id The unique of the data row in the database table.
      *
-     * @return Persisted Returns an instance of this entity.
+     * @return ConventionVehicle|null Returns an instance of this entity.
      */
     public static function getInstance(int $id) {
         $cols = implode(',', self::getColumns());
@@ -157,6 +157,8 @@ class ConventionVehicle extends StaticEntity {
         try {
             $db->open();
         } catch (\Exception $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
             return null;
         }
         $row = $db->query($sql, array(':id' => $id))->fetch(\PDO::FETCH_ASSOC);

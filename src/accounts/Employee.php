@@ -182,6 +182,8 @@ class Employee extends StatefulEntity {
         try {
             $db->open();
         } catch (\Exception $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
             return null;
         }
         $row = $db->query($sql, array(':id' => $id))->fetch(\PDO::FETCH_ASSOC);

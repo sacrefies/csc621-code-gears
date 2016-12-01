@@ -21,6 +21,8 @@ namespace gears\accounts;
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../conf/Settings.php';
 require_once __DIR__ . '/Employee.php';
+require_once __DIR__ . '/CustomerVehicle.php';
+require_once __DIR__ . '/Customer.php';
 
 use gears\Controller;
 use gears\conf\Settings;
@@ -119,5 +121,68 @@ final class AccountController {
      */
     static public function getAllEmployees() : array {
         return Employee::getAll('state');
+    }
+
+    /**
+     * Get all vehicles which are owned by the specified customer.
+     *
+     * @param int $customerId The unique id of the customer.
+     *
+     * @return array An array of CustomerVehicle objects.
+     */
+    static public function getCustomerVehicles(int $customerId) : array {
+        if ($customerId < 0) {
+            return [];
+        }
+        $where = 'customer_id = ?';
+        $values = [$customerId];
+        return ConventionVehicle::getList($where, $values);
+    }
+
+    /**
+     * Get all customers
+     * @return array An array of Customer objects
+     */
+    static public function getAllCustomers(): array {
+        return Customer::getAll();
+    }
+
+    /**
+     * @param string|null $firstName
+     * @param string|null $lastName
+     *
+     * @return array
+     */
+    static public function getCustomersByName(string $firstName = null, string $lastName = null) : array {
+        $where = '';
+        $values = [];
+        if ($firstName) {
+            $where = 'first_name = ?';
+            $values[] = $firstName;
+        }
+        if ($lastName) {
+            if ($where) {
+                $where .= ' AND last_name = ?';
+            } else {
+                $where = 'last_name = ?';
+            }
+            $values[] = $firstName;
+        }
+        if (!$firstName && !$lastName) {
+            return [];
+        }
+        return Customer::getList($where, $values);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Customer|null
+     */
+    public static function getCustomerById(int $id) {
+        if (0 > $id) {
+            return null;
+        }
+        return Customer::getInstance($id);
     }
 }

@@ -7,17 +7,64 @@
  */
 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace gears\accounts;
 
-require_once __DIR__.'/../models/StaticEntity.php';
-require_once __DIR__.'/../database/DBEngine.php';
+require_once __DIR__ . '/../models/StaticEntity.php';
+require_once __DIR__ . '/../database/DBEngine.php';
+require_once __DIR__ . '/ConventionVehicle.php';
+require_once __DIR__ . '/Customer.php';
+
 
 use gears\models\Persisted;
 use gears\models\StaticEntity;
+use gears\services\Job;
+use gears\database\DBEngine;
 
 
+/**
+ * Class CustomerVehicle for the customer owned vehicles
+ * @package gears\accounts
+ */
 class CustomerVehicle extends StaticEntity {
+    /**
+     * @var int The id of this instance
+     */
+    public $customer_vehicle_id;
+    /**
+     * @var Customer The customer who owns this vehicle.
+     */
+    public $customer;
+    /**
+     * @var ConventionVehicle The conventional vehicle to which is this instance linked
+     */
+    public $conventionVehicle;
+    /**
+     * @var int The mileage of this vehicle.
+     */
+    public $mileage;
+    /**
+     * @var string the vin number of this vehicle.
+     */
+    public $vin;
+
+    /**
+     * PHP 5 allows developers to declare constructor methods for classes.
+     * Classes which have a constructor method call this method on each newly-created object,
+     * so it is suitable for any initialization that the object may need before it is used.
+     *
+     * Note: Parent constructors are not called implicitly if the child class defines a constructor.
+     * In order to run a parent constructor, a call to parent::__construct() within the child constructor is required.
+     *
+     * param [ mixed $args [, $... ]]
+     * @return void
+     * @link http://php.net/manual/en/language.oop5.decon.php
+     */
+    protected function __construct() {
+        $this->customer_vehicle_id = -1;
+        $this->customer = null;
+        $this->conventionVehicle = null;
+    }
 
     /**
      * Update the data row in the database which links to this object.
@@ -25,7 +72,15 @@ class CustomerVehicle extends StaticEntity {
      * @return int Returns 1 if update is successful; otherwise 0.
      */
     public function update() : int {
-        // TODO: Implement update() method.
+        // ['customer_id', 'customer_vehicle_id', 'mileage', 'vin'];
+        $values = [$this->customer->customerId, $this->conventionVehicle->vehicleId, $this->mileage, $this->vin];
+        if ($this->customer_vehicle_id === -1) {
+            return $this->insert($values);
+        } else {
+            $values[] = $this->customer_vehicle_id;
+            $where = 'customer_vehicle_id = ?';
+            return $this->updateTable($where, $values);
+        }
     }
 
     /**
@@ -34,7 +89,9 @@ class CustomerVehicle extends StaticEntity {
      * @return int Returns 1 if removal is successful; otherwise 0.
      */
     public function remove() : int {
-        // TODO: Implement remove() method.
+        $where = 'customer_vehicle_id = ? AND customer_id= ? AND convention_vehicle_id = ?';
+        $values = [$this->customer_vehicle_id, $this->customer->customerId, $this->conventionVehicle->vehicleId];
+        return $this->delete($where, $values);
     }
 
     /**
@@ -45,7 +102,29 @@ class CustomerVehicle extends StaticEntity {
      * @see Persisted::update()
      */
     public function copy() {
-        // TODO: Implement copy() method.
+        $cv = new CustomerVehicle();
+        $cv->customer = $this->customer;
+        $cv->conventionVehicle = $this->conventionVehicle;
+        $cv->mileage = $this->mileage;
+        $cv->vin = $this->vin;
+        return $cv;
+    }
+
+    /**
+     * Check whether this vehicle is currently being serviced.
+     * @return bool Returns true if this vehicle is being serviced; otherwise false.
+     */
+    public function isInService() : bool {
+        return $this->getServicingJob()? true: false;
+    }
+
+    /**
+     * Get the Job object which is servicing this vehicle.
+     * @return Job|null Returns the Job object or null if no.
+     */
+    public function getServicingJob() {
+        // TODO: getServicingJob
+        return null;
     }
 
     /**
@@ -57,7 +136,6 @@ class CustomerVehicle extends StaticEntity {
      * @return Persisted Returns a new object which is an in-memory copy of $persisted.
      */
     public static function copyFrom(Persisted $persisted) {
-        // TODO: Implement copyFrom() method.
     }
 
     /**
@@ -66,7 +144,7 @@ class CustomerVehicle extends StaticEntity {
      * @return Persisted Returns a new in-memory object of this entity.
      */
     public static function createNew() {
-        // TODO: Implement createNew() method.
+        return new CustomerVehicle();
     }
 
     /**
@@ -74,10 +152,23 @@ class CustomerVehicle extends StaticEntity {
      *
      * @param int $id The unique of the data row in the database table.
      *
-     * @return Persisted Returns an instance of this entity.
+     * @return CustomerVehicle|null Returns an instance of this entity.
      */
     public static function getInstance(int $id) {
-        // TODO: Implement getInstance() method.
+        $cols = implode(',', self::getColumns());
+        $table = self::getTableName();
+        $sql = "SELECT $cols FROM $table WHERE convention_vehicle_id = :id";
+        $db = DBEngine::getInstance();
+        try {
+            $db->open();
+        } catch (\Exception $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
+            return null;
+        }
+        $row = $db->query($sql, array(':id' => $id))->fetch(\PDO::FETCH_ASSOC);
+        $db->close();
+        return ($row) ? self::createInstanceFromRow($row) : null;
     }
 
     /**
@@ -85,7 +176,7 @@ class CustomerVehicle extends StaticEntity {
      * @return array Returns this entity's table column names
      */
     public static function getColumns() : array {
-        // TODO: Implement getColumns() method.
+        return ['customer_vehicle_id', 'customer_id', 'convention_vehicle_id', 'mileage', 'vin'];
     }
 
     /**
@@ -93,6 +184,6 @@ class CustomerVehicle extends StaticEntity {
      * @return array Returns the column names for update/insertion
      */
     public static function getUpdateColumns() : array {
-        // TODO: Implement getUpdateColumns() method.
+        return ['customer_id', 'convention_vehicle_id', 'mileage', 'vin'];
     }
 }
