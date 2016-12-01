@@ -35,6 +35,30 @@ abstract class StaticEntity implements Persisted {
         return strtolower(basename(str_replace('\\', '/', get_called_class())));
     }
 
+    /**
+     * Create and initialize a new instance of this entity from the database.
+     *
+     * @param string $where The where clause to identify the row. This clause must be constructed with
+     *                      parameter placeholders: '?', e.g.: 'emp_id = ? AND emp_code = ?'
+     * @param array $values An array of the column values which are involved by $where. The sequence of the items must
+     *                      be align with the column sequence in $where.
+     *
+     * @return Persisted Returns an instance of this entity.
+     */
+    public static function getInstanceFromKeys(string $where, array $values) {
+        $cols = implode(',', static::getColumns());
+        $table = self::getTableName();
+        $sql = "SELECT $cols FROM $table WHERE $where";
+        $db = DBEngine::getInstance();
+        try {
+            $db->open();
+        } catch (\Exception $e) {
+            return null;
+        }
+        $row = $db->query($sql, $values)->fetch(\PDO::FETCH_ASSOC);
+        $db->close();
+        return ($row) ? static::createInstanceFromRow($row) : null;
+    }
 
     /**
      * Get a list of instances of this entity

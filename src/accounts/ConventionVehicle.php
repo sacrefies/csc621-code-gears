@@ -148,20 +148,6 @@ class ConventionVehicle extends StaticEntity {
     }
 
     /**
-     * Create and initialize a new instance of this entity from the database.
-     *
-     * @param string $where The where clause to identify the row. This clause must be constructed with
-     *                      parameter placeholders: '?', e.g.: 'emp_id = ? AND emp_code = ?'
-     * @param array $values An array of the column values which are involved by $where. The sequence of the items must
-     *                      be align with the column sequence in $where.
-     *
-     * @return Persisted Returns an instance of this entity.
-     */
-    public static function getInstanceFromKeys(string $where, array $values) {
-        // TODO: Implement getInstanceFromKeys() method.
-    }
-
-    /**
      * Get the column name of the table of this entity.
      * @return array Returns this entity's table column names
      */
