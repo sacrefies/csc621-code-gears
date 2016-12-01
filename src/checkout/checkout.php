@@ -40,8 +40,6 @@ include __DIR__ . '/../header.php';
 <!-- main content starts here -->
 <body>
 	<script type="text/javascript">
-		//document.getElementById("defaultOpen").click();
-
 		function popUp(id){
 			var valid = false;
 			while(valid === false)
@@ -76,27 +74,6 @@ include __DIR__ . '/../header.php';
 		function isNumeric(n) {
   			return !isNaN(parseFloat(n)) && isFinite(n);
 		}
-
-		/*function openTab(evt, tab) {
-    		// Declare all variables
-    		var i, tabcontent, tablinks;
-
-    		// Get all elements with class="tabcontent" and hide them
-    		tabcontent = document.getElementsByClassName("tabcontent");
-    		for (i = 0; i < tabcontent.length; i++) {
-        		tabcontent[i].style.display = "none";
-    		}
-
-    		// Get all elements with class="tablinks" and remove the class "active"
-    		tablinks = document.getElementsByClassName("tablinks");
-    		for (i = 0; i < tablinks.length; i++) {
-        		tablinks[i].className = tablinks[i].className.replace("active", "");
-    		}
-
-    		// Show the current tab, and add an "active" class to the link that opened the tab
-    		document.getElementById(tab).style.display = "block";
-    		evt.currentTarget.className += "active";
-		}*/
 	</script>
 	<h1 class="page-header">Invoices</h1>
 	<div role="tabpanel">
@@ -147,12 +124,6 @@ include __DIR__ . '/../header.php';
 			</div>
 			<div id="payedTab" role="tabpanel" class="tab-pane">
 				<?php
-
-				/*$invoice = invoice::createNew();
-
-				$invoice->apptId = 1;
-				$invoice->amtDue = 20.00;
-				$invoice->calcAmtDue();*/
 
 				$invoices = CheckoutController::getAllPayedInvoices();
 
