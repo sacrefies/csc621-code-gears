@@ -103,7 +103,7 @@ echo '</pre>';
                 </ul>
             </li>
             <li><a href="#">In-Service</a></li>
-            <li><a href="#">Checkout</a></li>
+            <li><a href="/checkout/checkout.php">Checkout</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li <?php if ('mechanics' === getActivatedMenuTabName($activeMenu)) {
