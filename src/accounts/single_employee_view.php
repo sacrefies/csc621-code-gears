@@ -16,7 +16,7 @@
  */
 
 declare(strict_types = 1);
-namespace gears;
+namespace gears\accounts;
 
 require_once __DIR__ . '/../accounts/AccountController.php';
 require_once __DIR__ . '/../models/State.php';
