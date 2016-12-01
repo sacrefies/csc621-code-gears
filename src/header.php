@@ -108,7 +108,7 @@ echo '</pre>';
         <ul class="nav navbar-nav navbar-right">
             <li <?php if ('mechanics' === getActivatedMenuTabName($activeMenu)) {
                 echo 'class="active"';
-            } ?>><a href="accounts/mechanics_view.php">Mechanics</a></li>
+            } ?>><a href="/accounts/mechanics_view.php">Mechanics</a></li>
             <?php
             if (strtolower(AccountController::getSelfScript()) !== '/login.php') {
                 echo '<li><a href="/accounts/single_employee_view.php?empId=' . getUserId() . '"><span class="glyphicon glyphicon-user"></span> ' . getUserName() . '</a></li>' . PHP_EOL;

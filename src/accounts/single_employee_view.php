@@ -77,18 +77,23 @@ $emp = AccountController::getEmployeeById((int)$_GET['empId']);
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="isMan">Manager:</label>
+                    <label class="control-label col-sm-2" for="isMan">Employee Type:</label>
                     <div class="col-sm-10">
-                        <?php if ($emp->isMan) { ?>
-                            <span class="glyphicon glyphicon-wrench"></span>
+                        <?php if (!$emp->isMan) { ?>
+                            <p><span class="glyphicon glyphicon-wrench" id="isMan"> Mechanic</span></p>
                         <?php } else { ?>
-                            <span class="glyphicon glyphicon-family"></span>
+                            <p><span class="glyphicon glyphicon-user" id="isMan"> Manager</span></p>
                         <?php } ?>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">Submit</button>
+                    <label class="control-label col-sm-2" for="state">Mechanic Status:</label>
+                    <div class="col-sm-10">
+                        <?php if ($emp->getState() === State::AVAILABLE) { ?>
+                            <h4><span class="label label-success" id="state">AVAILABLE</span></h4>
+                        <?php } else { ?>
+                            <h4><span class="label label-default" id="state">BUSY</span></h4>
+                        <?php } ?>
                     </div>
                 </div>
             </form>
