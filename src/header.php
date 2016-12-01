@@ -50,6 +50,8 @@ function getActivatedMenuTabName(int $activeMenuId) : string {
             return 'checkout';
         case 4:
             return 'mechanics';
+        case 5:
+            return 'customers';
     }
     return 'none';
 }
@@ -63,11 +65,12 @@ function getUserId() {
     $emp = $_SESSION[Settings::$CURR_USER_SESS_KEY];
     return $emp->empId;
 }
+
 // only for debugging
-echo '<pre>';
-echo session_status().PHP_EOL;
-print_r($_SESSION);
-echo '</pre>';
+//echo '<pre>';
+//echo session_status().PHP_EOL;
+//print_r($_SESSION);
+//echo '</pre>';
 
 ?>
 
@@ -84,7 +87,7 @@ echo '</pre>';
 </head>
 <body>
 <!-- Page header: navigation bar-->
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#"><?php echo $pageHeader ?></a>
@@ -106,6 +109,16 @@ echo '</pre>';
             <li><a href="/checkout/checkout.php">Checkout</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown" <?php if ('customers' === getActivatedMenuTabName($activeMenu)) {
+                echo 'class="active"';
+            } ?>>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Customers<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/accounts/customer_edit_view.php?mode=0">Register New Customer</a></li>
+                    <li><a href="/accounts/customer_vehicle_edit_view.php?mode=0">Register New Customer Vehicle</a></li>
+                    <li><a href="/accounts/customers_view.php">Customer List</a></li>
+                </ul>
+            </li>
             <li <?php if ('mechanics' === getActivatedMenuTabName($activeMenu)) {
                 echo 'class="active"';
             } ?>><a href="/accounts/mechanics_view.php">Mechanics</a></li>
