@@ -75,83 +75,87 @@ include __DIR__ . '/../header.php';
   			return !isNaN(parseFloat(n)) && isFinite(n);
 		}
 	</script>
-	<h1 class="page-header">Invoices</h1>
-	<div role="tabpanel">
-		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#pendingTab" role="tab" 
-				data-toggle="tab">Pending</a></li>
-        	<li role="presentation"><a href="#payedTab" role="tab" 
-        		data-toggle="tab">Payed</a></li>
-        </ul>
-        <div class="tab-content">
-	        <div id="pendingTab" role="tabpanel" class="tab-pane active">
-				<?php
+	<div class="panel panel-default">
+    	<div class="panel-heading">Invoices</div>
+        <div class="panel-body">
+			<div role="tabpanel">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#pendingTab" role="tab" 
+						data-toggle="tab">Pending</a></li>
+		        	<li role="presentation"><a href="#payedTab" role="tab" 
+		        		data-toggle="tab">Payed</a></li>
+		        </ul>
+		        <div class="tab-content">
+			        <div id="pendingTab" role="tabpanel" class="tab-pane active">
+						<?php
 
-				/*$invoice = invoice::createNew();
+						/*$invoice = invoice::createNew();
 
-				$invoice->apptId = 1;
-				$invoice->amtDue = 20.00;
-				$invoice->calcAmtDue();*/
+						$invoice->apptId = 1;
+						$invoice->amtDue = 20.00;
+						$invoice->calcAmtDue();*/
 
-				$invoices = CheckoutController::getAllPendingInvoices();
+						$invoices = CheckoutController::getAllPendingInvoices();
 
-				echo "<table class='table'>";
-				echo "<tr>";
-				echo "<th>Invoice ID</th>";
-				echo "<th>Appointment ID</th>";
-				echo "<th>Time Created</th>";
-				echo "<th>Last Updated</th>";
-				echo "<th>Amount Due</th>";
-				echo "<th>Amount Payed</th>";
-				echo "<th>Discount</th>";
-				echo "</tr>";
-				foreach($invoices as $invoice) {
-					$id = $invoice->invoiceId;
-					echo "<tr>";
-					echo "<td>" . $id . "</td>";
-					echo "<td>" . $invoice->apptId . "</td>";
-					echo "<td>" . $invoice->createTime . "</td>";
-					echo "<td>" . $invoice->updateTime . "</td>";
-					echo "<td>" . $invoice->amtDue . "</td>";
-					echo "<td>" . $invoice->amtPayed . "</td>";
-					echo "<td>" . $invoice->discRate . "</td>";
-					echo "<td><button class='button' onclick=popUp($id)>Update</button></td>";
-					echo "</tr>";
-				}
-					
-				echo "</table>";
-				?>
-			</div>
-			<div id="payedTab" role="tabpanel" class="tab-pane">
-				<?php
+						echo "<table class='table table-striped'>";
+						echo "<tr>";
+						echo "<th>Invoice ID</th>";
+						echo "<th>Appointment ID</th>";
+						echo "<th>Time Created</th>";
+						echo "<th>Last Updated</th>";
+						echo "<th>Amount Due</th>";
+						echo "<th>Amount Payed</th>";
+						echo "<th>Discount</th>";
+						echo "</tr>";
+						foreach($invoices as $invoice) {
+							$id = $invoice->invoiceId;
+							echo "<tr>";
+							echo "<td>" . $id . "</td>";
+							echo "<td>" . $invoice->apptId . "</td>";
+							echo "<td>" . $invoice->createTime . "</td>";
+							echo "<td>" . $invoice->updateTime . "</td>";
+							echo "<td>" . $invoice->amtDue . "</td>";
+							echo "<td>" . $invoice->amtPayed . "</td>";
+							echo "<td>" . $invoice->discRate . "</td>";
+							echo "<td><button class='button' onclick=popUp($id)>Update</button></td>";
+							echo "</tr>";
+						}
+							
+						echo "</table>";
+						?>
+					</div>
+					<div id="payedTab" role="tabpanel" class="tab-pane">
+						<?php
 
-				$invoices = CheckoutController::getAllPayedInvoices();
+						$invoices = CheckoutController::getAllPayedInvoices();
 
-				echo "<table class='table'>";
-				echo "<tr>";
-				echo "<th>Invoice ID</th>";
-				echo "<th>Appointment ID</th>";
-				echo "<th>Time Created</th>";
-				echo "<th>Last Updated</th>";
-				echo "<th>Amount Due</th>";
-				echo "<th>Amount Payed</th>";
-				echo "<th>Discount</th>";
-				echo "</tr>";
-				foreach($invoices as $invoice) {
-					$id = $invoice->invoiceId;
-					echo "<tr>";
-					echo "<td>" . $id . "</td>";
-					echo "<td>" . $invoice->apptId . "</td>";
-					echo "<td>" . $invoice->createTime . "</td>";
-					echo "<td>" . $invoice->updateTime . "</td>";
-					echo "<td>" . $invoice->amtDue . "</td>";
-					echo "<td>" . $invoice->amtPayed . "</td>";
-					echo "<td>" . $invoice->discRate . "</td>";
-					echo "</tr>";
-				}
-					
-				echo "</table>";
-				?>
+						echo "<table class='table table-striped'>";
+						echo "<tr>";
+						echo "<th>Invoice ID</th>";
+						echo "<th>Appointment ID</th>";
+						echo "<th>Time Created</th>";
+						echo "<th>Last Updated</th>";
+						echo "<th>Amount Due</th>";
+						echo "<th>Amount Payed</th>";
+						echo "<th>Discount</th>";
+						echo "</tr>";
+						foreach($invoices as $invoice) {
+							$id = $invoice->invoiceId;
+							echo "<tr>";
+							echo "<td>" . $id . "</td>";
+							echo "<td>" . $invoice->apptId . "</td>";
+							echo "<td>" . $invoice->createTime . "</td>";
+							echo "<td>" . $invoice->updateTime . "</td>";
+							echo "<td>" . $invoice->amtDue . "</td>";
+							echo "<td>" . $invoice->amtPayed . "</td>";
+							echo "<td>" . $invoice->discRate . "</td>";
+							echo "</tr>";
+						}
+							
+						echo "</table>";
+						?>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
