@@ -74,6 +74,18 @@ final class AccountController {
     }
 
     /**
+     * Assign a job to a mechanic
+     *
+     * @param int $empId
+     * @param int $jobId
+     *
+     * @return bool
+     */
+    static public function assignJob(int $empId, int $jobId):bool {
+
+    }
+
+    /**
      * Get an instance of Employee by its employee code.
      *
      * @param string $empCode The employee's code to login with.

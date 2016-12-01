@@ -25,6 +25,7 @@ use gears\database\DBEngine;
 use gears\models\Persisted;
 use gears\models\State;
 use gears\models\StatefulEntity;
+use gears\services\Job;
 
 
 /**
@@ -120,6 +121,28 @@ class Employee extends StatefulEntity {
         $emp->isMan = $this->empCode;
         $emp->phone = $this->empCode;
         return $emp;
+    }
+
+    /**
+     * Get the Job object that this employee is working on.
+     * @return Job|null Returns the Job object that this employee is working on.
+     */
+    public function getWorkingJob() {
+        if ($this->empId === -1) {
+            return null;
+        }
+        $values = [$this->empId, State::NEW, State::INSPECTING, State::ONGOING];
+        return Job::getInstanceFromKeys('mechanic_id=? AND state IN (?,?,?)', $values);
+    }
+
+    /**
+     * @param Job $job
+     *
+     * @return bool
+     */
+    public function assignJob(Job $job):bool {
+        // TODO: assign job
+        $this->setState(State::BUSY);
     }
 
     /**
