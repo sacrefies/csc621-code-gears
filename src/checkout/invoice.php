@@ -26,6 +26,8 @@ use gears\models\Persisted;
 use gears\models\State;
 use gears\models\StatefulEntity;
 
+date_default_timezone_set('America/New_York');
+
 
 /**
  * Entity Class invoice
@@ -50,19 +52,19 @@ class Invoice extends StatefulEntity {
      */
     public $updateTime = '';
     /**
-     * @var double
+     * @var float
      */
     public $taxRate = 0.00;
     /**
-     * @var double
+     * @var float
      */
-    public $amtDue = 0.00;
+    public $amtDue = 20.00;
     /**
-     * @var double
+     * @var float
      */
     public $amtPayed = 0.00;
     /**
-     * @var double
+     * @var float
      */
     public $discRate = 0.00;
 
@@ -81,8 +83,9 @@ class Invoice extends StatefulEntity {
      */
     protected function __construct() {
         $this->state = State::PENDING;
+        $this->createTime = "" . date('Y-m-d H:i:s') . "";
+        $this->updateTime = "" . date('Y-m-d H:i:s') . "";
         $this->invoiceId = -1;
-        $this->apptId = 1;
     }
 
     /**
@@ -96,10 +99,12 @@ class Invoice extends StatefulEntity {
                         $this->amtDue, $this->amtPayed, $this->discRate];
             return $this->insert($vals);
         }
-        $vals = [$this->invoiceId, $this->apptId, $this->createTime, $this->updateTime, $this->state,
-                     $this->taxRate, $this->amtDue, $this->amtPayed, $this->discRate];
+        $vals = [$this->apptId, $this->createTime, $this->updateTime, $this->state,
+                     $this->taxRate, $this->amtDue, $this->amtPayed, $this->discRate, $this->invoiceId];
         $where = 'invoice_id = ?';
-        return $this->updateTable($where, $vals);
+        $return = $this->updateTable($where, $vals);
+        //error_log(message);
+        return $return;
     }
 
     /**
@@ -320,10 +325,18 @@ class Invoice extends StatefulEntity {
         $inv->createTime = $row['create_time'];
         $inv->updateTime = $row['update_time'];
         $inv->state = $row['state'];
-        $inv->taxRate = (double)$row['tax_rate'];
-        $inv->amtDue = (double)$row['amount_due'];
-        $inv->amtPayed= (double)$row['amount_payed'];
-        $inv->discRate = (double)$row['discount_rate'];
+        $inv->taxRate = (float)$row['tax_rate'];
+        $inv->amtDue = (float)$row['amount_due'];
+        $inv->amtPayed= (float)$row['amount_payed'];
+        $inv->discRate = (float)$row['discount_rate'];
         return $inv;
+    }
+
+    public function calcAmtDue() {
+        $this->amtDue = $this->amtDue - $this->amtPayed;
+        if($this->amtDue < 0){
+            $this->amtDue = 0;
+        }
+        return self::update();
     }
 }

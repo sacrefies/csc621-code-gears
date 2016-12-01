@@ -35,37 +35,73 @@ $pageHeader = 'Checkout';
  */
 $activeMenu = 3;
 
-//include __DIR__ . '/header.php';
+include __DIR__ . '/header.php';
 ?>
 <!-- main content starts here -->
+<body>
+	<script type="text/javascript">
+		function popUp(id){
+				var amt = prompt("Enter amount payed:");
+				while(!isNumeric(amt))
+   				{
+     				var amt = prompt("Enter amount payed (number only):");
+   				}
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange=function(){
+					if (xhttp.readyState==4 && xhttp.status==200){
+						var data = xhttp.responseText;
+						//document.getElementById("output").innerHTML = data;
+						location.reload();
+					}
+				}//end onreadystatechange
+				
+				var link = "invUpdate.php?id="+id+"&amt="+amt;
+
+				xhttp.open("GET", link, true);
+				xhttp.send();
+		}
+		function isNumeric(n) {
+  			return !isNaN(parseFloat(n)) && isFinite(n);
+		}
+	</script>
+	<h1 class="page-header">Pending Invoices</h1>
 <?php
 
-$invoice = invoice::createNew();
+/*$invoice = invoice::createNew();
 
 $invoice->apptId = 1;
-$invoice->update();
+$invoice->update();*/
 
 $invoices = CheckoutController::getAllInvoices();
 
-echo "<table align='center'>";
+echo "<table class='table'>";
 echo "<tr>";
 echo "<th>Invoice ID</th>";
 echo "<th>Appointment ID</th>";
+echo "<th>Time Created</th>";
+echo "<th>Last Updated</th>";
+echo "<th>Amount Due</th>";
+echo "<th>Amount Payed</th>";
+echo "<th>Discount</th>";
 echo "</tr>";
-echo "<tr>";
-echo "<td>" . $invoices[0]->invoiceId . "</td>";
-echo "<td>" . $invoices[0]->apptId . "</td>";
-echo "</tr>";
-echo "<tr>";
-echo "<td>" . $invoices[1]->invoiceId . "</td>";
-echo "<td>" . $invoices[1]->apptId . "</td>";
-echo "</tr>";
+foreach($invoices as $invoice) {
+	$id = $invoice->invoiceId;
+	echo "<tr>";
+	echo "<td>" . $id . "</td>";
+	echo "<td>" . $invoice->apptId . "</td>";
+	echo "<td>" . $invoice->createTime . "</td>";
+	echo "<td>" . $invoice->updateTime . "</td>";
+	echo "<td>" . $invoice->amtDue . "</td>";
+	echo "<td>" . $invoice->amtPayed . "</td>";
+	echo "<td>" . $invoice->discRate . "</td>";
+	echo "<td><button class='button' onclick=popUp($id)>Update</button></td>";
+	echo "</tr>";
+}
+	
 echo "</table>";
-
-
-
-
 ?>
+<p id="output"></p>
+</body>
 
 
 

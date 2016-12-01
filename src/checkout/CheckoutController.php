@@ -34,61 +34,34 @@ final class CheckoutController {
     use Controller;
 
     /**
-     * Check whether the current accessor is a login user.
-     * @return bool Returns true if the user has login; otherwise false.
-     */
-    static public function checkLogin():bool {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-        return isset($_SESSION[Settings::$CURR_USER_SESS_KEY]) && !empty($_SESSION[Settings::$CURR_USER_SESS_KEY]);
-    }
-
-    /**
-     * Logout the current user.
-     */
-    static public function logout() {
-        session_unset();
-        session_destroy();
-        session_start();
-        self::redirectTo('/login.php');
-    }
-
-    /**
-     * Perform a user login process. The current login user will be stored in $_SESSION.
+     * Get an instance of Invoice by its invoice id.
      *
-     * @param string $empCode The employee's code
+     * @param string $id The invoice's id.
      *
-     * @return bool Returns true if login is successful; otherwise false.
-     */
-    static public function login(string $empCode):bool {
-        if ($empCode) {
-            session_start();
-            // get employee
-            $emp = self::getEmployeeByCode($empCode);
-            if ($emp) {
-                $_SESSION[Settings::$CURR_USER_SESS_KEY] = $emp;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Get an instance of Employee by its employee code.
-     *
-     * @param string $empCode The employee's code to login with.
-     *
-     * @return Employee|null Returns an instance of Employee if the code exists in the database.
+     * @return Invoice|null Returns an instance of Invoice if the id exists in the database.
      */
     static public function getAllInvoices():array {
         return invoice::getAll();
     }
 
-    static public function getEmployeeById(int $id) : Employee {
+    static public function updateInvoice(int $id, float $amt) {
+        $inv = self::getInvoiceByID($id);
+        $inv->amtPayed = $inv->amtPayed + $amt;
+        $return = $inv->calcAmtDue();
+        return ''.$return.''.$inv->amtPayed.' '.$inv->amtDue.'';
+    }
+
+    /**
+     * Get an instance of Invoice by its invoice id.
+     *
+     * @param string $id The invoice's id.
+     *
+     * @return Invoice|null Returns an instance of Invoice if the id exists in the database.
+     */
+    static public function getInvoiceById(int $id) : Invoice {
         if (0 > $id) {
             return null;
         }
-        return Employee::getInstance($id);
+        return invoice::getInstance($id);
     }
 }
