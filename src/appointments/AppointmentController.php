@@ -18,7 +18,12 @@
 declare(strict_types=1);
 namespace gears\appointments;
 
+require_once __DIR__.'/../Controller.php';
+
+
+use gears\Controller;
 
 class AppointmentController {
+    use Controller;
 
 }
