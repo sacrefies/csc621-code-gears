@@ -40,20 +40,34 @@ if ((!AccountController::isLogin() || AccountController::isSessionExpired())
  */
 function getActivatedMenuTabName(int $activeMenuId) : string {
     switch ($activeMenuId) {
+        case 0:
+            return 'dashboard';
         case 1:
             return 'appointment';
         case 2:
             return 'in-service';
         case 3:
             return 'checkout';
+        case 4:
+            return 'mechanics';
     }
-    return 'dashboard';
+    return 'none';
 }
 
 function getUserName() {
     $emp = $_SESSION[Settings::$CURR_USER_SESS_KEY];
     return $emp->fname . ' ' . $emp->lname;
 }
+
+function getUserId() {
+    $emp = $_SESSION[Settings::$CURR_USER_SESS_KEY];
+    return $emp->empId;
+}
+// only for debugging
+echo '<pre>';
+echo session_status().PHP_EOL;
+print_r($_SESSION);
+echo '</pre>';
 
 ?>
 
@@ -69,37 +83,40 @@ function getUserName() {
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div class="container">
-    <!-- Page header: navigation bar-->
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#"><?php echo $pageHeader ?></a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li <?php if ('dashboard' === getActivatedMenuTabName($activeMenu)) {
-                    echo 'class="active"';
-                } ?>><a href="/dashboard.php">Dashboard</a></li>
-                <li class="dropdown" <?php if ('appointment' === getActivatedMenuTabName($activeMenu)) {
-                    echo 'class="active"';
-                } ?>>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointment<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">New Appointment</a></li>
-                        <li><a href="/appointments/weekly_view.php">This Week</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">In-Service</a></li>
-                <li><a href="#">Checkout</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="accounts/mechanics_view.php">Mechanics</a></li>
-                <?php
-                if (strtolower(AccountController::getSelfScript()) !== '/login.php') {
-                    echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> ' . getUserName() . '</a></li>' . PHP_EOL;
-                    echo '<li><a href="/logout.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>' . PHP_EOL;
-                }
-                ?>
-            </ul>
+<!-- Page header: navigation bar-->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"><?php echo $pageHeader ?></a>
         </div>
-    </nav>
+        <ul class="nav navbar-nav">
+            <li <?php if ('dashboard' === getActivatedMenuTabName($activeMenu)) {
+                echo 'class="active"';
+            } ?>><a href="/dashboard.php">Dashboard</a></li>
+            <li class="dropdown" <?php if ('appointment' === getActivatedMenuTabName($activeMenu)) {
+                echo 'class="active"';
+            } ?>>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointment<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">New Appointment</a></li>
+                    <li><a href="/appointments/weekly_view.php">This Week</a></li>
+                </ul>
+            </li>
+            <li><a href="#">In-Service</a></li>
+            <li><a href="#">Checkout</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li <?php if ('mechanics' === getActivatedMenuTabName($activeMenu)) {
+                echo 'class="active"';
+            } ?>><a href="accounts/mechanics_view.php">Mechanics</a></li>
+            <?php
+            if (strtolower(AccountController::getSelfScript()) !== '/login.php') {
+                echo '<li><a href="/accounts/single_employee_view.php?empId=' . getUserId() . '"><span class="glyphicon glyphicon-user"></span> ' . getUserName() . '</a></li>' . PHP_EOL;
+                echo '<li><a href="/logout.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>' . PHP_EOL;
+            }
+            ?>
+        </ul>
+    </div>
+</nav>
+
+<div class="container" style="margin-top: 1em">

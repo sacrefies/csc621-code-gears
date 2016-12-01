@@ -100,4 +100,12 @@ final class AccountController {
         }
         return Employee::getInstance($id);
     }
+
+    /**
+     * Get all employees
+     * @return array An array of Employee objects
+     */
+    static public function getAllEmployees() : array {
+        return Employee::getAll('state');
+    }
 }

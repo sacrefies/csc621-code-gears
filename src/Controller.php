@@ -17,6 +17,7 @@
 
 declare(strict_types = 1);
 namespace gears;
+
 use gears\accounts\Employee;
 use gears\conf\Settings;
 
@@ -66,8 +67,23 @@ trait Controller {
      * Kill current session
      */
     public static function destroySession() {
-        session_abort();
-        session_unset();
+        // Initialize the session.
+        // If you are using session_name("something"), don't forget it now!
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        // Unset all of the session variables.
+        $_SESSION = array();
+        // If it's desired to kill the session, also delete the session cookie.
+        // Note: This will destroy the session, and not just the session data!
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        // Finally, destroy the session.
         session_destroy();
     }
 

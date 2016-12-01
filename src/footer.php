@@ -71,5 +71,10 @@ namespace gears;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- Bootstrap core JS -->
 <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+<script type="javascript" language="JavaScript">
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 </body>
 </html>

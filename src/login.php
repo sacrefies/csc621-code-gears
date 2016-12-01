@@ -31,21 +31,21 @@ if (isset($_POST['empCode'])) {
 }
 
 $title = 'Gears: Login';
-$activeMenu = 0;
+$activeMenu = -1;
 $pageHeader = 'Gears';
 
 include __DIR__ . '/header.php';
 ?>
 
-<div class="panel panel-default" style="margin-top: 10em;">
+<div class="panel panel-default">
     <div class="panel-heading">Employee Login</div>
     <div class="panel-body">
         <?php
         if (!empty($error)) {
-            echo "<div class=\"alert alert-warning alert-dismissible\">\n";
-            echo "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n";
-            echo "<strong>Failed!</strong> $error\n";
-            echo "</div>\n";
+            echo '<div class="alert alert-warning alert-dismissible">'.PHP_EOL;
+            echo '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'.PHP_EOL;
+            echo "<strong>Failed!</strong> $error".PHP_EOL;
+            echo '</div>'.PHP_EOL;
         }
         ?>
         <form action="<?php echo AccountController::getSelfScript(); ?>" method="POST">

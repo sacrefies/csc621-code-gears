@@ -247,7 +247,7 @@ class Employee extends StatefulEntity {
         } catch (\Exception $e) {
             return $emps;
         }
-        $rows = $db->fetchAll($sql, null);
+        $rows = $db->fetchAll($sql);
         $db->close();
         $emps = array();
         if ($rows) {
