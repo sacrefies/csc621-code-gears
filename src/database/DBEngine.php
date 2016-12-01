@@ -110,14 +110,16 @@ class DBEngine {
                 $this->stmt = null;
             }
         } catch (PDOException $e) {
-            // pass
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
         }
         try {
             if ($this->conn) {
                 $this->conn = null;
             }
         } catch (PDOException $e) {
-            // pass
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
         }
     }
 
@@ -142,6 +144,8 @@ class DBEngine {
             }
             return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
             $this->stmt = null;
             return null;
         }
@@ -167,6 +171,8 @@ class DBEngine {
                 $this->stmt->execute();
             }
         } catch (PDOException $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
             $this->stmt = null;
         }
         return $this->stmt;
@@ -193,6 +199,8 @@ class DBEngine {
             }
             return $this->stmt->rowCount();
         } catch (PDOException $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
             return -1;
         }
     }

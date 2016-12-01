@@ -53,6 +53,8 @@ abstract class StaticEntity implements Persisted {
         try {
             $db->open();
         } catch (\Exception $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
             return null;
         }
         $row = $db->query($sql, $values)->fetch(\PDO::FETCH_ASSOC);
@@ -83,6 +85,8 @@ abstract class StaticEntity implements Persisted {
         try {
             $db->open();
         } catch (\Exception $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
             return $entities;
         }
         $rows = $db->fetchAll($sql, $values);
@@ -114,6 +118,8 @@ abstract class StaticEntity implements Persisted {
         try {
             $db->open();
         } catch (\Exception $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
             return $entities;
         }
         $rows = $db->fetchAll($sql);
@@ -163,6 +169,8 @@ abstract class StaticEntity implements Persisted {
         try {
             $db->open();
         } catch (\Exception $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
             return -1;
         }
         $rc = $db->execute($sql, $values);
@@ -194,6 +202,8 @@ abstract class StaticEntity implements Persisted {
         try {
             $db->open();
         } catch (\Exception $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
             return -1;
         }
         $rc = $db->execute($sql, $values);
@@ -218,6 +228,8 @@ abstract class StaticEntity implements Persisted {
         try {
             $db->open();
         } catch (\Exception $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
             return -1;
         }
         $rc = $db->execute($sql, $values);
