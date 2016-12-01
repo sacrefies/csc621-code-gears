@@ -35,6 +35,73 @@ abstract class StaticEntity implements Persisted {
         return strtolower(basename(str_replace('\\', '/', get_called_class())));
     }
 
+
+    /**
+     * Get a list of instances of this entity
+     *
+     * @param string $where   The where clause to identify the row(s). This clause must be constructed with
+     *                        parameter placeholders: '?', e.g.: 'emp_id = ? AND emp_code = ?'
+     * @param array $values   An array of the column values which are involved by $where. The sequence of the items must
+     *                        be align with the column sequence in $where.
+     * @param string $orderBy columns to order
+     *
+     * @return array A list of instances of this entity.
+     */
+    public static function getList(string $where, array $values, string $orderBy = null) : array {
+        $cols = implode(',', static::getColumns());
+        $table = static::getTableName();
+        $sql = "SELECT $cols FROM $table WHERE $where";
+        if ($orderBy) {
+            $sql = "$sql ORDER BY $orderBy";
+        }
+        $entities = array();
+        $db = DBEngine::getInstance();
+        try {
+            $db->open();
+        } catch (\Exception $e) {
+            return $entities;
+        }
+        $rows = $db->fetchAll($sql, $values);
+        $db->close();
+        if ($rows) {
+            foreach ($rows as $row) {
+                $entities[] = static::createInstanceFromRow($row);
+            }
+        }
+        return $entities;
+    }
+
+    /**
+     * Get all existing instances from the database.
+     *
+     * @param string $orderBy columns to order
+     *
+     * @return array A list of instances of this entity.
+     */
+    public static function getAll(string $orderBy = null) : array {
+        $cols = implode(',', static::getColumns());
+        $table = static::getTableName();
+        $sql = "SELECT $cols FROM $table";
+        if ($orderBy) {
+            $sql = "$sql ORDER BY $orderBy";
+        }
+        $entities = array();
+        $db = DBEngine::getInstance();
+        try {
+            $db->open();
+        } catch (\Exception $e) {
+            return $entities;
+        }
+        $rows = $db->fetchAll($sql);
+        $db->close();
+        if ($rows) {
+            foreach ($rows as $row) {
+                $entities[] = static::createInstanceFromRow($row);
+            }
+        }
+        return $entities;
+    }
+
     /**
      * Create an instance of this entity from a database row.
      *
