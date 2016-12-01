@@ -66,7 +66,7 @@ abstract class StaticEntity implements Persisted {
         foreach ($columns as $col) {
             $cols = "$cols $col = ?,";
         }
-        $cols = rtrim($cols);
+        $cols = rtrim($cols, ',');
         $sql = "UPDATE $table SET $cols WHERE $where";
         $db = DBEngine::getInstance();
         try {
