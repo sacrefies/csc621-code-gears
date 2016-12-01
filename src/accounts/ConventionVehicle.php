@@ -12,8 +12,8 @@ namespace gears\accounts;
 require_once __DIR__ . '/../database/DBEngine.php';
 
 use gears\database\DBEngine;
-use gears\models\Persisted;
 use gears\models\StaticEntity;
+use gears\models\Persisted;
 
 
 /**
@@ -103,6 +103,23 @@ class ConventionVehicle extends StaticEntity {
         $cv->model = $this->model;
         $cv->trim = $this->trim;
         return $cv;
+    }
+
+    /**
+     * Get all customer vehicles that are related to this conventional vehicle.
+     * @return array An array of CustomerVehicle objects; or an empty array if there is no such customer vehicle.
+     */
+    public function getDerivedCustomerVehicles() : array {
+        $where = 'convention_vehicle_id = ?';
+        return CustomerVehicle::getList($where, array($this->vehicleId));
+    }
+
+    /**
+     * Get all inventory items that are related to this conventional vehicle
+     * @return array
+     */
+    public function getInventoryItems() : array {
+        // TODO: getInventoryItems
     }
 
     /**
