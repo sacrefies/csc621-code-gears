@@ -41,25 +41,36 @@ include __DIR__ . '/../header.php';
 <body>
 	<script type="text/javascript">
 		function popUp(id){
-				var amt = prompt("Enter amount payed:");
-				while(!isNumeric(amt))
-   				{
-     				var amt = prompt("Enter amount payed (number only):");
-   				}
-				var xhttp = new XMLHttpRequest();
-				xhttp.onreadystatechange=function(){
-					if (xhttp.readyState==4 && xhttp.status==200){
-						var data = xhttp.responseText;
-						//document.getElementById("output").innerHTML = data;
-						location.reload();
-					}
-				}//end onreadystatechange
+			var valid = false;
+			while(valid === false)
+   			{
+     			var amt = prompt("Enter amount payed:");
+     			if(isNumeric(amt)){
+     				var xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange=function(){
+						if (xhttp.readyState==4 && xhttp.status==200){
+							var data = xhttp.responseText;
+							//document.getElementById("output").innerHTML = data;
+							location.reload();
+						}
+					}//end onreadystatechange
 				
-				var link = "invUpdate.php?id="+id+"&amt="+amt;
+					var link = "invUpdate.php?id="+id+"&amt="+amt;
 
-				xhttp.open("GET", link, true);
-				xhttp.send();
+					xhttp.open("GET", link, true);
+					xhttp.send();
+     				valid = true;
+     			}
+     			else if(amt === null){
+     				valid = true;
+     			}
+     			else {
+     				valid = false;
+     				alert("Please enter a valid amount");
+     			}
+   			}
 		}
+
 		function isNumeric(n) {
   			return !isNaN(parseFloat(n)) && isFinite(n);
 		}
