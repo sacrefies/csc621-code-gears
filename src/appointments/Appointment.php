@@ -23,7 +23,7 @@ require_once __DIR__ . '/../database/DBEngine.php';
 require_once __DIR__ . '/../accounts/Customer.php';
 require_once __DIR__ . '/../models/Persisted.php';
 require_once __DIR__ . '/../models/StatefulEntity.php';
-require_once __DIR__.'/../checkout/invoice.php';
+require_once __DIR__.'/../checkout/Invoice.php';
 
 use gears\database\DBEngine;
 use gears\accounts\Customer;
