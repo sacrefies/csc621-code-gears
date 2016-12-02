@@ -25,6 +25,7 @@ use gears\database\DBEngine;
 use gears\models\Persisted;
 use gears\models\State;
 use gears\models\StatefulEntity;
+use \DateTime;
 
 date_default_timezone_set('America/New_York');
 
@@ -44,13 +45,13 @@ class Invoice extends StatefulEntity {
      */
     public $apptId;
     /**
-     * @var string
+     * @var DateTime
      */
-    public $createTime = '';
+    public $createTime;
     /**
-     * @var string
+     * @var DateTime
      */
-    public $updateTime = '';
+    public $updateTime;
     /**
      * @var float
      */
@@ -87,8 +88,11 @@ class Invoice extends StatefulEntity {
      */
     protected function __construct() {
         $this->state = State::PENDING;
-        $this->createTime = "" . date('Y-m-d H:i:s') . "";
-        $this->updateTime = "" . date('Y-m-d H:i:s') . "";
+        $date = date('Y-m-d H:i:s');
+        $date = DateTime::createFromFormat('Y-m-d H:i:s', $date);
+        $this->createTime = $date->format('Y-m-d H:i:s');
+        $this->updateTime = $date->format('Y-m-d H:i:s');
+        $this->apptId = null;
         $this->invoiceId = -1;
     }
 
@@ -256,7 +260,9 @@ class Invoice extends StatefulEntity {
             $this->amtPayed = $this->amtDue;
             $this->state = State::PAYED;
         }
-        $this->updateTime = "" . date('Y-m-d H:i:s') . "";
+        $date = date('Y-m-d H:i:s');
+        $date = DateTime::createFromFormat('Y-m-d H:i:s', $date);
+        $this->updateTime = $date->format('Y-m-d H:i:s');
         return self::update();
     }
 }

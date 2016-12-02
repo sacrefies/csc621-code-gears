@@ -14,18 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 declare(strict_types = 1);
 namespace gears\checkout;
-
 require_once __DIR__ . '/CheckoutController.php';
 require_once __DIR__ . '/invoice.php';
 require_once __DIR__ . '/../appointments/Appointment.php';
 require_once __DIR__ . '/../accounts/Customer.php';
-
 use gears\appointments\Appointment;
 use gears\accounts\Customer;
-
 /**
  * @var string A string variable to set the page title.
  */
@@ -39,7 +35,6 @@ $pageHeader = 'Checkout';
  *          0: dashboard, 1: appointment, 2: in-service, 3: checkout
  */
 $activeMenu = 3;
-
 include __DIR__ . '/../header.php';
 ?>
 <!-- main content starts here -->
@@ -58,9 +53,7 @@ include __DIR__ . '/../header.php';
                         location.reload();
                     }
                 }//end onreadystatechange
-
                 var link = "invUpdate.php?id=" + id + "&amt=" + amt;
-
                 xhttp.open("GET", link, true);
                 xhttp.send();
                 valid = true;
@@ -74,7 +67,6 @@ include __DIR__ . '/../header.php';
             }
         }
     }
-
     function isNumeric(n) {
         return !isNaN(parseFloat(n)) && isFinite(n);
     }
@@ -92,16 +84,11 @@ include __DIR__ . '/../header.php';
             <div class="tab-content">
                 <div id="pendingTab" role="tabpanel" class="tab-pane active">
                     <?php
-
-                    //this works. I was just using it to put dummy data in the db
-                    /*$invoice = invoice::createNew();
-
+                    $invoice = invoice::createNew();
                     $invoice->apptId = 1;
                     $invoice->amtDue = 20.00;
-                    $invoice->calcAmtDue();*/
-
+                    $invoice->updatePay();
                     $invoices = CheckoutController::getAllPendingInvoices();
-
                     echo "<table class='table table-striped'>";
                     echo "<tr>";
                     echo "<th>Invoice ID</th>";
@@ -114,14 +101,12 @@ include __DIR__ . '/../header.php';
                     echo "</tr>";
                     foreach ($invoices as $invoice) {
                         $id = $invoice->invoiceId;
-                        //this doesn't work
-                        /*$appId = $invoice->apptId;
-                        $app = Appointment::getInstance($appId); error happens on this line
+                        $appId = $invoice->apptId;
+                        /*$app = Appointment::getInstance($appId);
                         $cust = Customer::getInstance($app->custId);
                         $custFirst = $cust->firstName;
                         $custLast = $cust->lastName;
                         $custName = "" . $custFirst . " " . $custLast;*/
-
                         echo "<tr>";
                         echo "<td>" . $id . "</td>";
                         echo "<td>" . $appId . "</td>";
@@ -134,15 +119,12 @@ include __DIR__ . '/../header.php';
                         echo "<td><button class='button' onclick=popUp($id)>Update</button></td>";
                         echo "</tr>";
                     }
-
                     echo "</table>";
                     ?>
                 </div>
                 <div id="payedTab" role="tabpanel" class="tab-pane">
                     <?php
-
                     $invoices = CheckoutController::getAllPayedInvoices();
-
                     echo "<table class='table table-striped'>";
                     echo "<tr>";
                     echo "<th>Invoice ID</th>";
@@ -165,7 +147,6 @@ include __DIR__ . '/../header.php';
                         echo "<td>" . $invoice->discRate . "</td>";
                         echo "</tr>";
                     }
-
                     echo "</table>";
                     ?>
                 </div>
