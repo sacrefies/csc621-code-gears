@@ -81,7 +81,7 @@ final class CheckoutController {
     static public function updateInvoice(int $id, float $amt) {
         $inv = self::getInvoiceByID($id);
         $inv->amtPayed = $inv->amtPayed + $amt;
-        return $inv->calcAmtDue();    
+        return $inv->updatePay();    
     }
 
     /**

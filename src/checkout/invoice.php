@@ -340,7 +340,7 @@ class Invoice extends StatefulEntity {
      *
      * @return int Returns 1 if update is successful; otherwise 0.
      */
-    public function calcAmtDue():int {
+    public function updatePay():int {
         if($this->amtDue === $this->amtPayed){
             $this->state = State::PAYED;
         }
