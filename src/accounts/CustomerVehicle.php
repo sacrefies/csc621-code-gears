@@ -14,12 +14,10 @@ require_once __DIR__ . '/../models/StaticEntity.php';
 require_once __DIR__ . '/../database/DBEngine.php';
 require_once __DIR__ . '/ConventionVehicle.php';
 require_once __DIR__ . '/Customer.php';
-require_once __DIR__.'/../services/Job.php';
 
 
 use gears\models\Persisted;
 use gears\models\StaticEntity;
-use gears\services\Job;
 use gears\database\DBEngine;
 
 
@@ -195,7 +193,6 @@ class CustomerVehicle extends StaticEntity {
     public static function getUpdateColumns() : array {
         return ['customer_id', 'convention_vehicle_id', 'mileage', 'vin'];
     }
-
 
     /**
      * @inheritdoc

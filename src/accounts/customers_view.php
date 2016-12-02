@@ -60,7 +60,7 @@ $customers = AccountController::getAllCustomers();
                 <?php foreach ($customers as $cust) { ?>
                     <tr>
                         <td>
-                            <a href="customer_edit_view.php?mode=2?customerId=<?php echo $cust->customerId; ?>">
+                            <a href="customer_edit_view.php?mode=2&customerId=<?php echo $cust->customerId; ?>">
                                 <?php echo $cust->firstName . ' ' . $cust->lastName; ?>
                             </a>
                         </td>
