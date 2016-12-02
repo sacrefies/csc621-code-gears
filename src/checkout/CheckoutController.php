@@ -20,7 +20,7 @@ namespace gears\checkout;
 
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../conf/Settings.php';
-require_once __DIR__ . '/invoice.php';
+require_once __DIR__ . '/Invoice.php';
 
 use gears\Controller;
 use gears\conf\Settings;

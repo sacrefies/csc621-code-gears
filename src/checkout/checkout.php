@@ -17,7 +17,7 @@
 declare(strict_types = 1);
 namespace gears\checkout;
 require_once __DIR__ . '/CheckoutController.php';
-require_once __DIR__ . '/invoice.php';
+require_once __DIR__ . '/Invoice.php';
 require_once __DIR__ . '/../appointments/Appointment.php';
 require_once __DIR__ . '/../accounts/Customer.php';
 use gears\appointments\Appointment;
@@ -85,14 +85,15 @@ include __DIR__ . '/../header.php';
                 <div id="pendingTab" role="tabpanel" class="tab-pane active">
                     <?php
                     /*$invoice = invoice::createNew();
-                    $invoice->apptId = 1;
+                    $invoice->appt = Appointment::getInstance(1);
                     $invoice->amtDue = 20.00;
                     $invoice->updatePay();*/
                     $invoices = CheckoutController::getAllPendingInvoices();
                     echo "<table class='table table-striped'>";
                     echo "<tr>";
                     echo "<th>Invoice ID</th>";
-                    echo "<th>Appointment ID</th>";
+                    echo "<th>Customer</th>";
+                    echo "<th>Subject</th>";
                     echo "<th>Time Created</th>";
                     echo "<th>Last Updated</th>";
                     echo "<th>Amount Due</th>";
@@ -101,16 +102,16 @@ include __DIR__ . '/../header.php';
                     echo "</tr>";
                     foreach ($invoices as $invoice) {
                         $id = $invoice->invoiceId;
-                        $appId = $invoice->apptId;
-                        /*$app = Appointment::getInstance($appId);
-                        $cust = Customer::getInstance($app->custId);
+                        $app = $invoice->appt;
+                        $subject = $app->subject;
+                        $cust = Customer::getInstance($app->customer->customerId);
                         $custFirst = $cust->firstName;
                         $custLast = $cust->lastName;
-                        $custName = "" . $custFirst . " " . $custLast;*/
+                        $custName = "" . $custFirst . " " . $custLast;
                         echo "<tr>";
                         echo "<td>" . $id . "</td>";
-                        echo "<td>" . $appId . "</td>";
-                        //echo "<td>" . $custName . "</td>";
+                        echo "<td>" . $custName . "</td>";
+                        echo "<td>" . $subject . "</td>";
                         echo "<td>" . $invoice->createTime . "</td>";
                         echo "<td>" . $invoice->updateTime . "</td>";
                         echo "<td>" . $invoice->amtDue . "</td>";
@@ -128,22 +129,28 @@ include __DIR__ . '/../header.php';
                     echo "<table class='table table-striped'>";
                     echo "<tr>";
                     echo "<th>Invoice ID</th>";
-                    echo "<th>Appointment ID</th>";
+                    echo "<th>Customer</th>";
+                    echo "<th>Subject</th>";
                     echo "<th>Time Created</th>";
-                    echo "<th>Last Updated</th>";
-                    echo "<th>Amount Due</th>";
-                    echo "<th>Amount Payed</th>";
+                    echo "<th>Time Payed</th>";
+                    echo "<th>Cost</th>";
                     echo "<th>Discount</th>";
                     echo "</tr>";
                     foreach ($invoices as $invoice) {
                         $id = $invoice->invoiceId;
+                        $app = $invoice->appt;
+                        $subject = $app->subject;
+                        $cust = Customer::getInstance($app->customer->customerId);
+                        $custFirst = $cust->firstName;
+                        $custLast = $cust->lastName;
+                        $custName = "" . $custFirst . " " . $custLast;
                         echo "<tr>";
                         echo "<td>" . $id . "</td>";
-                        echo "<td>" . $invoice->apptId . "</td>";
+                        echo "<td>" . $custName . "</td>";
+                        echo "<td>" . $subject . "</td>";
                         echo "<td>" . $invoice->createTime . "</td>";
                         echo "<td>" . $invoice->updateTime . "</td>";
                         echo "<td>" . $invoice->amtDue . "</td>";
-                        echo "<td>" . $invoice->amtPayed . "</td>";
                         echo "<td>" . $invoice->discRate . "</td>";
                         echo "</tr>";
                     }

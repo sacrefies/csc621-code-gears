@@ -20,12 +20,14 @@ namespace gears\checkout;
 
 require_once __DIR__ . '/../database/DBEngine.php';
 require_once __DIR__ . '/../models/StatefulEntity.php';
+require_once __DIR__ . '/../appointments/Appointment.php';
 
 use gears\database\DBEngine;
 use gears\models\Persisted;
 use gears\models\State;
 use gears\models\StatefulEntity;
 use \DateTime;
+use gears\appointments\Appointment;
 
 date_default_timezone_set('America/New_York');
 
@@ -41,9 +43,9 @@ class Invoice extends StatefulEntity {
      */
     public $invoiceId;
     /**
-     * @var int
+     * @var Appointment the appointment this invoice is for
      */
-    public $apptId;
+    public $appt;
     /**
      * @var DateTime
      */
@@ -92,7 +94,7 @@ class Invoice extends StatefulEntity {
         $date = DateTime::createFromFormat('Y-m-d H:i:s', $date);
         $this->createTime = $date->format('Y-m-d H:i:s');
         $this->updateTime = $date->format('Y-m-d H:i:s');
-        $this->apptId = null;
+        $this->appt = null;
         $this->invoiceId = -1;
     }
 
@@ -103,11 +105,11 @@ class Invoice extends StatefulEntity {
      */
     public function update():int {
         if ($this->invoiceId === -1) {
-            $vals = [$this->apptId, $this->createTime, $this->updateTime, $this->state, $this->taxRate, 
+            $vals = [$this->appt->appId, $this->createTime, $this->updateTime, $this->state, $this->taxRate, 
                         $this->amtDue, $this->amtPayed, $this->discRate];
             return $this->insert($vals);
         }
-        $vals = [$this->apptId, $this->createTime, $this->updateTime, $this->state,
+        $vals = [$this->appt->appId, $this->createTime, $this->updateTime, $this->state,
                      $this->taxRate, $this->amtDue, $this->amtPayed, $this->discRate, $this->invoiceId];
         $where = 'invoice_id = ?';
         return $this->updateTable($where, $vals);
@@ -235,7 +237,7 @@ class Invoice extends StatefulEntity {
         $appId = $row['appointment_id'];
         $inv = new Invoice($appId);
         $inv->invoiceId = (int)$row['invoice_id'];
-        $inv->apptId = (int)$appId;
+        $inv->appt = Appointment::getInstance((int)$row['appointment_id']);
         $inv->createTime = $row['create_time'];
         $inv->updateTime = $row['update_time'];
         $inv->state = (int)$row['state'];

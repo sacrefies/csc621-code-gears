@@ -19,7 +19,7 @@ declare(strict_types = 1);
 namespace gears\checkout;
 
 require_once __DIR__ . '/CheckoutController.php';
-require_once __DIR__ . '/invoice.php';
+require_once __DIR__ . '/Invoice.php';
 
 $id = (int)$_GET["id"];
 $amt = floatval($_GET["amt"]);
