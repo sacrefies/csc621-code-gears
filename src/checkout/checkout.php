@@ -84,10 +84,10 @@ include __DIR__ . '/../header.php';
             <div class="tab-content">
                 <div id="pendingTab" role="tabpanel" class="tab-pane active">
                     <?php
-                    $invoice = invoice::createNew();
+                    /*$invoice = invoice::createNew();
                     $invoice->apptId = 1;
                     $invoice->amtDue = 20.00;
-                    $invoice->updatePay();
+                    $invoice->updatePay();*/
                     $invoices = CheckoutController::getAllPendingInvoices();
                     echo "<table class='table table-striped'>";
                     echo "<tr>";
