@@ -50,4 +50,12 @@ final class Settings {
      * @var int Site session time out duration. 1800 === 30 minutes
      */
     public static $SESSION_TIMEOUT = 1800;
+
+    /**
+     * Get the default time zone for all DateTime creation/calculation
+     * @return \DateTimeZone The default time zone
+     */
+    public static function timeZone() : \DateTimeZone {
+        new \DateTimeZone('America/New_York');
+    }
 }
