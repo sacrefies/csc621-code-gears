@@ -13,7 +13,7 @@ namespace gears\accounts;
 require_once __DIR__.'/../models/StaticEntity.php';
 require_once __DIR__.'/../database/DBEngine.php';
 
-use gear\appointments\Appointment;
+use gears\appointments\Appointment;
 use gears\models\Persisted;
 use gears\models\StaticEntity;
 use gears\database\DBEngine;

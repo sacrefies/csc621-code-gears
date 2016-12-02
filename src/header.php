@@ -105,8 +105,12 @@ function getUserId() {
                     <li><a href="/appointments/weekly_view.php">This Week</a></li>
                 </ul>
             </li>
-            <li><a href="#">In-Service</a></li>
-            <li><a href="/checkout/checkout.php">Checkout</a></li>
+            <li <?php if ('in-service' === getActivatedMenuTabName($activeMenu)) {
+                echo 'class="active"';
+            } ?>><a href="#">In-Service</a></li>
+            <li <?php if ('checkout' === getActivatedMenuTabName($activeMenu)) {
+                echo 'class="active"';
+            } ?>><a href="/checkout/checkout.php">Checkout</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown" <?php if ('customers' === getActivatedMenuTabName($activeMenu)) {
