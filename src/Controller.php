@@ -83,8 +83,10 @@ trait Controller {
                 $params["secure"], $params["httponly"]
             );
         }
+        // Write session data and end session
+        session_commit();
         // Finally, destroy the session.
-        session_destroy();
+        // session_destroy();
     }
 
     /**

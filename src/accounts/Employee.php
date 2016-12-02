@@ -213,7 +213,7 @@ class Employee extends StatefulEntity {
     protected static function createInstanceFromRow(array $row):Employee {
         // ['emp_id', 'phone_number', 'first_name', 'last_name', 'emp_code', 'is_manager', 'state']
         $emp = new Employee();
-        $emp->empId = $row['emp_id'];
+        $emp->empId = (int)$row['emp_id'];
         $emp->empCode = $row['emp_code'];
         $emp->fname = $row['first_name'];
         $emp->lname = $row['last_name'];

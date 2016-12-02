@@ -195,100 +195,8 @@ class Invoice extends StatefulEntity {
         } catch (\Exception $e) {
             return $invs;
         }
-        $rows = $db->fetchAll($sql, array(':id' => $id));
+        $rows = $db->fetchAll($sql, array(':id' => $appId));
         $db->close();
-        if ($rows) {
-            foreach ($rows as $row) {
-                $invs[] = self::createInstanceFromRow($row);
-            }
-        }
-        return $invs;
-    }
-
-    /**
-     * Create and initialize a new instance of this entity from the database.
-     *
-     * @param string $where The where clause to identify the row. This clause must be constructed with
-     *                      parameter placeholders: '?', e.g.: 'emp_id = ? AND emp_code = ?'
-     * @param array $values An array of the column values which are involved by $where. The sequence of the items must
-     *                      be align with the column sequence in $where.
-     *
-     * @return Invoice|null Returns an instance of this entity.
-     */
-    public static function getInstanceFromKeys(string $where, array $values):Invoice {
-        $cols = implode(',', self::getColumns());
-        $table = self::getTableName();
-        $sql = "SELECT $cols FROM $table WHERE $where";
-        $db = DBEngine::getInstance();
-        try {
-            $db->open();
-        } catch (\Exception $e) {
-            return null;
-        }
-        $row = $db->query($sql, $values)->fetch(\PDO::FETCH_ASSOC);
-        $db->close();
-        return self::createInstanceFromRow($row);
-    }
-
-    /**
-     * Get a list of instances of this entity
-     *
-     * @param string $where   The where clause to identify the row(s). This clause must be constructed with
-     *                        parameter placeholders: '?', e.g.: 'emp_id = ? AND emp_code = ?'
-     * @param array $values   An array of the column values which are involved by $where. The sequence of the items must
-     *                        be align with the column sequence in $where.
-     * @param string $orderBy columns to order
-     *
-     * @return array A list of instances of this entity.
-     */
-    public static function getList(string $where, array $values, string $orderBy = null):array {
-        $cols = implode(',', self::getColumns());
-        $table = self::getTableName();
-        $sql = "SELECT $cols FROM $table WHERE $where";
-        if ($orderBy) {
-            $sql = "$sql ORDER BY $orderBy";
-        }
-        $invs = array();
-        $db = DBEngine::getInstance();
-        try {
-            $db->open();
-        } catch (\Exception $e) {
-            return $invs;
-        }
-        $rows = $db->fetchAll($sql, $values);
-        $db->close();
-        if ($rows) {
-            foreach ($rows as $row) {
-                $invs[] = self::createInstanceFromRow($row);
-            }
-        }
-        return $invs;
-    }
-
-    /**
-     * Get all existing instances from the database.
-     *
-     * @param string $orderBy columns to order
-     *
-     * @return array A list of instances of this entity.
-     */
-    public static function getAll(string $orderBy = null) : array {
-        $cols = implode(',', self::getColumns());
-        $table = self::getTableName();
-        $sql = "SELECT $cols FROM $table";
-        if ($orderBy) {
-            $sql = "$sql ORDER BY $orderBy";
-        }
-        $invs = array();
-        $db = DBEngine::getInstance();
-        try {
-            $db->open();
-        } catch (\Exception $e) {
-            return $invs;
-        }
-        $rows = $db->fetchAll($sql, array());
-        $db->close();
-        $invs = array();
         if ($rows) {
             foreach ($rows as $row) {
                 $invs[] = self::createInstanceFromRow($row);
@@ -322,8 +230,8 @@ class Invoice extends StatefulEntity {
         // ['emp_id', 'phone_number', 'first_name', 'last_name', 'emp_code', 'is_manager', 'state']
         $appId = $row['appointment_id'];
         $inv = new Invoice($appId);
-        $inv->invoiceId = $row['invoice_id'];
-        $inv->apptId = $appId;
+        $inv->invoiceId = (int)$row['invoice_id'];
+        $inv->apptId = (int)$appId;
         $inv->createTime = $row['create_time'];
         $inv->updateTime = $row['update_time'];
         $inv->state = (int)$row['state'];

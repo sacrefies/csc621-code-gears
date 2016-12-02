@@ -23,7 +23,8 @@ require_once __DIR__ . '/invoice.php';
 require_once __DIR__ . '/../appointments/Appointment.php';
 require_once __DIR__ . '/../accounts/Customer.php';
 
-//use gears\appointments\Appointment;
+use gears\appointments\Appointment;
+use gears\accounts\Customer;
 
 /**
  * @var string A string variable to set the page title.
@@ -43,136 +44,135 @@ include __DIR__ . '/../header.php';
 ?>
 <!-- main content starts here -->
 <body>
-	<script type="text/javascript">
-		function popUp(id){
-			var valid = false;
-			while(valid === false)
-   			{
-     			var amt = prompt("Enter amount payed:");
-     			if(isNumeric(amt)){
-     				var xhttp = new XMLHttpRequest();
-					xhttp.onreadystatechange=function(){
-						if (xhttp.readyState==4 && xhttp.status==200){
-							var data = xhttp.responseText;
-							//document.getElementById("output").innerHTML = data;
-							location.reload();
-						}
-					}//end onreadystatechange
-				
-					var link = "invUpdate.php?id="+id+"&amt="+amt;
+<script type="text/javascript">
+    function popUp(id) {
+        var valid = false;
+        while (valid === false) {
+            var amt = prompt("Enter amount payed:");
+            if (isNumeric(amt)) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        var data = xhttp.responseText;
+                        //document.getElementById("output").innerHTML = data;
+                        location.reload();
+                    }
+                }//end onreadystatechange
 
-					xhttp.open("GET", link, true);
-					xhttp.send();
-     				valid = true;
-     			}
-     			else if(amt === null){
-     				valid = true;
-     			}
-     			else {
-     				valid = false;
-     				alert("Please enter a valid amount");
-     			}
-   			}
-		}
+                var link = "invUpdate.php?id=" + id + "&amt=" + amt;
 
-		function isNumeric(n) {
-  			return !isNaN(parseFloat(n)) && isFinite(n);
-		}
-	</script>
-	<div class="panel panel-default">
-    	<div class="panel-heading">Invoices</div>
-        <div class="panel-body">
-			<div role="tabpanel">
-				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active"><a href="#pendingTab" role="tab" 
-						data-toggle="tab">Pending</a></li>
-		        	<li role="presentation"><a href="#payedTab" role="tab" 
-		        		data-toggle="tab">Payed</a></li>
-		        </ul>
-		        <div class="tab-content">
-			        <div id="pendingTab" role="tabpanel" class="tab-pane active">
-						<?php
+                xhttp.open("GET", link, true);
+                xhttp.send();
+                valid = true;
+            }
+            else if (amt === null) {
+                valid = true;
+            }
+            else {
+                valid = false;
+                alert("Please enter a valid amount");
+            }
+        }
+    }
 
-						//this works. I was just using it to put dummy data in the db
-						/*$invoice = invoice::createNew();
+    function isNumeric(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+</script>
+<div class="panel panel-default">
+    <div class="panel-heading">Invoices</div>
+    <div class="panel-body">
+        <div role="tabpanel">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#pendingTab" role="tab"
+                                                          data-toggle="tab">Pending</a></li>
+                <li role="presentation"><a href="#payedTab" role="tab"
+                                           data-toggle="tab">Payed</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="pendingTab" role="tabpanel" class="tab-pane active">
+                    <?php
 
-						$invoice->apptId = 1;
-						$invoice->amtDue = 20.00;
-						$invoice->calcAmtDue();*/
+                    //this works. I was just using it to put dummy data in the db
+                    /*$invoice = invoice::createNew();
 
-						$invoices = CheckoutController::getAllPendingInvoices();
+                    $invoice->apptId = 1;
+                    $invoice->amtDue = 20.00;
+                    $invoice->calcAmtDue();*/
 
-						echo "<table class='table table-striped'>";
-						echo "<tr>";
-						echo "<th>Invoice ID</th>";
-						echo "<th>Appointment ID</th>";
-						echo "<th>Time Created</th>";
-						echo "<th>Last Updated</th>";
-						echo "<th>Amount Due</th>";
-						echo "<th>Amount Payed</th>";
-						echo "<th>Discount</th>";
-						echo "</tr>";
-						foreach($invoices as $invoice) {
-							$id = $invoice->invoiceId;
-							//this doesn't work
-							/*$appId = $invoice->apptId;
-							$app = Appointment::getInstance($appId); error happens on this line
-							$cust = Customer::getInstance($app->custId);
-							$custFirst = $cust->firstName;
-							$custLast = $cust->lastName;
-							$custName = "" . $custFirst . " " . $custLast;*/
+                    $invoices = CheckoutController::getAllPendingInvoices();
 
-							echo "<tr>";
-							echo "<td>" . $id . "</td>";
-							echo "<td>" . $appId . "</td>";
-							//echo "<td>" . $custName . "</td>";
-							echo "<td>" . $invoice->createTime . "</td>";
-							echo "<td>" . $invoice->updateTime . "</td>";
-							echo "<td>" . $invoice->amtDue . "</td>";
-							echo "<td>" . $invoice->amtPayed . "</td>";
-							echo "<td>" . $invoice->discRate . "</td>";
-							echo "<td><button class='button' onclick=popUp($id)>Update</button></td>";
-							echo "</tr>";
-						}
-							
-						echo "</table>";
-						?>
-					</div>
-					<div id="payedTab" role="tabpanel" class="tab-pane">
-						<?php
+                    echo "<table class='table table-striped'>";
+                    echo "<tr>";
+                    echo "<th>Invoice ID</th>";
+                    echo "<th>Appointment ID</th>";
+                    echo "<th>Time Created</th>";
+                    echo "<th>Last Updated</th>";
+                    echo "<th>Amount Due</th>";
+                    echo "<th>Amount Payed</th>";
+                    echo "<th>Discount</th>";
+                    echo "</tr>";
+                    foreach ($invoices as $invoice) {
+                        $id = $invoice->invoiceId;
+                        //this doesn't work
+                        /*$appId = $invoice->apptId;
+                        $app = Appointment::getInstance($appId); error happens on this line
+                        $cust = Customer::getInstance($app->custId);
+                        $custFirst = $cust->firstName;
+                        $custLast = $cust->lastName;
+                        $custName = "" . $custFirst . " " . $custLast;*/
 
-						$invoices = CheckoutController::getAllPayedInvoices();
+                        echo "<tr>";
+                        echo "<td>" . $id . "</td>";
+                        echo "<td>" . $appId . "</td>";
+                        //echo "<td>" . $custName . "</td>";
+                        echo "<td>" . $invoice->createTime . "</td>";
+                        echo "<td>" . $invoice->updateTime . "</td>";
+                        echo "<td>" . $invoice->amtDue . "</td>";
+                        echo "<td>" . $invoice->amtPayed . "</td>";
+                        echo "<td>" . $invoice->discRate . "</td>";
+                        echo "<td><button class='button' onclick=popUp($id)>Update</button></td>";
+                        echo "</tr>";
+                    }
 
-						echo "<table class='table table-striped'>";
-						echo "<tr>";
-						echo "<th>Invoice ID</th>";
-						echo "<th>Appointment ID</th>";
-						echo "<th>Time Created</th>";
-						echo "<th>Last Updated</th>";
-						echo "<th>Amount Due</th>";
-						echo "<th>Amount Payed</th>";
-						echo "<th>Discount</th>";
-						echo "</tr>";
-						foreach($invoices as $invoice) {
-							$id = $invoice->invoiceId;
-							echo "<tr>";
-							echo "<td>" . $id . "</td>";
-							echo "<td>" . $invoice->apptId . "</td>";
-							echo "<td>" . $invoice->createTime . "</td>";
-							echo "<td>" . $invoice->updateTime . "</td>";
-							echo "<td>" . $invoice->amtDue . "</td>";
-							echo "<td>" . $invoice->amtPayed . "</td>";
-							echo "<td>" . $invoice->discRate . "</td>";
-							echo "</tr>";
-						}
-							
-						echo "</table>";
-						?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<p id="output"></p>
+                    echo "</table>";
+                    ?>
+                </div>
+                <div id="payedTab" role="tabpanel" class="tab-pane">
+                    <?php
+
+                    $invoices = CheckoutController::getAllPayedInvoices();
+
+                    echo "<table class='table table-striped'>";
+                    echo "<tr>";
+                    echo "<th>Invoice ID</th>";
+                    echo "<th>Appointment ID</th>";
+                    echo "<th>Time Created</th>";
+                    echo "<th>Last Updated</th>";
+                    echo "<th>Amount Due</th>";
+                    echo "<th>Amount Payed</th>";
+                    echo "<th>Discount</th>";
+                    echo "</tr>";
+                    foreach ($invoices as $invoice) {
+                        $id = $invoice->invoiceId;
+                        echo "<tr>";
+                        echo "<td>" . $id . "</td>";
+                        echo "<td>" . $invoice->apptId . "</td>";
+                        echo "<td>" . $invoice->createTime . "</td>";
+                        echo "<td>" . $invoice->updateTime . "</td>";
+                        echo "<td>" . $invoice->amtDue . "</td>";
+                        echo "<td>" . $invoice->amtPayed . "</td>";
+                        echo "<td>" . $invoice->discRate . "</td>";
+                        echo "</tr>";
+                    }
+
+                    echo "</table>";
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p id="output"></p>
 </body>
 <?php include __DIR__ . '/../footer.php'; ?>

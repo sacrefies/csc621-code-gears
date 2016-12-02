@@ -130,13 +130,19 @@ final class AccountController {
      *
      * @return array An array of CustomerVehicle objects.
      */
-    static public function getCustomerVehicles(int $customerId) : array {
+    static public function getCustomerVehiclesByCustomer(int $customerId) : array {
         if ($customerId < 0) {
             return [];
         }
         $where = 'customer_id = ?';
         $values = [$customerId];
-        return ConventionVehicle::getList($where, $values);
+        return CustomerVehicle::getList($where, $values);
+    }
+
+
+    public static function getAllCustomerVehicles() : array {
+        $order = 'customer_id, customer_vehicle_id';
+        return CustomerVehicle::getAll();
     }
 
     /**

@@ -16,7 +16,7 @@
  */
 
 declare(strict_types=1);
-namespace gear\appointments;
+namespace gears\appointments;
 
 
 use gears\models\Persisted;

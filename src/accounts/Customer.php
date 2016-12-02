@@ -13,6 +13,7 @@ namespace gears\accounts;
 require_once __DIR__.'/../models/StaticEntity.php';
 require_once __DIR__.'/../database/DBEngine.php';
 
+use gear\appointments\Appointment;
 use gears\models\Persisted;
 use gears\models\StaticEntity;
 use gears\database\DBEngine;
@@ -110,12 +111,12 @@ class Customer extends StaticEntity {
      * Get all
      */
     public function getActiveAppointments() {
-        // TODO getActiveAppointments
+        return Appointment::getList();
     }
 
 
     public function getHistoryAppointment() {
-        // TODO getHistoryAppointment
+        return Appointment::getList();
     }
 
     /**
@@ -176,5 +177,19 @@ class Customer extends StaticEntity {
      */
     public static function getUpdateColumns() : array {
         return ['first_name', 'last_name', 'phone_number', 'customer_zip'];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected static function createInstanceFromRow(array $row) : Customer {
+        // ['customer_id', 'first_name', 'last_name', 'phone_number', 'customer_zip'];
+        $emp = new Customer();
+        $emp->customerId = (int)$row['customer_id'];
+        $emp->firstName = $row['first_name'];
+        $emp->lastName = $row['last_name'];
+        $emp->phoneNumber = $row['phone_number'];
+        $emp->zip = $row['customer_zip'];
+        return $emp;
     }
 }

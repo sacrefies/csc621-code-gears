@@ -14,6 +14,7 @@ require_once __DIR__ . '/../models/StaticEntity.php';
 require_once __DIR__ . '/../database/DBEngine.php';
 require_once __DIR__ . '/ConventionVehicle.php';
 require_once __DIR__ . '/Customer.php';
+require_once __DIR__.'/../services/Job.php';
 
 
 use gears\models\Persisted;
@@ -128,6 +129,14 @@ class CustomerVehicle extends StaticEntity {
     }
 
     /**
+     * Get the jobs that serviced for this vehicle.
+     * @return array Returns an array of Job objects
+     */
+    public function getServicedJobs() : array {
+
+    }
+
+    /**
      * Make a copy of the given object. The new copy is a brand new entity which does not exist in the database yet.
      * To save the new copy, invoke update() method.
      *
@@ -185,5 +194,20 @@ class CustomerVehicle extends StaticEntity {
      */
     public static function getUpdateColumns() : array {
         return ['customer_id', 'convention_vehicle_id', 'mileage', 'vin'];
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    protected static function createInstanceFromRow(array $row) : CustomerVehicle {
+        // ['customer_vehicle_id', 'customer_id', 'convention_vehicle_id', 'mileage', 'vin'];
+        $emp = new CustomerVehicle();
+        $emp->customer_vehicle_id = (int)$row['customer_vehicle_id'];
+        $emp->mileage = (int)$row['mileage'];
+        $emp->vin = $row['vin'];
+        $emp->customer = Customer::getInstance((int)$row['customer_id']);
+        $emp->conventionVehicle = ConventionVehicle::getInstance((int)$row['convention_vehicle_id']);
+        return $emp;
     }
 }

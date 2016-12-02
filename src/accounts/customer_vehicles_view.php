@@ -28,7 +28,7 @@ use gears\models\State;
 /**
  * @var string A string variable to set the page title.
  */
-$title = 'Customers';
+$title = 'Customers Vehicles';
 /**
  * @var string A string variable to set the nav bar header.
  */
@@ -41,7 +41,12 @@ $activeMenu = 5;
 
 include __DIR__ . '/../header.php';
 
-$customers = AccountController::getAllCustomers();
+$customerId = -1;
+if (isset($_GET['customerId']) && $_GET['customerId']) {
+    $customerId = $_GET['customerId'];
+}
+
+$customers = ($customerId !== -1) ? AccountController::getCustomerVehiclesByCustomer($customerId) : AccountController::getAllCustomerVehicles();
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">Customers</div>
@@ -50,10 +55,11 @@ $customers = AccountController::getAllCustomers();
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Customer Name</th>
-                    <th>Phone Number</th>
-                    <th>zip</th>
-                    <th>Vehicles Registered</th>
+                    <th>Vehicle</th>
+                    <th>Owned By</th>
+                    <th>Mileage</th>
+                    <th>vin</th>
+                    <th>Times Serviced</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -68,7 +74,7 @@ $customers = AccountController::getAllCustomers();
                         <td><?php echo $cust->zip; ?></td>
                         <td>
                             <?php
-                            $veh = AccountController::getCustomerVehiclesByCustomer($cust->customerId);
+                            $veh = AccountController::getCustomerVehicles($cust->customerId);
                             if ($veh) {
                                 echo '<a href="customer_vehicles_view.php?customerId=' . $cust->customerId . '"><span class="badge">' . count($veh) . '</span></a>' . PHP_EOL;
                             }
