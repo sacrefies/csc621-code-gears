@@ -117,7 +117,7 @@ include __DIR__ . '/../header.php';
                         echo "<td>" . $invoice->amtDue . "</td>";
                         echo "<td>" . $invoice->amtPayed . "</td>";
                         echo "<td>" . $invoice->discRate . "</td>";
-                        echo "<td><button class='button' onclick=popUp($id)>Update</button></td>";
+                        echo "<td><button class='btn btn-info btn-sm' onclick=popUp($id)>Update</button></td>";
                         echo "</tr>";
                     }
                     echo "</table>";
