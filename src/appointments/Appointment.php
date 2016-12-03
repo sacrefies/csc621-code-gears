@@ -23,7 +23,7 @@ require_once __DIR__ . '/../database/DBEngine.php';
 require_once __DIR__ . '/../accounts/Customer.php';
 require_once __DIR__ . '/../models/Persisted.php';
 require_once __DIR__ . '/../models/StatefulEntity.php';
-require_once __DIR__.'/../checkout/Invoice.php';
+require_once __DIR__ . '/../checkout/Invoice.php';
 
 use gears\database\DBEngine;
 use gears\accounts\Customer;
@@ -105,8 +105,9 @@ class Appointment extends StatefulEntity {
     public function update() : int {
         // ['subject', 'update_time', 'create_time', 'description', 'event_time', 'start_time', 'end_time',
         // 'customer_id', 'state'];
-        $values = [$this->subject, $this->updateTime, $this->createTime, $this->desc, $this->eventTime,
-            $this->startTime, $this->endTime, $this->customer->customerId, $this->state];
+        $values = [$this->subject, $this->updateTime->format(DATE_ISO8601), $this->createTime->format(DATE_ISO8601),
+            $this->desc, $this->eventTime->format(DATE_ISO8601), $this->startTime->format(DATE_ISO8601),
+            $this->endTime->format(DATE_ISO8601), $this->customer->customerId, $this->state];
         if ($this->appId === -1) {
             return $this->insert($values);
         } else {
