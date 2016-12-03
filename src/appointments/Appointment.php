@@ -236,12 +236,12 @@ class Appointment extends StatefulEntity {
         $app = new Appointment();
         $app->appId = (int)$row['appointment_id'];
         $app->subject = $row['subject'];
-        $app->updateTime = \DateTime::createFromFormat(DATE_ISO8601, $row['update_time']);
-        $app->createTime = \DateTime::createFromFormat(DATE_ISO8601, $row['create_time']);
+        $app->updateTime = new \DateTime($row['update_time']);
+        $app->createTime = new \DateTime($row['create_time']);
         $app->desc = $row['description'];
-        $app->eventTime = \DateTime::createFromFormat(DATE_ISO8601, $row['event_time']);
-        $app->startTime = \DateTime::createFromFormat(DATE_ISO8601, $row['start_time']);
-        $app->endTime = \DateTime::createFromFormat(DATE_ISO8601, $row['end_time']);
+        $app->eventTime = new \DateTime($row['event_time']);
+        $app->startTime = new \DateTime($row['start_time']);
+        $app->endTime = new \DateTime($row['end_time']);
         $app->customer = Customer::getInstance((int)$row['customer_id']);
         $app->state = (int)$row['state'];
         return $app;
