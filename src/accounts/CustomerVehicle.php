@@ -146,7 +146,9 @@ class CustomerVehicle extends StaticEntity {
      * @return array Returns an array of Job objects
      */
     public function getServicedJobs() : array {
-
+        $where = 'customer_vehicle_id = ? AND state IN (?, ?)';
+        $values = [$this->customer_vehicle_id, State::CANCELLED, State::DONE];
+        return Job::getInstanceFromKeys($where, $values);
     }
 
     /**
