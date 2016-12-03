@@ -56,21 +56,46 @@ function getActivatedMenuTabName(int $activeMenuId) : string {
     return 'none';
 }
 
+/**
+ * Get the logon user's full name
+ * @return string Returns the logon user's full name
+ */
 function getUserName() {
     $emp = $_SESSION[Settings::$CURR_USER_SESS_KEY];
     return $emp->fname . ' ' . $emp->lname;
 }
 
+/**
+ * Get the logon user's unique identifier's value
+ * @return int The id of the logon user.
+ */
 function getUserId() {
     $emp = $_SESSION[Settings::$CURR_USER_SESS_KEY];
     return $emp->empId;
 }
 
-// only for debugging
-//echo '<pre>';
-//echo session_status().PHP_EOL;
-//print_r($_SESSION);
-//echo '</pre>';
+/**
+ * Encode the specified string value to UTF-8.
+ *
+ * @param string $val The string to be encoded.
+ *
+ * @return string A string which is encoded with UTF-8 from the given string.
+ */
+function toUTF8(string $val) {
+// From http://w3.org/International/questions/qa-forms-utf-8.html
+    if (preg_match('%^(?:[\x09\x0A\x0D\x20-\x7E]
+    | [\xC2-\xDF][\x80-\xBF]
+    | \xE0[\xA0-\xBF][\x80-\xBF]
+    | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}
+    | \xED[\x80-\x9F][\x80-\xBF]
+    | \xF0[\x90-\xBF][\x80-\xBF]{2}
+    | [\xF1-\xF3][\x80-\xBF]{3}
+    | \xF4[\x80-\x8F][\x80-\xBF]{2})*$%xs', $val)) {
+        return $val;
+    } else {
+        return iconv('CP1252', 'UTF-8', $val);
+    }
+}
 
 ?>
 
@@ -108,9 +133,13 @@ function getUserId() {
             <li <?php if ('in-service' === getActivatedMenuTabName($activeMenu)) {
                 echo 'class="active"';
             } ?>><a href="#">In-Service</a></li>
-            <li <?php if ('checkout' === getActivatedMenuTabName($activeMenu)) {
-                echo 'class="active"';
-            } ?>><a href="/checkout/checkout.php">Checkout</a></li>
+            <li class="dropdown" <?php echo ('checkout' === getActivatedMenuTabName($activeMenu)) ? 'class="active"' : ''; ?>>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Checkout<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/checkout/invAppointments.php">Pending Appointments</a></li>
+                    <li><a href="/checkout/checkout.php">Invoices</a></li>
+                </ul>
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown" <?php if ('customers' === getActivatedMenuTabName($activeMenu)) {
@@ -118,7 +147,7 @@ function getUserId() {
             } ?>>
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Customers<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="/accounts/customer_edit_view.php?mode=0">Register New Customer</a></li>
+                    <li><a href="/accounts/customer_edit.php?mode=0">Register New Customer</a></li>
                     <li><a href="/accounts/customer_vehicle_edit_view.php?mode=0">Register New Customer Vehicle</a></li>
                     <li><a href="/accounts/customers_view.php">Customer List</a></li>
                 </ul>
