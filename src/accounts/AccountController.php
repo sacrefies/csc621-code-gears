@@ -84,7 +84,7 @@ final class AccountController {
      * @return bool
      */
     static public function assignJob(int $empId, int $jobId):bool {
-
+        return false;
     }
 
     /**
@@ -95,10 +95,7 @@ final class AccountController {
      * @return Employee|null Returns an instance of Employee if the code exists in the database.
      */
     static public function getEmployeeByCode(string $empCode) {
-        if (!$empCode) {
-            return null;
-        }
-        return Employee::getInstanceFromKeys('emp_code=?', array($empCode));
+        return $empCode ? Employee::getInstanceFromKeys('emp_code=?', array($empCode)) : null;
     }
 
     /**
@@ -109,10 +106,7 @@ final class AccountController {
      * @return Employee|null Returns an instance of Employee if the id exists in the database.
      */
     static public function getEmployeeById(int $id) {
-        if (0 > $id) {
-            return null;
-        }
-        return Employee::getInstance($id);
+        return (0 <= $id) ? Employee::getInstance($id) : null;
     }
 
     /**
@@ -139,10 +133,13 @@ final class AccountController {
         return CustomerVehicle::getList($where, $values);
     }
 
-
+    /**
+     * Get all customer owned vehicles.
+     * @return array
+     */
     public static function getAllCustomerVehicles() : array {
         $order = 'customer_id, customer_vehicle_id';
-        return CustomerVehicle::getAll();
+        return CustomerVehicle::getAll($order);
     }
 
     /**
@@ -186,9 +183,53 @@ final class AccountController {
      * @return Customer|null
      */
     public static function getCustomerById(int $id) {
-        if (0 > $id) {
-            return null;
-        }
-        return Customer::getInstance($id);
+        return (0 > $id) ? null : Customer::getInstance($id);
+    }
+
+    /**
+     * Get the full name of the given customer object.
+     *
+     * @param Customer $customer
+     *
+     * @return string Returns the full name of the customer.
+     */
+    public static function getCustomerFullName(Customer $customer) : string {
+        return $customer ? $customer->firstName . ' ' . $customer->lastName : '';
+    }
+
+    /**
+     * @param string $fname
+     * @param string $lname
+     * @param string $phone
+     * @param string $zip
+     *
+     * @return bool
+     */
+    public static function createNewCustomer(string $fname, string $lname, string $phone, string $zip) : bool {
+        $cust = Customer::createNew();
+        $cust->firstName = $fname;
+        $cust->lastName = $lname;
+        $cust->phoneNumber = $phone;
+        $cust->zip = $zip;
+        $rc = $cust->update();
+        return (-1 === $rc)? false : (bool)$rc;
+    }
+
+    /**
+     * @param Customer $cust
+     * @param string $fname
+     * @param string $lname
+     * @param string $phone
+     * @param string $zip
+     *
+     * @return bool
+     */
+    public static function updateCustomer(Customer $cust, string $fname, string $lname, string $phone, string $zip) : bool {
+        $cust->firstName = $fname;
+        $cust->lastName = $lname;
+        $cust->phoneNumber = $phone;
+        $cust->zip = $zip;
+        $rc = $cust->update();
+        return (-1 === $rc)? false : (bool)$rc;
     }
 }

@@ -18,11 +18,8 @@
 declare(strict_types = 1);
 namespace gears\accounts;
 
-require_once __DIR__ . '/../accounts/AccountController.php';
-require_once __DIR__ . '/../models/State.php';
+require_once __DIR__ . '/AccountController.php';
 require_once __DIR__ . '/Customer.php';
-
-use gears\models\State;
 
 
 /**
@@ -41,12 +38,12 @@ $activeMenu = 5;
 
 include __DIR__ . '/../header.php';
 
-$customers = AccountController::getAllCustomers();
+$cvs = AccountController::getAllCustomers();
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">Customers</div>
     <div class="panel-body">
-        <?php if ($customers) { ?>
+        <?php if ($cvs) { ?>
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -57,11 +54,11 @@ $customers = AccountController::getAllCustomers();
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($customers as $cust) { ?>
+                <?php foreach ($cvs as $cust): ?>
                     <tr>
                         <td>
-                            <a href="customer_edit_view.php?mode=2&customerId=<?php echo $cust->customerId; ?>">
-                                <?php echo $cust->firstName . ' ' . $cust->lastName; ?>
+                            <a href="single_customer_view.php?customerId=<?php echo $cust->customerId; ?>">
+                                <?php echo AccountController::getCustomerFullName($cust); ?>
                             </a>
                         </td>
                         <td><?php echo $cust->phoneNumber; ?></td>
@@ -75,7 +72,7 @@ $customers = AccountController::getAllCustomers();
                             ?>
                         </td>
                     </tr>
-                <?php } ?>
+                <?php endforeach; ?>
                 </tbody>
             </table>
             <!-- Modal -->

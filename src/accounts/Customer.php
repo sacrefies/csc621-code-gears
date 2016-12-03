@@ -133,9 +133,9 @@ class Customer extends StaticEntity {
     /**
      * Create a new instance of this entity.
      *
-     * @return Persisted Returns a new in-memory object of this entity.
+     * @return Customer Returns a new in-memory object of this entity.
      */
-    public static function createNew() {
+    public static function createNew() : Customer {
         return new Customer();
     }
 

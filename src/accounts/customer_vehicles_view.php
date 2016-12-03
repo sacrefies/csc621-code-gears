@@ -18,12 +18,10 @@
 declare(strict_types = 1);
 namespace gears\accounts;
 
-require_once __DIR__ . '/../accounts/AccountController.php';
-require_once __DIR__ . '/../models/State.php';
+require_once __DIR__ . '/AccountController.php';
 require_once __DIR__ . '/Customer.php';
-
-use gears\models\State;
-
+require_once __DIR__ . '/CustomerVehicle.php';
+require_once __DIR__ . '/ConventionVehicle.php';
 
 /**
  * @var string A string variable to set the page title.
@@ -43,15 +41,18 @@ include __DIR__ . '/../header.php';
 
 $customerId = -1;
 if (isset($_GET['customerId']) && $_GET['customerId']) {
-    $customerId = $_GET['customerId'];
+    $customerId = (int)$_GET['customerId'];
 }
 
-$customers = ($customerId !== -1) ? AccountController::getCustomerVehiclesByCustomer($customerId) : AccountController::getAllCustomerVehicles();
+$cvs = ($customerId !== -1) ? AccountController::getCustomerVehiclesByCustomer($customerId) : AccountController::getAllCustomerVehicles();
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading">Customers</div>
+    <div
+        class="panel-heading"><?php echo (-1 !== $customerId) ? AccountController::getCustomerFullName($cvs[0]->customer) : 'Customer'; ?>
+        Owned Vehicles
+    </div>
     <div class="panel-body">
-        <?php if ($customers) { ?>
+        <?php if ($cvs) { ?>
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -63,45 +64,25 @@ $customers = ($customerId !== -1) ? AccountController::getCustomerVehiclesByCust
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($customers as $cust) { ?>
+                <?php foreach ($cvs as $cv): ?>
                     <tr>
                         <td>
-                            <a href="customer_edit_view.php?mode=2?customerId=<?php echo $cust->customerId; ?>">
-                                <?php echo $cust->firstName . ' ' . $cust->lastName; ?>
+                            <a href="customer_vehicle_edit_view.php?mode=2&customer_vehicle_Id=<?php echo $cv->customer_vehicle_id; ?>">
+                                <?php echo "{$cv->conventionVehicle->year} {$cv->conventionVehicle->make} {$cv->conventionVehicle->model} {$cv->conventionVehicle->trim}"; ?>
                             </a>
                         </td>
-                        <td><?php echo $cust->phoneNumber; ?></td>
-                        <td><?php echo $cust->zip; ?></td>
                         <td>
-                            <?php
-                            $veh = AccountController::getCustomerVehicles($cust->customerId);
-                            if ($veh) {
-                                echo '<a href="customer_vehicles_view.php?customerId=' . $cust->customerId . '"><span class="badge">' . count($veh) . '</span></a>' . PHP_EOL;
-                            }
-                            ?>
+                            <a href="customer_edit.php?mode=2&customerId=<?php echo $cv->customer->customerId; ?>">
+                                <?php echo AccountController::getCustomerFullName($cv->customer); ?>
+                            </a>
                         </td>
+                        <td><?php echo $cv->mileage; ?></td>
+                        <td><?php echo $cv->vin; ?></td>
+                        <td>pending on in-service package</td>
                     </tr>
-                <?php } ?>
+                <?php endforeach; ?>
                 </tbody>
             </table>
-            <!-- Modal -->
-            <div id="jobSelect" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Select One Job</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>Job List Should Be Displayed Here</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         <?php } else { ?>
             <div class="alert alert-warning alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

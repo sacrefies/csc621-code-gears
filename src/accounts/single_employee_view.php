@@ -18,10 +18,9 @@
 declare(strict_types = 1);
 namespace gears\accounts;
 
-require_once __DIR__ . '/../accounts/AccountController.php';
+require_once __DIR__ . '/AccountController.php';
 require_once __DIR__ . '/../models/State.php';
 
-use gears\accounts\AccountController;
 use gears\models\State;
 
 

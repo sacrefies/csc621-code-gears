@@ -147,7 +147,7 @@ function toUTF8(string $val) {
             } ?>>
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Customers<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="/accounts/customer_edit.php?mode=0">Register New Customer</a></li>
+                    <li><a href="/accounts/customer_edit.php">Register New Customer</a></li>
                     <li><a href="/accounts/customer_vehicle_edit_view.php?mode=0">Register New Customer Vehicle</a></li>
                     <li><a href="/accounts/customers_view.php">Customer List</a></li>
                 </ul>
