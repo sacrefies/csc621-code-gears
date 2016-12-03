@@ -83,10 +83,11 @@ include __DIR__ . '/../header.php';
                         echo "<td>" . $subject . "</td>";
                         echo "<td>" . $invoice->createTime->format('Y-m-d H:i:s') . "</td>";
                         echo "<td>" . $invoice->updateTime->format('Y-m-d H:i:s') . "</td>";
-                        echo "<td>" . $invoice->amtDue . "</td>";
+                        echo "<td>" . round($invoice->amtDue, 2) . "</td>";
                         echo "<td>" . $invoice->amtPayed . "</td>";
                         echo "<td>" . $invoice->discRate . "</td>";
-                        echo "<td><button class='btn btn-info btn-sm' data-toggle='modal' data-target='#amtEnter' id='$id'>Update</button></td>";
+                        echo "<td><button class='btn btn-info btn-sm' data-toggle='modal' data-target='#amtEnter' 
+                        		data-yourParameter='$id'>Update</button></td>";
                         echo "</tr>";
                     }
                     echo "</table>";
@@ -119,7 +120,7 @@ include __DIR__ . '/../header.php';
                         echo "<td>" . $subject . "</td>";
                         echo "<td>" . $invoice->createTime->format('Y-m-d H:i:s') . "</td>";
                         echo "<td>" . $invoice->updateTime->format('Y-m-d H:i:s') . "</td>";
-                        echo "<td>" . $invoice->amtDue . "</td>";
+                        echo "<td>" . round($invoice->amtDue, 2) . "</td>";
                         echo "<td>" . $invoice->discRate . "</td>";
                         echo "</tr>";
                     }
@@ -142,8 +143,9 @@ include __DIR__ . '/../header.php';
                 <label for="payAmt">Enter Amount Payed:</label>
 		        <input name="payAmt" type="number" id="payAmt" class="form-control" placeholder="Amount Payed"
 		                       required autofocus pattern="^[0-9]$"/>
+		        <br>
 		        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="update()">Update</button>
-		        <input name="invId" id="invId" type="number" lass="form-control" style="visibility:hidden;"/>
+		        <input name="invId" id="invId" type="number" class="form-control" style="visibility:hidden;"/>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -156,7 +158,7 @@ include __DIR__ . '/../header.php';
 	$(document).ready(function(){
 		$('#amtEnter').on('show.bs.modal', function(e) {
 			var $modal = $(this);
-	  		var id = e.relatedTarget.id;
+	  		var id = e.relatedTarget.dataset.yourparameter;
 	  		$modal.find('.edit-content').html("Update Payment for Invoice " + id);
 	  		document.getElementById("invId").value = id;
 		});
@@ -175,7 +177,6 @@ include __DIR__ . '/../header.php';
             }
         }//end onreadystatechange
         var link = "invUpdate.php?id=" + id + "&amt=" + amt;
-        console.log(link);
         xhttp.open("GET", link, true);
         xhttp.send();
     }

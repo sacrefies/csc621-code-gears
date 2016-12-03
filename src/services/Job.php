@@ -103,25 +103,7 @@ class Job extends StatefulEntity {
      * @return int Returns 1 if update is successful; otherwise 0.
      */
     public function update() : int {
-        if (!$this->key) {
-            error_log('The unique key string of this job is not set.');
-            return -1;
-        }
-        if (!$this->appointment || !$this->customerVehicle) {
-            error_log('Either appointment or customer vehicle of this job is not set.');
-            return -1;
-        }
-        // ['job_key', 'create_time', 'summary', 'description', 'state', 'appointment_id',
-        // 'mechanic_id', 'customer_vehicle_id']
-        $values = [$this->key, $this->createTime, $this->summary, $this->desc, $this->state, $this->appointment->appId,
-            $this->mechanic->empId, $this->customerVehicle->customer_vehicle_id];
-        if ($this->jobId === -1) {
-            return $this->insert($values);
-        } else {
-            $values[] = $this->jobId;
-            $where = 'job_id = ?';
-            return $this->updateTable($where, $values);
-        }
+        // TODO: Implement update() method.
     }
 
     /**
@@ -130,9 +112,7 @@ class Job extends StatefulEntity {
      * @return int Returns 1 if removal is successful; otherwise 0.
      */
     public function remove() : int {
-        $where = 'job_id = ? AND appointment_id = ?';
-        $values = [$this->jobId, $this->appointment->appId];
-        return $this->delete($where, $values);
+        // TODO: Implement remove() method.
     }
 
     /**
@@ -143,28 +123,7 @@ class Job extends StatefulEntity {
      * @see Persisted::update()
      */
     public function copy() {
-        $job = new Job();
-        $job->appointment = $this->appointment;
-        $job->customerVehicle = $this->customerVehicle;
-        $job->createTime = new \DateTime();
-        $job->desc = $this->desc;
-        $job->summary = $this->summary;
-        $job->setState($this->getState());
-        $job->key = $this->key;
-    }
-
-    /**
-     * Compute and format a job key according to this job's creation time and customer full name.
-     * <p>This method is for the newly created fresh Job object to obtain its unique job key before being saved to the
-     * database.</p>
-     * <p>NOTE: This method does not set value to $key attribute.</p>
-     * @return string A formatted serial key.
-     */
-    public function getComputedKey() : string {
-        $parts[] = 'gears';
-        $parts[] = strtolower(substr($this->appointment->customer->firstName . $this->appointment->customer->lastName, 0, 4));
-        $parts[] = $this->createTime->format('YmdHisO');
-        return implode('-', $parts);
+        // TODO: Implement copy() method.
     }
 
     /**
@@ -173,7 +132,7 @@ class Job extends StatefulEntity {
      *                        worksheet available (in which case the Job has not started yet).
      */
     public function getWorksheet() {
-        return Worksheet::getInstance($this->jobId);
+        return null;
     }
 
     /**
@@ -183,19 +142,18 @@ class Job extends StatefulEntity {
      * @param Persisted $persisted The object to be copied.
      *
      * @return Persisted Returns a new object which is an in-memory copy of $persisted.
-     * @throws \LogicException Not implemented
      */
     public static function copyFrom(Persisted $persisted) {
-        throw new \LogicException('Not implemented yet');
+        // TODO: Implement copyFrom() method.
     }
 
     /**
      * Create a new instance of this entity.
      *
-     * @return Job Returns a new in-memory object of this entity.
+     * @return Persisted Returns a new in-memory object of this entity.
      */
-    public static function createNew() : Job {
-        return new Job();
+    public static function createNew() {
+        // TODO: Implement createNew() method.
     }
 
     /**
@@ -203,23 +161,10 @@ class Job extends StatefulEntity {
      *
      * @param int $id The unique of the data row in the database table.
      *
-     * @return Job|null Returns an instance of this entity.
+     * @return Persisted Returns an instance of this entity.
      */
     public static function getInstance(int $id) {
-        $cols = implode(',', self::getColumns());
-        $table = self::getTableName();
-        $sql = "SELECT $cols FROM $table WHERE job_id = :id";
-        $db = DBEngine::getInstance();
-        try {
-            $db->open();
-        } catch (\Exception $e) {
-            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
-            error_log($msg);
-            return null;
-        }
-        $row = $db->query($sql, array(':id' => $id))->fetch(\PDO::FETCH_ASSOC);
-        $db->close();
-        return ($row) ? self::createInstanceFromRow($row) : null;
+        // TODO: Implement getInstance() method.
     }
 
     /**
@@ -261,4 +206,6 @@ class Job extends StatefulEntity {
         $job->mechanic = Employee::getInstance((int)$row['mechanic_id']);
         $job->customerVehicle = CustomerVehicle::getInstance((int)$row['customer_vehicle_id']);
     }
+
+
 }
