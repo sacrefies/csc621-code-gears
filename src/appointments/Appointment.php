@@ -90,11 +90,11 @@ class Appointment extends StatefulEntity {
     protected function __construct() {
         $this->appId = -1;
         $this->customer = null;
-        $this->updateTime = \DateTime::createFromFormat(DATE_ISO8601, '1970-01-01 00:00:000');
-        $this->createTime = \DateTime::createFromFormat(DATE_ISO8601, '1970-01-01 00:00:000');
-        $this->endTime = \DateTime::createFromFormat(DATE_ISO8601, '1970-01-01 00:00:000');
-        $this->startTime = \DateTime::createFromFormat(DATE_ISO8601, '1970-01-01 00:00:000');
-        $this->eventTime = \DateTime::createFromFormat(DATE_ISO8601, '1970-01-01 00:00:000');
+        $this->updateTime = new \DateTime();
+        $this->createTime = new \DateTime();
+        $this->endTime = \DateTime::createFromFormat(DATE_ISO8601, '1970-01-01 00:00:00');
+        $this->startTime = \DateTime::createFromFormat(DATE_ISO8601, '1970-01-01 00:00:00');
+        $this->eventTime = \DateTime::createFromFormat(DATE_ISO8601, '1970-01-01 00:00:00');
     }
 
     /**
