@@ -7,14 +7,18 @@
  */
 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace gears\accounts;
 
-require_once __DIR__.'/../models/StaticEntity.php';
-require_once __DIR__.'/../database/DBEngine.php';
+require_once __DIR__ . '/../models/StaticEntity.php';
+require_once __DIR__ . '/../models/Persisted.php';
+require_once __DIR__ . '/../models/State.php';
+require_once __DIR__ . '/../database/DBEngine.php';
+require_once __DIR__ . '/../appointments/Appointment.php';
 
 use gears\appointments\Appointment;
 use gears\models\Persisted;
+use gears\models\State;
 use gears\models\StaticEntity;
 use gears\database\DBEngine;
 
@@ -108,15 +112,33 @@ class Customer extends StaticEntity {
     }
 
     /**
-     * Get all
+     * Get active appointment for this customer
+     * @return array A list of appointments
      */
-    public function getActiveAppointments() {
-        return Appointment::getList();
+    public function getActiveAppointment() : array {
+        $where = 'customer_id = ? AND state NOT IN (?, ?)';
+        $values = [$this->customerId, State::DONE, State::CANCELLED];
+        return Appointment::getList($where, $values);
     }
 
-
+    /**
+     * Get history appointments for this customer
+     * @return array A list appointments
+     */
     public function getHistoryAppointment() {
-        return Appointment::getList();
+        $where = 'customer_id = ? AND state IN (?, ?)';
+        $values = [$this->customerId, State::DONE, State::CANCELLED];
+        return Appointment::getList($where, $values);
+    }
+
+    /**
+     * Get all appointments requested by this customer.
+     * @return array A list of appointments.
+     */
+    public function getAppointments() {
+        $where = 'customer_id = ?';
+        $values = [$this->customerId];
+        return Appointment::getList($where, $values);
     }
 
     /**
@@ -169,7 +191,7 @@ class Customer extends StaticEntity {
      */
     public static function getColumns() : array {
         return ['customer_id', 'first_name', 'last_name', 'phone_number', 'customer_zip'];
-}
+    }
 
     /**
      * Get the column names for UPDATE/INSERT SQL.

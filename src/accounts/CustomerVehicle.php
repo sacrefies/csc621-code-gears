@@ -1,9 +1,18 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Jason
- * Date: 12/1/2016
- * Time: 01:01
+ * Copyright 2016 Saint Joseph's University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 
@@ -11,14 +20,19 @@ declare(strict_types = 1);
 namespace gears\accounts;
 
 require_once __DIR__ . '/../models/StaticEntity.php';
+require_once __DIR__ . '/../models/Persisted.php';
+require_once __DIR__ . '/../models/State.php';
 require_once __DIR__ . '/../database/DBEngine.php';
 require_once __DIR__ . '/ConventionVehicle.php';
 require_once __DIR__ . '/Customer.php';
+require_once __DIR__ . '/../services/Job.php';
 
 
 use gears\models\Persisted;
+use gears\models\State;
 use gears\models\StaticEntity;
 use gears\database\DBEngine;
+use gears\services\Job;
 
 
 /**
@@ -114,7 +128,7 @@ class CustomerVehicle extends StaticEntity {
      * @return bool Returns true if this vehicle is being serviced; otherwise false.
      */
     public function isInService() : bool {
-        return $this->getServicingJob()? true: false;
+        return $this->getServicingJob() ? true : false;
     }
 
     /**
@@ -122,8 +136,9 @@ class CustomerVehicle extends StaticEntity {
      * @return Job|null Returns the Job object or null if no.
      */
     public function getServicingJob() {
-        // TODO: getServicingJob
-        return null;
+        $where = 'customer_vehicle_id = ? AND state NOT IN (?, ?)';
+        $values = [$this->customer_vehicle_id, State::CANCELLED, State::DONE];
+        return Job::getInstanceFromKeys($where, $values);
     }
 
     /**

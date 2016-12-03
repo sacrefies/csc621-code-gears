@@ -157,7 +157,9 @@ class Appointment extends StatefulEntity {
      */
     public function getJob() {
         // TODO: getJob()
-        return null;
+        $where = 'appointment_id = ?';
+        $values = $this->appId;
+        return Job::getInstanceFromKeys($where, $values);
     }
 
     /**

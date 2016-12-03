@@ -35,15 +35,15 @@ use gears\models\StaticEntity;
 class Task extends StaticEntity{
 
     /**
-     * @var Worksheet
+     * @var Worksheet the worksheet
      */
     public $worksheet;
     /**
-     * @var InventoryItem
+     * @var InventoryItem The inventory item used by this task
      */
     public $invItem;
     /**
-     * @var int
+     * @var int The quantity of the inventory item used
      */
     public $quantity;
     /**
@@ -51,11 +51,11 @@ class Task extends StaticEntity{
      */
     public $isDone;
     /**
-     * @var \DateTime
+     * @var \DateTime The finish time of this task.
      */
     public $finishTime;
     /**
-     * @var double
+     * @var double The sub-total cost of this task (quantity * InventoryItem->unit_price)
      */
     public $cost;
 

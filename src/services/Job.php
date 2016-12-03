@@ -1,9 +1,18 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Jason
- * Date: 11/30/2016
- * Time: 23:55
+ * Copyright 2016 Saint Joseph's University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 declare(strict_types = 1);
@@ -81,7 +90,7 @@ class Job extends StatefulEntity {
      */
     public function __construct() {
         $this->jobId = -1;
-        $this->key = null;
+        $this->key = '';
         $this->appointment = null;
         $this->customerVehicle = null;
         $this->mechanic = null;
@@ -172,7 +181,8 @@ class Job extends StatefulEntity {
      * @return array Returns the column names for update/insertion
      */
     public static function getUpdateColumns() : array {
-        // TODO: Implement getUpdateColumns() method.
+        return ['job_key', 'create_time', 'summary', 'description', 'state', 'appointment_id',
+            'mechanic_id', 'customer_vehicle_id'];
     }
 
     /**
@@ -187,13 +197,14 @@ class Job extends StatefulEntity {
         // 'mechanic_id', 'customer_vehicle_id'];
         $job = new Job();
         $job->jobId = (int)$row['job_id'];
-        $job->jobId = $row['job_id'];
-        $job->jobId = $row['job_id'];
-        $job->jobId = $row['job_id'];
-        $job->jobId = $row['job_id'];
-        $job->jobId = $row['job_id'];
-        $job->jobId = $row['job_id'];
-        $job->jobId = $row['job_id'];
+        $job->key = $row['job_key'];
+        $job->createTime = new \DateTime($row['create_time']);
+        $job->summary = $row['summary'];
+        $job->desc = $row['description'];
+        $job->state = (int)$row['state'];
+        $job->appointment = Appointment::getInstance((int)$row['appointment_id']);
+        $job->mechanic = Employee::getInstance((int)$row['mechanic_id']);
+        $job->customerVehicle = CustomerVehicle::getInstance((int)$row['customer_vehicle_id']);
     }
 
 

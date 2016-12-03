@@ -20,6 +20,9 @@ namespace gears\accounts;
 
 require_once __DIR__ . '/../database/DBEngine.php';
 require_once __DIR__ . '/../models/StatefulEntity.php';
+require_once __DIR__ . '/../models/Persisted.php';
+require_once __DIR__ . '/../models/State.php';
+require_once __DIR__ . '/../services/Job.php';
 
 use gears\database\DBEngine;
 use gears\models\Persisted;
@@ -133,16 +136,6 @@ class Employee extends StatefulEntity {
         }
         $values = [$this->empId, State::NEW, State::INSPECTING, State::ONGOING];
         return Job::getInstanceFromKeys('mechanic_id=? AND state IN (?,?,?)', $values);
-    }
-
-    /**
-     * @param Job $job
-     *
-     * @return bool
-     */
-    public function assignJob(Job $job):bool {
-        // TODO: assign job
-        $this->setState(State::BUSY);
     }
 
     /**
