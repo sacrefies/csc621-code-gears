@@ -21,6 +21,8 @@ namespace gears\services;
 
 require_once __DIR__ . '/../models/StaticEntity.php';
 require_once __DIR__ . '/../models/Persisted.php';
+require_once __DIR__.'/InventoryItem.php';
+require_once __DIR__.'/Worksheet.php';
 
 use gears\models\Persisted;
 use gears\models\StaticEntity;
@@ -31,6 +33,32 @@ use gears\models\StaticEntity;
  * @package gears\services
  */
 class Task extends StaticEntity{
+
+    /**
+     * @var Worksheet
+     */
+    public $worksheet;
+    /**
+     * @var InventoryItem
+     */
+    public $invItem;
+    /**
+     * @var int
+     */
+    public $quantity;
+    /**
+     * @var int 0: false, 1: true
+     */
+    public $isDone;
+    /**
+     * @var \DateTime
+     */
+    public $finishTime;
+    /**
+     * @var double
+     */
+    public $cost;
+
     /**
      * Update the data row in the database which links to this object.
      *

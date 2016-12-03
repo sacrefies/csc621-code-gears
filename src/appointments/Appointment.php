@@ -24,12 +24,14 @@ require_once __DIR__ . '/../accounts/Customer.php';
 require_once __DIR__ . '/../models/Persisted.php';
 require_once __DIR__ . '/../models/StatefulEntity.php';
 require_once __DIR__ . '/../checkout/Invoice.php';
+require_once __DIR__ . '/../services/Job.php';
 
 use gears\database\DBEngine;
 use gears\accounts\Customer;
 use gears\models\Persisted;
 use gears\models\StatefulEntity;
 use gears\checkout\Invoice;
+use gears\services\Job;
 
 
 /**
@@ -149,8 +151,12 @@ class Appointment extends StatefulEntity {
         return $app;
     }
 
+    /**
+     * Get the job object which services this appointment.
+     * @return Job|null An instance of Job which services this appointment.
+     */
     public function getJob() {
-        // TODO getJob()
+        // TODO: getJob()
         return null;
     }
 

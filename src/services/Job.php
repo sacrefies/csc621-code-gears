@@ -15,7 +15,8 @@ require_once __DIR__ . '/../appointments/Appointment.php';
 require_once __DIR__ . '/../database/DBEngine.php';
 require_once __DIR__ . '/../models/Persisted.php';
 require_once __DIR__ . '/../accounts/Employee.php';
-require_once __DIR__.'/../accounts/CustomerVehicle.php';
+require_once __DIR__ . '/../accounts/CustomerVehicle.php';
+require_once __DIR__ . '/../accounts/CustomerVehicle.php';
 
 
 use gears\models\Persisted;
@@ -24,6 +25,7 @@ use gears\database\DBEngine;
 use gears\appointments\Appointment;
 use gears\models\State;
 use gears\accounts\Employee;
+use gears\accounts\CustomerVehicle;
 
 
 /**
@@ -31,6 +33,60 @@ use gears\accounts\Employee;
  * @package gears\services
  */
 class Job extends StatefulEntity {
+
+    /**
+     * @var int this job's id
+     */
+    public $jobId;
+    /**
+     * @var string this job's unique key
+     */
+    public $key;
+    /**
+     * @var \DateTime the time this job is created
+     */
+    public $createTime;
+    /**
+     * @var string summary
+     */
+    public $summary;
+    /**
+     * @var string description
+     */
+    public $desc;
+    /**
+     * @var Appointment The appointment to which this job references
+     */
+    public $appointment;
+    /**
+     * @var Employee The mechanic to which this job is assigned
+     */
+    public $mechanic;
+    /**
+     * @var CustomerVehicle The vehicle this job is working on.
+     */
+    public $customerVehicle;
+
+    /**
+     * PHP 5 allows developers to declare constructor methods for classes.
+     * Classes which have a constructor method call this method on each newly-created object,
+     * so it is suitable for any initialization that the object may need before it is used.
+     *
+     * Note: Parent constructors are not called implicitly if the child class defines a constructor.
+     * In order to run a parent constructor, a call to parent::__construct() within the child constructor is required.
+     *
+     * param [ mixed $args [, $... ]]
+     * @return void
+     * @link http://php.net/manual/en/language.oop5.decon.php
+     */
+    public function __construct() {
+        $this->jobId = -1;
+        $this->key = null;
+        $this->appointment = null;
+        $this->customerVehicle = null;
+        $this->mechanic = null;
+        $this->createTime = new \DateTime();
+    }
 
     /**
      * Update the data row in the database which links to this object.
@@ -59,6 +115,15 @@ class Job extends StatefulEntity {
      */
     public function copy() {
         // TODO: Implement copy() method.
+    }
+
+    /**
+     * Get the worksheet associates with this job. If this job has not started yet, A null point is returned.
+     * @return Worksheet|null Returns an instance of Worksheet which associate with this job; returns null if no
+     *                        worksheet available (in which case the Job has not started yet).
+     */
+    public function getWorksheet() {
+        return null;
     }
 
     /**
@@ -118,7 +183,17 @@ class Job extends StatefulEntity {
      * @return Job An instance of this entity.
      */
     protected static function createInstanceFromRow(array $row) : Job {
-
+        // ['job_id', 'job_key', 'create_time', 'summary', 'description', 'state', 'appointment_id',
+        // 'mechanic_id', 'customer_vehicle_id'];
+        $job = new Job();
+        $job->jobId = (int)$row['job_id'];
+        $job->jobId = $row['job_id'];
+        $job->jobId = $row['job_id'];
+        $job->jobId = $row['job_id'];
+        $job->jobId = $row['job_id'];
+        $job->jobId = $row['job_id'];
+        $job->jobId = $row['job_id'];
+        $job->jobId = $row['job_id'];
     }
 
 
