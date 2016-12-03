@@ -70,10 +70,6 @@ class Invoice extends StatefulEntity {
      * @var float
      */
     public $discRate = 0.00;
-    /**
-    * @var int
-    */
-    public $state;
 
 
     /**
@@ -91,9 +87,8 @@ class Invoice extends StatefulEntity {
     protected function __construct() {
         $this->state = State::PENDING;
         $date = date('Y-m-d H:i:s');
-        $date = DateTime::createFromFormat('Y-m-d H:i:s', $date);
-        $this->createTime = $date->format('Y-m-d H:i:s');
-        $this->updateTime = $date->format('Y-m-d H:i:s');
+        $this->createTime = new \DateTime();
+        $this->updateTime = new \DateTime();
         $this->appt = null;
         $this->invoiceId = -1;
     }
@@ -105,11 +100,13 @@ class Invoice extends StatefulEntity {
      */
     public function update():int {
         if ($this->invoiceId === -1) {
-            $vals = [$this->appt->appId, $this->createTime, $this->updateTime, $this->state, $this->taxRate, 
+            $vals = [$this->appt->appId, $this->createTime->format(DATE_ISO8601), 
+                        $this->updateTime->format(DATE_ISO8601), $this->state, $this->taxRate, 
                         $this->amtDue, $this->amtPayed, $this->discRate];
             return $this->insert($vals);
         }
-        $vals = [$this->appt->appId, $this->createTime, $this->updateTime, $this->state,
+        $vals = [$this->appt->appId, $this->createTime->format(DATE_ISO8601), 
+                    $this->updateTime->format(DATE_ISO8601), $this->state,
                      $this->taxRate, $this->amtDue, $this->amtPayed, $this->discRate, $this->invoiceId];
         $where = 'invoice_id = ?';
         return $this->updateTable($where, $vals);
@@ -238,8 +235,8 @@ class Invoice extends StatefulEntity {
         $inv = new Invoice($appId);
         $inv->invoiceId = (int)$row['invoice_id'];
         $inv->appt = Appointment::getInstance((int)$row['appointment_id']);
-        $inv->createTime = $row['create_time'];
-        $inv->updateTime = $row['update_time'];
+        $inv->createTime = new \DateTime($row['create_time']);
+        $inv->updateTime = new \DateTime($row['update_time']);
         $inv->state = (int)$row['state'];
         $inv->taxRate = (float)$row['tax_rate'];
         $inv->amtDue = (float)$row['amount_due'];
@@ -257,14 +254,18 @@ class Invoice extends StatefulEntity {
     public function updatePay():int {
         if($this->amtDue === $this->amtPayed){
             $this->state = State::PAYED;
+            $this->appt->state = State::DONE;
+            $this->appt->updateTime = new \DateTime();
+            $this->appt->update();
         }
         if($this->amtDue < $this->amtPayed){
             $this->amtPayed = $this->amtDue;
             $this->state = State::PAYED;
+            $this->appt->state = State::DONE;
+            $this->appt->updateTime = new \DateTime();
+            $this->appt->update();
         }
-        $date = date('Y-m-d H:i:s');
-        $date = DateTime::createFromFormat('Y-m-d H:i:s', $date);
-        $this->updateTime = $date->format('Y-m-d H:i:s');
+        $this->updateTime = new \DateTime();
         return self::update();
     }
 }

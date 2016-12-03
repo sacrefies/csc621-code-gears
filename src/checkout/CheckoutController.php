@@ -21,10 +21,12 @@ namespace gears\checkout;
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../conf/Settings.php';
 require_once __DIR__ . '/Invoice.php';
+require_once __DIR__ . '/../appointments/Appointment.php';
 
 use gears\Controller;
 use gears\conf\Settings;
 use gears\models\State;
+use gears\appointments\Appointment;
 
 
 /**
@@ -41,10 +43,10 @@ final class CheckoutController {
      * @return array Returns an array of all pending Invoices.
      */
     static public function getAllPendingInvoices():array {
-        $invoices = invoice::getAll();
+        $invoices = Invoice::getAll();
         $pending = array();
         foreach($invoices as $invoice) {
-            if($invoice->state === STATE::PENDING) {
+            if($invoice->getState() === STATE::PENDING) {
                 $pending[] = $invoice;
             }
         }
@@ -58,14 +60,31 @@ final class CheckoutController {
      * @return array Returns an array of all payed Invoices.
      */
     static public function getAllPayedInvoices():array {
-        $invoices = invoice::getAll();
+        $invoices = Invoice::getAll();
         $payed = array();
         foreach($invoices as $invoice) {
-            if($invoice->state === STATE::PAYED) {
+            if($invoice->getState() === STATE::PAYED) {
                 $payed[] = $invoice;
             }
         }
         return $payed;
+    }
+
+    /**
+     * Get an array of all invoicing Appointments.
+     *
+     *
+     * @return array Returns an array of all invoicing Appointments.
+     */
+    static public function getInvAppointments():array {
+        $appts = Appointment::getAll();
+        $invoicing = array();
+        foreach($appts as $appt) {
+            if($appt->getState() === STATE::INVOICING) {
+                $invoicing[] = $appt;
+            }
+        }
+        return $invoicing;
     }
 
 
@@ -95,6 +114,6 @@ final class CheckoutController {
         if (0 > $id) {
             return null;
         }
-        return invoice::getInstance($id);
+        return Invoice::getInstance($id);
     }
 }

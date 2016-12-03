@@ -20,6 +20,9 @@ namespace gears\checkout;
 
 require_once __DIR__ . '/CheckoutController.php';
 require_once __DIR__ . '/Invoice.php';
+require_once __DIR__ . '/../accounts/AccountController.php';
+
+use gears\accounts\AccountController;
 
 $id = (int)$_GET["id"];
 $amt = floatval($_GET["amt"]);
