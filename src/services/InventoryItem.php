@@ -16,11 +16,11 @@
  */
 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace gears\services;
 
-require_once __DIR__.'/../models/StaticEntity.php';
-require_once __DIR__.'/../models/Persisted.php';
+require_once __DIR__ . '/../models/StaticEntity.php';
+require_once __DIR__ . '/../models/Persisted.php';
 
 use gears\models\Persisted;
 use gears\models\StaticEntity;
@@ -30,7 +30,12 @@ use gears\models\StaticEntity;
  * Class InventoryItem
  * @package gears\services
  */
-class InventoryItem extends StaticEntity{
+class InventoryItem extends StaticEntity {
+    /**
+     * @var int The unique id of an inventory item.
+     */
+    public $itemId;
+
     /**
      * Update the data row in the database which links to this object.
      *

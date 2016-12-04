@@ -32,7 +32,6 @@ use gears\models\Persisted;
 use gears\models\StatefulEntity;
 use gears\database\DBEngine;
 use gears\appointments\Appointment;
-use gears\models\State;
 use gears\accounts\Employee;
 use gears\accounts\CustomerVehicle;
 
@@ -88,7 +87,7 @@ class Job extends StatefulEntity {
      * @return void
      * @link http://php.net/manual/en/language.oop5.decon.php
      */
-    public function __construct() {
+    protected function __construct() {
         $this->jobId = -1;
         $this->key = '';
         $this->appointment = null;
@@ -117,11 +116,10 @@ class Job extends StatefulEntity {
             $this->mechanic->empId, $this->customerVehicle->customer_vehicle_id];
         if ($this->jobId === -1) {
             return $this->insert($values);
-        } else {
-            $values[] = $this->jobId;
-            $where = 'job_id = ?';
-            return $this->updateTable($where, $values);
         }
+        $values[] = $this->jobId;
+        $where = 'job_id = ?';
+        return $this->updateTable($where, $values);
     }
 
     /**

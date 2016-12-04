@@ -43,7 +43,7 @@ abstract class StaticEntity implements Persisted {
      * @param array $values An array of the column values which are involved by $where. The sequence of the items must
      *                      be align with the column sequence in $where.
      *
-     * @return Persisted|null Returns an instance of this entity.
+     * @return mixed Returns an instance of this entity.
      */
     public static function getInstanceFromKeys(string $where, array $values) {
         $cols = implode(',', static::getColumns());

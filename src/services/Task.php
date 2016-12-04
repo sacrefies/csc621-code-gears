@@ -21,18 +21,20 @@ namespace gears\services;
 
 require_once __DIR__ . '/../models/StaticEntity.php';
 require_once __DIR__ . '/../models/Persisted.php';
-require_once __DIR__.'/InventoryItem.php';
-require_once __DIR__.'/Worksheet.php';
+require_once __DIR__ . '/InventoryItem.php';
+require_once __DIR__ . '/Worksheet.php';
+require_once __DIR__ . '/../database/DBEngine.php';
 
 use gears\models\Persisted;
 use gears\models\StaticEntity;
+use gears\database\DBEngine;
 
 
 /**
  * Class Task
  * @package gears\services
  */
-class Task extends StaticEntity{
+class Task extends StaticEntity {
 
     /**
      * @var Worksheet the worksheet
@@ -60,12 +62,57 @@ class Task extends StaticEntity{
     public $cost;
 
     /**
+     * Task constructor.
+     */
+    protected function __construct() {
+        $this->worksheet = null;
+        $this->invItem = null;
+        $this->quantity = 0;
+        $this->finishTime = new \DateTime('1970-01-01 00:00:00');
+    }
+
+    /**
      * Update the data row in the database which links to this object.
      *
      * @return int Returns 1 if update is successful; otherwise 0.
      */
     public function update() : int {
-        // TODO: Implement update() method.
+        if (!$this->worksheet || !$this->invItem) {
+            error_log('Either worksheet or inventory item of this task is null');
+            return -1;
+        }
+        // ['inventory_item_id', 'worksheet_job_id', 'quantity', 'is_done', 'finish_time', 'amount_cost'];
+        $values = [$this->invItem->itemId, $this->worksheet->job->jobId, $this->quantity, $this->isDone,
+            $this->finishTime->format(DATE_ISO8601), $this->cost];
+        // how do we check the existence of this task?
+        if (!self::getTaskInstance($this->worksheet->job->jobId, $this->invItem->itemId)) {
+            return $this->insert($values);
+        }
+        // this entity requires different way to update other than the general updateTable()
+        // ['quantity', 'is_done', 'finish_time', 'amount_cost' | where-> 'inventory_item_id', 'worksheet_job_id', ]
+        $values = array_slice($values, 2);
+        $values[] = $this->invItem->itemId;
+        $values[] = $this->worksheet->job->jobId;
+        $where = 'inventory_item_id = ? AND worksheet_job_id = ?';
+        $cols = array_slice(self::getUpdateColumns(), 2);
+        $table = self::getTableName();
+
+        foreach ($cols as $col) {
+            $cols = "$cols $col = ?,";
+        }
+        $cols = rtrim($cols, ',');
+        $sql = "UPDATE $table SET $cols WHERE $where";
+        $db = DBEngine::getInstance();
+        try {
+            $db->open();
+        } catch (\Exception $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
+            return -1;
+        }
+        $rc = $db->execute($sql, $values);
+        $db->close();
+        return $rc;
     }
 
     /**
@@ -74,7 +121,9 @@ class Task extends StaticEntity{
      * @return int Returns 1 if removal is successful; otherwise 0.
      */
     public function remove() : int {
-        // TODO: Implement remove() method.
+        $where = 'worksheet_job_id = ? AND inventory_item_id = ?';
+        $values = [$this->worksheet->job->jobId, $this->invItem->invItemId];
+        return $this->delete($where, $values);
     }
 
     /**
@@ -85,7 +134,13 @@ class Task extends StaticEntity{
      * @see Persisted::update()
      */
     public function copy() {
-        // TODO: Implement copy() method.
+        $task = new Task();
+        $task->isDone = $this->isDone;
+        $task->cost = $this->cost;
+        $task->finishTime = $this->finishTime;
+        $task->quantity = $this->quantity;
+        $task->worksheet = $this->worksheet;
+        $task->invItem = $this->invItem;
     }
 
     /**
@@ -94,10 +149,11 @@ class Task extends StaticEntity{
      *
      * @param Persisted $persisted The object to be copied.
      *
-     * @return Persisted Returns a new object which is an in-memory copy of $persisted.
+     * @return mixed Returns a new object which is an in-memory copy of $persisted.
+     * @throws \LogicException Not implemented yet
      */
     public static function copyFrom(Persisted $persisted) {
-        // TODO: Implement copyFrom() method.
+        throw new \LogicException('Not implemented yet');
     }
 
     /**
@@ -106,7 +162,7 @@ class Task extends StaticEntity{
      * @return Persisted Returns a new in-memory object of this entity.
      */
     public static function createNew() {
-        // TODO: Implement createNew() method.
+        return new Task;
     }
 
     /**
@@ -115,9 +171,27 @@ class Task extends StaticEntity{
      * @param int $id The unique of the data row in the database table.
      *
      * @return Persisted Returns an instance of this entity.
+     * @throws \BadFunctionCallException Use getTaskInstance(int, int) instead. This function is not suitable for this
+     *                                   entity.
+     * @see getTaskInstance(int, int)
      */
     public static function getInstance(int $id) {
-        // TODO: Implement getInstance() method.
+        throw new \BadFunctionCallException('Use getTaskInstance(int, int) instead. This function is not suitable for this entity.');
+    }
+
+    /**
+     * Create and initialize a an instance of Task entity from the database.
+     *
+     * @param int $sheetId         The unique id of a work sheet.
+     * @param int $inventoryItemId The unique id of an inventory item.
+     *
+     * @return Task|null An instance of Task or null if no task is found.
+     */
+    public static function getTaskInstance(int $sheetId, int $inventoryItemId) {
+        // 'inventory_item_id', 'worksheet_job_id',
+        $where = 'worksheet_job_id = ? AND inventory_item_id = ?';
+        $values = [$sheetId, $inventoryItemId];
+        return self::getInstanceFromKeys($where, $values);
     }
 
     /**
@@ -125,7 +199,7 @@ class Task extends StaticEntity{
      * @return array Returns this entity's table column names
      */
     public static function getColumns() : array {
-        // TODO: Implement getColumns() method.
+        return ['inventory_item_id', 'worksheet_job_id', 'quantity', 'is_done', 'finish_time', 'amount_cost'];
     }
 
     /**
@@ -133,7 +207,7 @@ class Task extends StaticEntity{
      * @return array Returns the column names for update/insertion
      */
     public static function getUpdateColumns() : array {
-        // TODO: Implement getUpdateColumns() method.
+        return self::getColumns();
     }
 
     /**
@@ -141,10 +215,18 @@ class Task extends StaticEntity{
      *
      * @param array $row The data row in the database.
      *
-     * @return Persisted An instance of this entity.
+     * @return Task An instance of this entity.
      * @throws \LogicException This method in StaticEntity class is not implemented.
      */
-    protected static function createInstanceFromRow(array $row) {
-        parent::createInstanceFromRow($row); // TODO: Change the autogenerated stub
+    protected static function createInstanceFromRow(array $row) : Task {
+        // ['inventory_item_id', 'worksheet_job_id', 'quantity', 'is_done', 'finish_time', 'amount_cost'];
+        $task = new Task();
+        $task->worksheet = Worksheet::getInstance((int)$row['worksheet_job_id']);
+        $task->invItem = InventoryItem::getInstance((int)$row['inventory_item_id']);
+        $task->finishTime = new \DateTime($row['finish_time']);
+        $task->cost = (double)$row['amount_cost'];
+        $task->isDone = (int)$row['is_done'];
+        $task->quantity = (int)$row['quantity'];
+        return $task;
     }
 }

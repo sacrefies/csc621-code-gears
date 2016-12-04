@@ -22,9 +22,12 @@ namespace gears\services;
 require_once __DIR__ . '/../models/StaticEntity.php';
 require_once __DIR__ . '/../models/Persisted.php';
 require_once __DIR__ . '/Job.php';
+require_once __DIR__ . '/Task.php';
+require_once __DIR__ . '/../database/DBEngine.php';
 
 use gears\models\Persisted;
 use gears\models\StaticEntity;
+use gears\database\DBEngine;
 
 
 /**
@@ -33,11 +36,11 @@ use gears\models\StaticEntity;
  */
 class Worksheet extends StaticEntity {
     /**
-     * @var Job
+     * @var Job The job object with which this Worksheet associates.
      */
     public $job;
     /**
-     * @var int
+     * @var int Mileage
      */
     public $mileage;
     /**
@@ -50,12 +53,58 @@ class Worksheet extends StaticEntity {
     public $endTime;
 
     /**
+     * Worksheet constructor.
+     */
+    protected function __construct() {
+        $this->job = null;
+        $this->startTime = new \DateTime('1970-01-01 00:00:00');
+        $this->endTime = new \DateTime('1970-01-01 00:00:00');
+    }
+
+    /**
      * Update the data row in the database which links to this object.
      *
      * @return int Returns 1 if update is successful; otherwise 0.
      */
     public function update() : int {
-        // TODO: Implement update() method.
+        if (!$this->job) {
+            error_log('This worksheet has no associated Job object.');
+            return -1;
+        }
+        // ['job_id', 'vehicle_mileage', 'start_time', 'end_time'];
+        $values = [$this->job->jobId, $this->mileage, $this->startTime->format(DATE_ISO8601),
+            $this->endTime->format(DATE_ISO8601)];
+        // check if there is one worksheet existing already
+        if (!$this->job->getWorksheet()) {
+            return $this->insert($values);
+        }
+
+        // this entity requires different way to update other than the general updateTable()
+        $cols = self::getUpdateColumns();
+        // remove job_id from update columns
+        unset($cols[0]);
+        // move job_id values to the end of $values
+        unset($values[0]);
+        $values[] = $this->job->jobId;
+        $where = 'job_id = ?';
+        $table = self::getTableName();
+
+        foreach ($cols as $col) {
+            $cols = "$cols $col = ?,";
+        }
+        $cols = rtrim($cols, ',');
+        $sql = "UPDATE $table SET $cols WHERE $where";
+        $db = DBEngine::getInstance();
+        try {
+            $db->open();
+        } catch (\Exception $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
+            return -1;
+        }
+        $rc = $db->execute($sql, $values);
+        $db->close();
+        return $rc;
     }
 
     /**
@@ -64,18 +113,25 @@ class Worksheet extends StaticEntity {
      * @return int Returns 1 if removal is successful; otherwise 0.
      */
     public function remove() : int {
-        // TODO: Implement remove() method.
+        $where = 'job_id = ?';
+        $value = [$this->job->jobId];
+        return $this->delete($where, $value);
     }
 
     /**
      * Make a copy of this object. The new copy is a brand new entity which does not exist in the database yet.
      * To save the new copy, invoke update() method.
      *
-     * @return Persisted Returns a new object which is an in-memory copy of this object.
+     * @return Worksheet Returns a new object which is an in-memory copy of this object.
      * @see Persisted::update()
      */
-    public function copy() {
-        // TODO: Implement copy() method.
+    public function copy() : Worksheet {
+        $sh = new Worksheet();
+        $sh->job = $this->job;
+        $sh->mileage = $this->mileage;
+        $sh->startTime = $this->startTime;
+        $sh->endTime = $this->endTime;
+        return $sh;
     }
 
     /**
@@ -83,8 +139,18 @@ class Worksheet extends StaticEntity {
      * @return array Returns an array of Task objects; Returns an empty array if there is not task.
      */
     public function getTasks() : array {
-        // TODO: getTasks
-        return array();
+        $where = 'worksheet_job_id = ?';
+        $values = [$this->job->jobId];
+        return Task::getList($where, $values);
+    }
+
+    /**
+     * Create a new instance of this entity.
+     *
+     * @return Worksheet Returns a new in-memory object of this entity.
+     */
+    public static function createNew() : Worksheet {
+        return new Worksheet();
     }
 
     /**
@@ -93,19 +159,11 @@ class Worksheet extends StaticEntity {
      *
      * @param Persisted $persisted The object to be copied.
      *
-     * @return Persisted Returns a new object which is an in-memory copy of $persisted.
+     * @return Worksheet Returns a new object which is an in-memory copy of $persisted.
+     * @throws \LogicException Not implemented yet.
      */
-    public static function copyFrom(Persisted $persisted) {
-        // TODO: Implement copyFrom() method.
-    }
-
-    /**
-     * Create a new instance of this entity.
-     *
-     * @return Persisted Returns a new in-memory object of this entity.
-     */
-    public static function createNew() {
-        // TODO: Implement createNew() method.
+    public static function copyFrom(Persisted $persisted) : Worksheet {
+        throw new \LogicException('Not implemented yet');
     }
 
     /**
@@ -113,10 +171,23 @@ class Worksheet extends StaticEntity {
      *
      * @param int $id The unique of the data row in the database table.
      *
-     * @return Persisted Returns an instance of this entity.
+     * @return Worksheet|null Returns an instance of this entity.
      */
     public static function getInstance(int $id) {
-        // TODO: Implement getInstance() method.
+        $cols = implode(',', self::getColumns());
+        $table = self::getTableName();
+        $sql = "SELECT $cols FROM $table WHERE job_id = :id";
+        $db = DBEngine::getInstance();
+        try {
+            $db->open();
+        } catch (\Exception $e) {
+            $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
+            error_log($msg);
+            return null;
+        }
+        $row = $db->query($sql, array(':id' => $id))->fetch(\PDO::FETCH_ASSOC);
+        $db->close();
+        return ($row) ? self::createInstanceFromRow($row) : null;
     }
 
     /**
@@ -124,7 +195,7 @@ class Worksheet extends StaticEntity {
      * @return array Returns this entity's table column names
      */
     public static function getColumns() : array {
-        // TODO: Implement getColumns() method.
+        return ['job_id', 'vehicle_mileage', 'start_time', 'end_time'];
     }
 
     /**
@@ -132,7 +203,7 @@ class Worksheet extends StaticEntity {
      * @return array Returns the column names for update/insertion
      */
     public static function getUpdateColumns() : array {
-        // TODO: Implement getUpdateColumns() method.
+        return self::getColumns();
     }
 
     /**
@@ -140,10 +211,15 @@ class Worksheet extends StaticEntity {
      *
      * @param array $row The data row in the database.
      *
-     * @return Persisted An instance of this entity.
-     * @throws \LogicException This method in StaticEntity class is not implemented.
+     * @return Worksheet An instance of this entity.
      */
-    protected static function createInstanceFromRow(array $row) {
-        parent::createInstanceFromRow($row); // TODO: Change the autogenerated stub
+    protected static function createInstanceFromRow(array $row) : Worksheet {
+        // ['job_id', 'vehicle_mileage', 'start_time', 'end_time'];
+        $sh = new Worksheet();
+        $sh->job = Job::getInstance((int)$row['job_id']);
+        $sh->endTime = new \DateTime($row['end_time']);
+        $sh->startTime = new \DateTime($row['start_time']);
+        $sh->mileage = (int)$row['vehicle_mileage'];
+        return $sh;
     }
 }
