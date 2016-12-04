@@ -26,6 +26,7 @@ require_once __DIR__ . '/../models/Persisted.php';
 require_once __DIR__ . '/../accounts/Employee.php';
 require_once __DIR__ . '/../accounts/CustomerVehicle.php';
 require_once __DIR__ . '/../accounts/CustomerVehicle.php';
+require_once __DIR__ . '/Worksheet.php';
 
 
 use gears\models\Persisted;
