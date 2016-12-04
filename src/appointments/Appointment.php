@@ -86,7 +86,6 @@ class Appointment extends StatefulEntity {
      * In order to run a parent constructor, a call to parent::__construct() within the child constructor is required.
      *
      * param [ mixed $args [, $... ]]
-     * @return void
      * @link http://php.net/manual/en/language.oop5.decon.php
      */
     protected function __construct() {
@@ -158,7 +157,7 @@ class Appointment extends StatefulEntity {
     public function getJob() {
         // TODO: getJob()
         $where = 'appointment_id = ?';
-        $values = $this->appId;
+        $values = [$this->appId];
         return Job::getInstanceFromKeys($where, $values);
     }
 
