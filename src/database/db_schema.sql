@@ -262,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `inventoryitem` (
   `convention_vehicle_id` INT NOT NULL,
   `item_code` VARCHAR(200) NOT NULL,
   `part_name` VARCHAR(200) NOT NULL,
-  `cateory` VARCHAR(45) NOT NULL DEFAULT 'PARTS' COMMENT 'PARTS or LABOR',
+  `category` VARCHAR(45) NOT NULL DEFAULT 'PARTS' COMMENT 'PARTS or LABOR',
   `unit` VARCHAR(45) NOT NULL,
   `unit_price` REAL NOT NULL DEFAULT 0,
   PRIMARY KEY (`item_id`),

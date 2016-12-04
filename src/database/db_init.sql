@@ -21,22 +21,22 @@ INSERT INTO `conventionvehicle` (`vehicle_id`, `is_auto_trans`, `is_all_wheel`, 
 INSERT INTO `conventionvehicle` (`vehicle_id`, `is_auto_trans`, `is_all_wheel`, `make`, `year`, `trim`, `model`) VALUES (7, 1, 0, 'Ford', 2007, 'SES', 'Focus');
 INSERT INTO `conventionvehicle` (`vehicle_id`, `is_auto_trans`, `is_all_wheel`, `make`, `year`, `trim`, `model`) VALUES (8, 1, 1, 'Ford', 2007, 'ST', 'Focus');
 -- inventory items
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (1, 1, 'VCV10JPP', 'front-kit', 'PARTS', 'pair', 70);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (2, 1, 'MCV10', 'front-kit', 'PARTS', 'pair', 70);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (3, 2, 'SXV20JPPCE W/14” DW', 'front-kit', 'PARTS', 'pair', 80);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (4, 3, 'SXV20JPPCE W/14” DW', 'front-kit', 'PARTS', 'pair', 80);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (5, 3, 'SXV10', 'rear-kit', 'PARTS', 'pair', 80);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (6, 2, 'PK20R11', 'spark plugs', 'PARTS', 'plug', 15);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (7, 3, 'PK20R11', 'spark plugs', 'PARTS', 'plug', 15);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (8, 4, 'PK20R11', 'spark plugs', 'PARTS', 'plug', 15);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (11, 4, 'SXV10', 'rear-kit', 'PARTS', 'pair', 80);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (13, 4, 'MCV10', 'front-kit', 'PARTS', 'pair', 80);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (14, 5, 'MCV10', 'front-kit', 'PARTS', 'pair', 80);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (15, 5, 'SXV10', 'rear-kit', 'PARTS', 'pair', 80);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (16, 5, 'PK20R11', 'spark plugs', 'PARTS', 'plug', 15);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (17, 6, 'INSPECT-10', 'inspection', 'LABOR', 'hour', 54);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (18, 7, 'INSPECT-10', 'inspection', 'LABOR', 'hour', 54);
-INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `cateory`, `unit`, `unit_price`) VALUES (19, 1, 'INSPECT-20', 'inspection', 'LABOR', 'hour', 54);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (1, 1, 'VCV10JPP', 'front-kit', 'PARTS', 'pair', 70);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (2, 1, 'MCV10', 'front-kit', 'PARTS', 'pair', 70);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (3, 2, 'SXV20JPPCE W/14” DW', 'front-kit', 'PARTS', 'pair', 80);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (4, 3, 'SXV20JPPCE W/14” DW', 'front-kit', 'PARTS', 'pair', 80);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (5, 3, 'SXV10', 'rear-kit', 'PARTS', 'pair', 80);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (6, 2, 'PK20R11', 'spark plugs', 'PARTS', 'plug', 15);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (7, 3, 'PK20R11', 'spark plugs', 'PARTS', 'plug', 15);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (8, 4, 'PK20R11', 'spark plugs', 'PARTS', 'plug', 15);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (11, 4, 'SXV10', 'rear-kit', 'PARTS', 'pair', 80);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (13, 4, 'MCV10', 'front-kit', 'PARTS', 'pair', 80);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (14, 5, 'MCV10', 'front-kit', 'PARTS', 'pair', 80);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (15, 5, 'SXV10', 'rear-kit', 'PARTS', 'pair', 80);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (16, 5, 'PK20R11', 'spark plugs', 'PARTS', 'plug', 15);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (17, 6, 'INSPECT-10', 'inspection', 'LABOR', 'hour', 54);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (18, 7, 'INSPECT-10', 'inspection', 'LABOR', 'hour', 54);
+INSERT INTO `inventoryitem` (`item_id`, `convention_vehicle_id`, `item_code`, `part_name`, `category`, `unit`, `unit_price`) VALUES (19, 1, 'INSPECT-20', 'inspection', 'LABOR', 'hour', 54);
 -- customer
 INSERT INTO `customer` (`customer_id`, `first_name`, `last_name`, `phone_number`, `customer_zip`) VALUES (1, 'Jared', 'Williams', '215-666-7777', NULL);
 INSERT INTO `customer` (`customer_id`, `first_name`, `last_name`, `phone_number`, `customer_zip`) VALUES (2, 'Bill', 'Fisher', '613-567-9999', '19140');
