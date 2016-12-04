@@ -41,7 +41,7 @@ final class JobsController {
      *
      * @return Job|null Returns an instance of Job or null if not found.
      */
-    public function getJob(int $jobId) {
+    public static function getJob(int $jobId) {
         return (-1 === $jobId) ? null : Job::getInstance($jobId);
     }
 
