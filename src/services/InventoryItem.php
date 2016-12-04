@@ -21,7 +21,9 @@ namespace gears\services;
 
 require_once __DIR__ . '/../models/StaticEntity.php';
 require_once __DIR__ . '/../models/Persisted.php';
+require_once __DIR__.'/../accounts/ConventionVehicle.php';
 
+use gears\accounts\ConventionVehicle;
 use gears\models\Persisted;
 use gears\models\StaticEntity;
 
@@ -35,6 +37,39 @@ class InventoryItem extends StaticEntity {
      * @var int The unique id of an inventory item.
      */
     public $itemId;
+    /**
+     * @var ConventionVehicle The conventional vehicle for which this item is.
+     */
+    public $vehicle;
+    /**
+     * @var string item code
+     */
+    public $code;
+    /**
+     * @var string part name
+     */
+    public $part;
+    /**
+     * @var string unit
+     */
+    public $unit;
+    /**
+     * @var double unit price
+     */
+    public $unitPrice;
+    /**
+     * @var string category: PARTS|LABOR
+     */
+    public $category;
+
+    /**
+     * InventoryItem constructor.
+     */
+    protected function __construct() {
+        $this->vehicle = null;
+        $this->itemId = -1;
+    }
+
 
     /**
      * Update the data row in the database which links to this object.

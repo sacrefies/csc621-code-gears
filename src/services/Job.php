@@ -258,5 +258,6 @@ class Job extends StatefulEntity {
         $job->appointment = Appointment::getInstance((int)$row['appointment_id']);
         $job->mechanic = Employee::getInstance((int)$row['mechanic_id']);
         $job->customerVehicle = CustomerVehicle::getInstance((int)$row['customer_vehicle_id']);
+        return $job;
     }
 }
