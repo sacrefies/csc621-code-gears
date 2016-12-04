@@ -46,7 +46,7 @@ $cvId = (isset($_GET['customer_vehicle_Id']) && $_GET['customer_vehicle_Id']) ? 
 // get the vehicle
 $cv = AccountController::getCustomerVehicle($cvId);
 $fullName = implode(' ', [$cv->conventionVehicle->year, $cv->conventionVehicle->make, $cv->conventionVehicle->model, $cv->conventionVehicle->trim]);
-$historyJobs = $cv ? $cv->getServicedJobs() : [];
+$jobs = $cv ? $cv->getServicedJobs() : [];
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -126,9 +126,9 @@ $historyJobs = $cv ? $cv->getServicedJobs() : [];
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
-        Service Records: <?php echo (0 === count($historyJobs)) ? 'No record' : count($historyJobs); ?></div>
+        Service Records: <?php echo (0 === count($jobs)) ? 'No record' : count($jobs); ?></div>
     <div class="panel-body">
-        <?php if ($historyJobs): ?>
+        <?php if ($jobs): ?>
             <table class="table table-hover">
                 <thead>
                 <th>Summary</th>
@@ -137,7 +137,7 @@ $historyJobs = $cv ? $cv->getServicedJobs() : [];
                 <th>Mechanic</th>
                 </thead>
                 <tbody>
-                <?php foreach ($historyJobs as $job): ?>
+                <?php foreach ($jobs as $job): ?>
                     <tr>
                         <td>
                             <a href="/services/single_job_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->summary ?></a>
