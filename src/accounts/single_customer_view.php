@@ -34,7 +34,7 @@ $pageHeader = 'Profiles';
  * @var int An integer which indicates the current active nav menu tab.
  *          0: dashboard, 1: appointment, 2: in-service, 3: checkout, 4: mechanics
  */
-$activeMenu = 4;
+$activeMenu = 5;
 
 include __DIR__ . '/../header.php';
 

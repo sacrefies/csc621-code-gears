@@ -148,7 +148,7 @@ class CustomerVehicle extends StaticEntity {
     public function getServicedJobs() : array {
         $where = 'customer_vehicle_id = ? AND state IN (?, ?)';
         $values = [$this->customer_vehicle_id, State::CANCELLED, State::DONE];
-        return Job::getInstanceFromKeys($where, $values);
+        return Job::getList($where, $values);
     }
 
     /**
@@ -181,7 +181,7 @@ class CustomerVehicle extends StaticEntity {
     public static function getInstance(int $id) {
         $cols = implode(',', self::getColumns());
         $table = self::getTableName();
-        $sql = "SELECT $cols FROM $table WHERE convention_vehicle_id = :id";
+        $sql = "SELECT $cols FROM $table WHERE customer_vehicle_id = :id";
         $db = DBEngine::getInstance();
         try {
             $db->open();

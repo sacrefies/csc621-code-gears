@@ -198,6 +198,17 @@ final class AccountController {
     }
 
     /**
+     * Get an instance of CustomerVehicle.
+     *
+     * @param int $customerVehicleId
+     *
+     * @return CustomerVehicle|null
+     */
+    public static function getCustomerVehicle(int $customerVehicleId) {
+        return (-1 === $customerVehicleId) ? null : CustomerVehicle::getInstance($customerVehicleId);
+    }
+
+    /**
      * @param string $fname
      * @param string $lname
      * @param string $phone
@@ -212,7 +223,7 @@ final class AccountController {
         $cust->phoneNumber = $phone;
         $cust->zip = $zip;
         $rc = $cust->update();
-        return (-1 === $rc)? false : (bool)$rc;
+        return (-1 === $rc) ? false : (bool)$rc;
     }
 
     /**
@@ -230,6 +241,6 @@ final class AccountController {
         $cust->phoneNumber = $phone;
         $cust->zip = $zip;
         $rc = $cust->update();
-        return (-1 === $rc)? false : (bool)$rc;
+        return (-1 === $rc) ? false : (bool)$rc;
     }
 }
