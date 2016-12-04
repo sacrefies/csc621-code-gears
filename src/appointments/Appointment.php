@@ -111,11 +111,10 @@ class Appointment extends StatefulEntity {
             $this->endTime->format(DATE_ISO8601), $this->customer->customerId, $this->state];
         if ($this->appId === -1) {
             return $this->insert($values);
-        } else {
-            $values[] = $this->appId;
-            $where = 'appointment_id = ?';
-            return $this->updateTable($where, $values);
         }
+        $values[] = $this->appId;
+        $where = 'appointment_id = ?';
+        return $this->updateTable($where, $values);
     }
 
     /**

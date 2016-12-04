@@ -118,22 +118,24 @@ function toUTF8(string $val) {
             <a class="navbar-brand" href="#"><?php echo $pageHeader ?></a>
         </div>
         <ul class="nav navbar-nav">
-            <li <?php if ('dashboard' === getActivatedMenuTabName($activeMenu)) {
-                echo 'class="active"';
-            } ?>><a href="/dashboard.php">Dashboard</a></li>
-            <li class="dropdown" <?php if ('appointment' === getActivatedMenuTabName($activeMenu)) {
-                echo 'class="active"';
-            } ?>>
+            <li <?php echo ('dashboard' === getActivatedMenuTabName($activeMenu)) ? 'class="active"' : ''; ?>>
+                <a href="/dashboard.php">Dashboard</a></li>
+            <li class="dropdown <?php echo ('appointment' === getActivatedMenuTabName($activeMenu)) ? ' active' : ''; ?>">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointment<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="#">New Appointment</a></li>
                     <li><a href="/appointments/weekly_view.php">This Week</a></li>
                 </ul>
             </li>
-            <li <?php if ('in-service' === getActivatedMenuTabName($activeMenu)) {
-                echo 'class="active"';
-            } ?>><a href="#">In-Service</a></li>
-            <li class="dropdown" <?php echo ('checkout' === getActivatedMenuTabName($activeMenu)) ? 'class="active"' : ''; ?>>
+            <li class="dropdown<?php echo ('in-service' === getActivatedMenuTabName($activeMenu)) ? ' active' : ''; ?>">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">In-Service<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a href="/services/jobs_view.php">Jobs Servicing</a></li>
+                    <li><a href="/services/jobs_vehicle_view.php">Vehicles In Service</a></li>
+                    <li><a href="/checkout/history_jobs_view.php">History Jobs</a></li>
+                </ul>
+            </li>
+            <li class="dropdown<?php echo ('checkout' === getActivatedMenuTabName($activeMenu)) ? ' active' : ''; ?>">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Checkout<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="/checkout/invAppointments.php">Pending Appointments</a></li>
@@ -142,19 +144,16 @@ function toUTF8(string $val) {
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown" <?php if ('customers' === getActivatedMenuTabName($activeMenu)) {
-                echo 'class="active"';
-            } ?>>
+            <li class="dropdown<?php echo ('customers' === getActivatedMenuTabName($activeMenu)) ? ' active' : ''; ?>">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Customers<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="/accounts/customer_edit.php">Register New Customer</a></li>
-                    <li><a href="/accounts/customer_vehicle_edit_view.php?mode=0">Register New Customer Vehicle</a></li>
+                    <li><a href="/accounts/customer_edit.php">New Customer</a></li>
                     <li><a href="/accounts/customers_view.php">Customer List</a></li>
                 </ul>
             </li>
-            <li <?php if ('mechanics' === getActivatedMenuTabName($activeMenu)) {
-                echo 'class="active"';
-            } ?>><a href="/accounts/mechanics_view.php">Mechanics</a></li>
+            <li <?php echo ('mechanics' === getActivatedMenuTabName($activeMenu)) ? 'class="active"' : ''; ?>>
+                <a href="/accounts/mechanics_view.php">Mechanics</a>
+            </li>
             <?php
             if (strtolower(AccountController::getSelfScript()) !== '/login.php') {
                 echo '<li><a href="/accounts/single_employee_view.php?empId=' . getUserId() . '"><span class="glyphicon glyphicon-user"></span> ' . getUserName() . '</a></li>' . PHP_EOL;
