@@ -104,8 +104,13 @@ final class CheckoutController {
         $inv = Invoice::createNew();
         $inv->appt = Appointment::getInstance($apptId);
         $inv->discRate = $disc;
-        $inv->amtPayed = $amt;
         $amtDue = self::getAmtDue($inv->appt, $disc);
+        if($disc == 1){
+            $inv->amtPayed = $amtDue;
+        }
+        else{
+            $inv->amtPayed = $amt;
+        }
         $inv->amtDue = $amtDue;
         return $inv->updatePay();
     }
@@ -116,14 +121,15 @@ final class CheckoutController {
      * @return float Returns the total amt due.
      */
     static public function getAmtDue(Appointment $appt, float $disc) {
-        /*$job = $appt->getJob();
+        $job = $appt->getJob();
         $worksheet = $job->getWorksheet();
         $tasks = $worksheet->getTasks();
+        $amtDue = 0;
 
         foreach($tasks as $task){
             $amtDue += $task->cost;
-        }*/
-        $amtDue = 20;
+        }
+        //$amtDue = 20;
         $taxRate = 0.06;
 
         if($disc == 0) {
@@ -134,8 +140,10 @@ final class CheckoutController {
         }
         $amtDue = $amtDue - $amtOff;
         $tax = $amtDue * $taxRate;
+        $due = round(($amtDue + $tax), 2);
+        $amtDue = floatval($due);
 
-        return $amtDue + $tax;
+        return $amtDue;
 
     }
 

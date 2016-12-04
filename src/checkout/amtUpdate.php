@@ -32,8 +32,9 @@ if(isset($_GET["disc"])){
 
 $id = (int)$_GET["id"];
 $appt = Appointment::getInstance($id);
+$return = round(CheckoutController::getAmtDue($appt, $disc), 2);
 
-echo CheckoutController::getAmtDue($appt, $disc);
+echo number_format($return, 2);;
 
 
 ?>

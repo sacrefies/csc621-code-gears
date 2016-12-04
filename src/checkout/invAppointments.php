@@ -51,6 +51,7 @@ include __DIR__ . '/../header.php';
                 echo "<th>Subject</th>";
                 echo "<th>Description</th>";
                 echo "<th>Time Created</th>";
+                echo "<th></th>";
                 echo "</tr>";
                 foreach ($appts as $appt) {
                     $id = $appt->appId;
@@ -81,20 +82,26 @@ include __DIR__ . '/../header.php';
                 <h4 class="modal-title edit-content">Create Invoice</h4>
             </div>
             <div class="modal-body">
-            	<label for="discAmt">Enter Discount:</label>
-		        <input name="discAmt" type="number" id="discAmt" value='' 
-		        	class="form-control" placeholder="Discount"/>
-		        <label><input type="checkbox" value=""
-		        	onclick="enableDisable(this.checked, 'discAmt')">  No Discount</label>
-		        <br>
-                <label id="label" for="payAmt">Enter Payment:</label>
-		        <input name="payAmt" type="number" id="payAmt" value=''
-		        	class="form-control" placeholder="Amount Payed"/>
-		        <label><input type="checkbox" value="" 
-		        	onclick="enableDisable(this.checked, 'payAmt')">  Pay Later</label>
-		        <br>
-		        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="create()">Submit</button>
-		        <input name="appId" id="appId" type="number" class="form-control" style="visibility:hidden;"/>
+            	<form action="javascript:create()" data-toggle="validator" role="form">
+            		<div class="form-group">
+		            	<label for="discAmt">Enter Discount:</label>
+				        <input name="discAmt" type="text" id="discAmt" pattern="^1?\.\d{1,2}$" 
+				        	class="form-control" placeholder="Discount"/>
+				        <label><input type="checkbox" value=""
+				        	onclick="enableDisable(this.checked, 'discAmt')">  No Discount</label>
+				        <br>
+		                <label id="label" for="payAmt">Enter Payment:</label>
+				        <input name="payAmt" type="text" id="payAmt"
+				        	pattern="^\d+(\.\d{1,2})?$" class="form-control" placeholder="Amount Payed"/>
+				        <label><input type="checkbox" value=""
+				        	onclick="enableDisable(this.checked, 'payAmt')">  Pay Later</label>
+				        <div class="help-block with-errors"></div>
+				        <input name="appId" id="appId" type="number" class="form-control" style="visibility:hidden;"/>
+			    	</div>
+			    	<div class="form-group">
+            			<input class="btn btn-primary" type="submit" name="submit" value="Submit"/>
+            		</div>
+		    	</form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -127,7 +134,8 @@ include __DIR__ . '/../header.php';
         xhttp.onreadystatechange = function () {
         	if (xhttp.readyState == 4 && xhttp.status == 200) {
                 var data = xhttp.responseText;
-                document.getElementById('label').innerHTML = "Enter Payment (" + data + " due):";
+                document.getElementById('label').innerHTML = 
+                	"Enter Payment ($" + data + " due):";
             }
         }//end onreadystatechange
         var link = "amtUpdate.php?id=" + id + "&disc=" + disc;
@@ -141,6 +149,8 @@ include __DIR__ . '/../header.php';
     }
 
 	function create() {
+		console.log("hello");
+		$('#invCreate').modal('hide');
         var id = document.getElementById("appId").value;
         var disc = document.getElementById("discAmt").value;
         var amt = document.getElementById("payAmt").value;
