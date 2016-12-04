@@ -81,7 +81,8 @@ include __DIR__ . '/../header.php';
                         $amtDue = round($invoice->amtDue, 2);
                         echo "<tr>";
                         echo "<td>" . $id . "</td>";
-                        echo "<td>" . $custName . "</td>";
+                        echo "<td><a href='/accounts/customer_individual_view.php?customerId=".$cust->customerId."'>" . 
+                    		$custName . "</a></td>";
                         echo "<td>" . $subject . "</td>";
                         echo "<td>" . $invoice->createTime->format('Y-m-d H:i:s') . "</td>";
                         echo "<td>" . $invoice->updateTime->format('Y-m-d H:i:s') . "</td>";
@@ -119,7 +120,8 @@ include __DIR__ . '/../header.php';
                         $cost = round($invoice->amtDue, 2);
                         echo "<tr>";
                         echo "<td>" . $id . "</td>";
-                        echo "<td>" . $custName . "</td>";
+                        echo "<td><a href='/accounts/customer_individual_view.php?customerId=".$cust->customerId."'>" . 
+                    		$custName . "</a></td>";
                         echo "<td>" . $subject . "</td>";
                         echo "<td>" . $invoice->createTime->format('Y-m-d H:i:s') . "</td>";
                         echo "<td>" . $invoice->updateTime->format('Y-m-d H:i:s') . "</td>";

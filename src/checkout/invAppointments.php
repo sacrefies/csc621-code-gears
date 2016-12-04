@@ -56,14 +56,16 @@ include __DIR__ . '/../header.php';
                 foreach ($appts as $appt) {
                     $id = $appt->appId;
                     $subject = $appt->subject;
+                    $desc = $appt->desc;
                     $cust = Customer::getInstance($appt->customer->customerId);
                     $custFirst = $cust->firstName;
                     $custLast = $cust->lastName;
                     $custName = "" . $custFirst . " " . $custLast;
                     echo "<tr>";
-                    echo "<td>" . $id . "</td>";
-                    echo "<td>" . $custName . "</td>";
+                    echo "<td><a href='/accounts/customer_individual_view.php?customerId=".$cust->customerId."'>" . 
+                    	$custName . "</a></td>";
                     echo "<td>" . $subject . "</td>";
+                    echo "<td>" . $desc . "</td>";
                     echo "<td>" . $appt->createTime->format('Y-m-d H:i:s') . "</td>";
                     echo "<td><button class='btn btn-success btn-sm' data-toggle='modal' data-target='#invCreate' data-yourParameter='$id'>Checkout</button></td>";
                     echo "</tr>";
