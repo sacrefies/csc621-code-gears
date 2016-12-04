@@ -19,14 +19,11 @@ declare(strict_types = 1);
 namespace gears\services;
 
 require_once __DIR__ . '/../Controller.php';
-require_once __DIR__ . '/../conf/Settings.php';
 require_once __DIR__ . '/Job.php';
 require_once __DIR__ . '/../appointments/Appointment.php';
 
 use gears\Controller;
-use gears\conf\Settings;
 use gears\models\State;
-use gears\services\Job;
 use gears\appointments\Appointment;
 
 
@@ -38,6 +35,17 @@ final class JobsController {
     use Controller;
 
     /**
+     * Get an instance of Job
+     *
+     * @param int $jobId The unique id of the job.
+     *
+     * @return Job|null Returns an instance of Job or null if not found.
+     */
+    public function getJob(int $jobId) {
+        return (-1 === $jobId) ? null : Job::getInstance($jobId);
+    }
+
+    /**
      * Get an array of all active Jobs.
      *
      *
@@ -46,9 +54,9 @@ final class JobsController {
     static public function getAllActiveJobs():array {
         $jobs = Job::getAll();
         $active = array();
-        foreach($jobs as $job) {
-        	$state = $job->getState();
-            if($state === State::NEW || $state === State::INSPECTING || $state === State::ONGOING) {
+        foreach ($jobs as $job) {
+            $state = $job->getState();
+            if ($state === State::NEW || $state === State::INSPECTING || $state === State::ONGOING) {
                 $active[] = $job;
             }
         }
@@ -64,9 +72,9 @@ final class JobsController {
     static public function getAllNewJobs():array {
         $jobs = Job::getAll();
         $new = array();
-        foreach($jobs as $job) {
-        	$state = $job->getState();
-            if($state === State::NEW) {
+        foreach ($jobs as $job) {
+            $state = $job->getState();
+            if ($state === State::NEW) {
                 $new[] = $job;
             }
         }
@@ -82,9 +90,9 @@ final class JobsController {
     static public function getAllInspectingJobs():array {
         $jobs = Job::getAll();
         $inspecting = array();
-        foreach($jobs as $job) {
-        	$state = $job->getState();
-            if($state === State::INSPECTING) {
+        foreach ($jobs as $job) {
+            $state = $job->getState();
+            if ($state === State::INSPECTING) {
                 $inspecting[] = $job;
             }
         }
@@ -100,9 +108,9 @@ final class JobsController {
     static public function getAllOngoingJobs():array {
         $jobs = Job::getAll();
         $ongoing = array();
-        foreach($jobs as $job) {
-        	$state = $job->getState();
-            if($state === State::ONGOING) {
+        foreach ($jobs as $job) {
+            $state = $job->getState();
+            if ($state === State::ONGOING) {
                 $ongoing[] = $job;
             }
         }
@@ -118,9 +126,9 @@ final class JobsController {
     static public function getAllDoneJobs():array {
         $jobs = Job::getAll();
         $done = array();
-        foreach($jobs as $job) {
-        	$state = $job->getState();
-            if($state === State::CANCELLED || $state === State::DONE) {
+        foreach ($jobs as $job) {
+            $state = $job->getState();
+            if ($state === State::CANCELLED || $state === State::DONE) {
                 $done[] = $job;
             }
         }
