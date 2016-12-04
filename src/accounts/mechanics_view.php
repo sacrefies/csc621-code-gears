@@ -63,7 +63,7 @@ $emps = AccountController::getAllEmployees();
                 <?php foreach ($emps as $emp) { ?>
                     <tr>
                         <td>
-                            <a href="single_employee_view.php?empId=<?php echo $emp->empId; ?>"><?php echo $emp->empCode; ?></a>
+                            <a href="mechanic_individual_view.php?empId=<?php echo $emp->empId; ?>"><?php echo $emp->empCode; ?></a>
                         </td>
                         <td><?php echo $emp->fname; ?></td>
                         <td><?php echo $emp->lname; ?></td>

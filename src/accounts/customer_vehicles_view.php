@@ -67,12 +67,12 @@ $cvs = ($customerId !== -1) ? AccountController::getCustomerVehiclesByCustomer($
                 <?php foreach ($cvs as $cv): ?>
                     <tr>
                         <td>
-                            <a href="single_customer_vehicle_view.php?customer_vehicle_Id=<?php echo $cv->customer_vehicle_id; ?>">
+                            <a href="customer_vehicle_individual_view.php?customer_vehicle_Id=<?php echo $cv->customer_vehicle_id; ?>">
                                 <?php echo "{$cv->conventionVehicle->year} {$cv->conventionVehicle->make} {$cv->conventionVehicle->model} {$cv->conventionVehicle->trim}"; ?>
                             </a>
                         </td>
                         <td>
-                            <a href="single_customer_view.php?customerId=<?php echo $cv->customer->customerId; ?>">
+                            <a href="customer_individual_view.php?customerId=<?php echo $cv->customer->customerId; ?>">
                                 <?php echo AccountController::getCustomerFullName($cv->customer); ?>
                             </a>
                         </td>

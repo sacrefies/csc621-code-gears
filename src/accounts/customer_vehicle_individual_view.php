@@ -99,7 +99,7 @@ $jobs = $cv ? $cv->getServicedJobs() : [];
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="owner">Owner:</label>
                     <div class="col-sm-10">
-                        <a href="single_customer_view.php?customerId=<?php echo $cv->customer->customerId; ?>"
+                        <a href="customer_individual_view.php?customerId=<?php echo $cv->customer->customerId; ?>"
                            id="owner"><?php echo AccountController::getCustomerFullName($cv->customer); ?></a>
                     </div>
                 </div>
@@ -108,7 +108,7 @@ $jobs = $cv ? $cv->getServicedJobs() : [];
                     <div class="col-sm-10">
                         <?php if ($cv->isInService()): ?>
                             <?php $job = $cv->getServicingJob(); ?>
-                            <a href="/services/single_job_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->summary; ?></a> by
+                            <a href="/services/job_individual_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->summary; ?></a> by
                             <a href="/accounts/single_employee_view.php?empId=<?php echo $job->mechanic->empId; ?>"><?php echo $job->mechanic->fname . ' ' . $job->mechanic->lname; ?></a>
                         <?php else: ?>
                             <h4><span class="label label-default" id="jobs">NOT AT STORE</span></h4>
@@ -140,13 +140,13 @@ $jobs = $cv ? $cv->getServicedJobs() : [];
                 <?php foreach ($jobs as $job): ?>
                     <tr>
                         <td>
-                            <a href="/services/single_job_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->summary ?></a>
+                            <a href="/services/job_individual_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->summary ?></a>
                         </td>
                         <td>
-                            <a href="/services/single_job_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->key ?></a>
+                            <a href="/services/job_individual_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->key ?></a>
                         </td>
                         <td><?php echo $job->finishTime->format('m/d/Y h:i A') ?></td>
-                        <td><a href="/accounts/single_employee_view.php?empId=<?php echo $job->mechanic->empId; ?>"><?php echo $job->mechanic->fname . ' ' . $job->mechanic->lname; ?></a></td>
+                        <td><a href="/accounts/mechanic_individual_view.php?empId=<?php echo $job->mechanic->empId; ?>"><?php echo $job->mechanic->fname . ' ' . $job->mechanic->lname; ?></a></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

@@ -57,7 +57,7 @@ $cvs = AccountController::getAllCustomers();
                 <?php foreach ($cvs as $cust): ?>
                     <tr>
                         <td>
-                            <a href="single_customer_view.php?customerId=<?php echo $cust->customerId; ?>">
+                            <a href="customer_individual_view.php?customerId=<?php echo $cust->customerId; ?>">
                                 <?php echo AccountController::getCustomerFullName($cust); ?>
                             </a>
                         </td>

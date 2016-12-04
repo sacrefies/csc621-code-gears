@@ -73,14 +73,14 @@ include __DIR__ . '/header.php';
                         <?php foreach ($jobs as $job): ?>
                             <tr>
                                 <td>
-                                    <a href="/services/single_job_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->summary ?></a>
+                                    <a href="/services/job_individual_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->summary ?></a>
                                 </td>
                                 <td>
-                                    <a href="/services/single_job_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->key ?></a>
+                                    <a href="/services/job_individual_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->key ?></a>
                                 </td>
                                 <td><?php echo $job->finishTime->format('m/d/Y h:i A') ?></td>
                                 <td>
-                                    <a href="/accounts/single_employee_view.php?empId=<?php echo $job->mechanic->empId; ?>"><?php echo $job->mechanic->fname . ' ' . $job->mechanic->lname; ?></a>
+                                    <a href="/accounts/mechanic_individual_view.php?empId=<?php echo $job->mechanic->empId; ?>"><?php echo $job->mechanic->fname . ' ' . $job->mechanic->lname; ?></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
