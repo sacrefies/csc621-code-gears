@@ -58,117 +58,25 @@ include __DIR__ . '/../header.php';
                 <div id="newTab" role="tabpanel" class="tab-pane active">
                     <?php
                     $jobs = JobsController::getAllNewJobs();
-                    echo "<table class='table table-striped'>";
-                    echo "<tr>";
-                    echo "<th>Job</th>";
-                    echo "<th>Customer</th>";
-                    echo "<th>Summary</th>";
-                    echo "<th>Time Created</th>";
-                    echo "<th></th>";
-                    echo "</tr>";
-                    foreach ($jobs as $job) {
-                        $key = $job->key;
-                        $app = $job->appointment;
-                        $summary = $job->summary;
-                        $cust = Customer::getInstance($app->customer->customerId);
-                        $custFirst = $cust->firstName;
-                        $custLast = $cust->lastName;
-                        $custName = "" . $custFirst . " " . $custLast;
-                        echo "<tr>";
-                        echo "<td>" . $key . "</td>";
-                        echo "<td>" . $custName . "</td>";
-                        echo "<td>" . $summary . "</td>";
-                        echo "<td>" . $job->createTime->format('Y-m-d H:i:s') . "</td>";
-                        echo "</tr>";
-                    }
-                    echo "</table>";
+                    printTable($jobs);
                     ?>
                 </div>
                 <div id="inspectingTab" role="tabpanel" class="tab-pane">
                     <?php
                     $jobs = JobsController::getAllInspectingJobs();
-                    echo "<table class='table table-striped'>";
-                    echo "<tr>";
-                    echo "<th>Job</th>";
-                    echo "<th>Customer</th>";
-                    echo "<th>Summary</th>";
-                    echo "<th>Time Created</th>";
-                    echo "<th></th>";
-                    echo "</tr>";
-                    foreach ($jobs as $job) {
-                        $key = $job->key;
-                        $app = $job->appointment;
-                        $summary = $job->summary;
-                        $cust = Customer::getInstance($app->customer->customerId);
-                        $custFirst = $cust->firstName;
-                        $custLast = $cust->lastName;
-                        $custName = "" . $custFirst . " " . $custLast;
-                        echo "<tr>";
-                        echo "<td>" . $key . "</td>";
-                        echo "<td>" . $custName . "</td>";
-                        echo "<td>" . $summary . "</td>";
-                        echo "<td>" . $job->createTime->format('Y-m-d H:i:s') . "</td>";
-                        echo "</tr>";
-                    }
-                    echo "</table>";
+                    printTable($jobs);
                     ?>
                 </div>
                 <div id="ongoingTab" role="tabpanel" class="tab-pane">
                     <?php
                     $jobs = JobsController::getAllOngoingJobs();
-                    echo "<table class='table table-striped'>";
-                    echo "<tr>";
-                    echo "<th>Job</th>";
-                    echo "<th>Customer</th>";
-                    echo "<th>Summary</th>";
-                    echo "<th>Time Created</th>";
-                    echo "<th></th>";
-                    echo "</tr>";
-                    foreach ($jobs as $job) {
-                        $key = $job->key;
-                        $app = $job->appointment;
-                        $summary = $job->summary;
-                        $cust = Customer::getInstance($app->customer->customerId);
-                        $custFirst = $cust->firstName;
-                        $custLast = $cust->lastName;
-                        $custName = "" . $custFirst . " " . $custLast;
-                        echo "<tr>";
-                        echo "<td>" . $key . "</td>";
-                        echo "<td>" . $custName . "</td>";
-                        echo "<td>" . $summary . "</td>";
-                        echo "<td>" . $job->createTime->format('Y-m-d H:i:s') . "</td>";
-                        echo "</tr>";
-                    }
-                    echo "</table>";
+                    printTable($jobs);
                     ?>
                 </div>
                 <div id="doneTab" role="tabpanel" class="tab-pane">
                     <?php
                     $jobs = JobsController::getAllDoneJobs();
-                    echo "<table class='table table-striped'>";
-                    echo "<tr>";
-                    echo "<th>Job</th>";
-                    echo "<th>Customer</th>";
-                    echo "<th>Summary</th>";
-                    echo "<th>Time Created</th>";
-                    echo "<th></th>";
-                    echo "</tr>";
-                    foreach ($jobs as $job) {
-                        $key = $job->key;
-                        $app = $job->appointment;
-                        $summary = $job->summary;
-                        $cust = Customer::getInstance($app->customer->customerId);
-                        $custFirst = $cust->firstName;
-                        $custLast = $cust->lastName;
-                        $custName = "" . $custFirst . " " . $custLast;
-                        echo "<tr>";
-                        echo "<td>" . $key . "</td>";
-                        echo "<td>" . $custName . "</td>";
-                        echo "<td>" . $summary . "</td>";
-                        echo "<td>" . $job->createTime->format('Y-m-d H:i:s') . "</td>";
-                        echo "</tr>";
-                    }
-                    echo "</table>";
+                    printTable($jobs);
                     ?>
                 </div>
             </div>
@@ -177,3 +85,31 @@ include __DIR__ . '/../header.php';
 </div>
 </body>
 <?php include __DIR__ . '/../footer.php'; ?>
+<?php
+	function printTable(array $jobs){
+		echo "<table class='table table-striped'>";
+        echo "<tr>";
+        echo "<th>Job</th>";
+        echo "<th>Customer</th>";
+        echo "<th>Summary</th>";
+        echo "<th>Time Created</th>";
+        echo "<th></th>";
+        echo "</tr>";
+        foreach ($jobs as $job) {
+            $key = $job->key;
+            $app = $job->appointment;
+            $summary = $job->summary;
+            $cust = Customer::getInstance($app->customer->customerId);
+            $custFirst = $cust->firstName;
+            $custLast = $cust->lastName;
+            $custName = "" . $custFirst . " " . $custLast;
+            echo "<tr>";
+            echo "<td>" . $key . "</td>";
+            echo "<td><a href='/accounts/customer_individual_view.php?customerId=".$cust->customerId."'>" . $custName . "</a></td>";
+            echo "<td>" . $summary . "</td>";
+            echo "<td>" . $job->createTime->format('Y-m-d H:i:s') . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+	}
+?>
