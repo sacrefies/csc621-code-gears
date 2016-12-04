@@ -78,7 +78,7 @@ include __DIR__ . '/header.php';
                                 <td>
                                     <a href="/services/job_individual_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->key ?></a>
                                 </td>
-                                <td><?php echo $job->finishTime->format('m/d/Y h:i A') ?></td>
+                                <td><?php echo $job->createTime->format('m/d/Y h:i A') ?></td>
                                 <td>
                                     <a href="/accounts/mechanic_individual_view.php?empId=<?php echo $job->mechanic->empId; ?>"><?php echo $job->mechanic->fname . ' ' . $job->mechanic->lname; ?></a>
                                 </td>
