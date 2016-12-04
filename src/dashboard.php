@@ -21,10 +21,12 @@ namespace gears;
 require_once __DIR__ . '/accounts/AccountController.php';
 require_once __DIR__ . '/accounts/Employee.php';
 require_once __DIR__ . '/services/JobsController.php';
+require_once __DIR__ . '/appointments/AppointmentController.php';
 
 use gears\accounts\AccountController;
 use gears\models\State;
 use gears\services\JobsController;
+use gears\appointments\AppointmentController;
 
 
 /**
@@ -51,7 +53,31 @@ include __DIR__ . '/header.php';
         <div class="panel panel-default">
             <div class="panel-heading">Today's Appointments</div>
             <div class="panel-body">
-                Lou, this part needs you!
+                <?php
+                $appts = AppointmentController::getDailyAppointments();
+                echo "<table class='table table-striped'>";
+                echo "<tr>";
+                echo "<th>Summary</th>";
+                echo "<th>Description</th>";
+                echo "<th>Event Time</th>";
+                echo "<th>Status</th>";
+                echo "<th></th>";
+                echo "</tr>";
+                foreach ($appts as $appt) {
+                    $subject = $appt->subject;
+                    $desc = $appt->desc;
+                    $event = $appt->eventTime;
+                    $state = $appt ->getState();
+
+                    echo "<tr>";
+                    echo "<td>" . $subject . "</td>";
+                    echo "<td>" . $desc . "</td>";
+                    echo "<td>" . $event->format('Y-m-d H:i:s') . "</td>";
+                    echo "<td>" . $state . "</td>";
+                    echo "</tr>";
+                }
+                echo "</table>";
+                ?>
             </div>
         </div>
     </div>

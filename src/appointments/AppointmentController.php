@@ -150,24 +150,6 @@ class AppointmentController {
         }
         return $invoicingApp;
     }
-    
-    /**
-     * Get an array of all invoicing Appointments.
-     *
-     * @return array Returns an array of daily Appointments.
-     */
-    /*static public function getTimelyAppointments():array{
-        $appointments = Appointment::getList();
-        $dailyApp = array();
-        foreach($appointments as $appointment){
-            if(){
-                //put in a where clause
-                //event_time >= sunday & event_time =< saturday
-
-            }
-        }
-        return $dailyApp;
-    }*/
 
 }
 
