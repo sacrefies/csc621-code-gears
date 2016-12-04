@@ -94,10 +94,10 @@ class Task extends StaticEntity {
         $values[] = $this->invItem->itemId;
         $values[] = $this->worksheet->job->jobId;
         $where = 'inventory_item_id = ? AND worksheet_job_id = ?';
-        $cols = array_slice(self::getUpdateColumns(), 2);
+        $columns = array_slice(self::getUpdateColumns(), 2);
         $table = self::getTableName();
-
-        foreach ($cols as $col) {
+        $cols = '';
+        foreach ($columns as $col) {
             $cols = "$cols $col = ?,";
         }
         $cols = rtrim($cols, ',');

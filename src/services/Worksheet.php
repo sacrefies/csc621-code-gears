@@ -80,16 +80,16 @@ class Worksheet extends StaticEntity {
         }
 
         // this entity requires different way to update other than the general updateTable()
-        $cols = self::getUpdateColumns();
+        $columns = self::getUpdateColumns();
         // remove job_id from update columns
-        unset($cols[0]);
+        unset($columns[0]);
         // move job_id values to the end of $values
         unset($values[0]);
         $values[] = $this->job->jobId;
         $where = 'job_id = ?';
         $table = self::getTableName();
-
-        foreach ($cols as $col) {
+        $cols = '';
+        foreach ($columns as $col) {
             $cols = "$cols $col = ?,";
         }
         $cols = rtrim($cols, ',');
