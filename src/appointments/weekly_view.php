@@ -38,12 +38,12 @@ $title = 'Appointment';
 /**
  * @var string A string variable to set the nav bar header.
  */
-$pageHeader = 'Profiles';
+$pageHeader = 'Appointments';
 /**
  * @var int An integer which indicates the current active nav menu tab.
  *          0: dashboard, 1: appointment, 2: in-service, 3: checkout, 4: mechanics
  */
-$activeMenu = 4;
+$activeMenu = 1;
 
 include __DIR__ . '/../header.php';
 
@@ -70,10 +70,10 @@ $appts = AppointmentController::getAllAppointments();
         $appts = AppointmentController::getAllAppointments();
         echo "<table class='table table-striped'>";
         echo "<tr>";
-        echo "<th>Subject</th>";
+        echo "<th>Summary</th>";
         echo "<th>Description</th>";
         echo "<th>Event Time</th>";
-        echo "<th>State</th>";
+        echo "<th>Status</th>";
         echo "<th></th>";
         echo "</tr>";
         foreach ($appts as $appt) {
