@@ -66,6 +66,7 @@ $appts = AppointmentController::getAllAppointments();
 <div class="panel panel-default">
     <div class="panel-heading">Appointments List</div>
     <div class="panel-body">
+
         <?php
         $appts = AppointmentController::getAllAppointments();
         echo "<table class='table table-striped'>";
@@ -78,15 +79,15 @@ $appts = AppointmentController::getAllAppointments();
         echo "</tr>";
         foreach ($appts as $appt) {
             $subject = $appt->subject;
-            $desc = $appt->description;
-            $event = $appt->event_time;
-            $state = $appt ->status;
+            $desc = $appt->desc;
+            $event = $appt->eventTime;
+            $state = $appt ->getState();
 
             echo "<tr>";
             echo "<td>" . $subject . "</td>";
             echo "<td>" . $desc . "</td>";
-            echo "<td>" . $event->event_time->format('Y-m-d H:i:s') . "</td>";
-            echo "<td>" . $state. "</td>";
+            echo "<td>" . $event->format('Y-m-d H:i:s') . "</td>";
+            echo "<td>" . $state . "</td>";
             echo "</tr>";
         }
         echo "</table>";

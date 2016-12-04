@@ -52,10 +52,10 @@ class AppointmentController {
         $appointments = Appointment::getAll();
         $allApp = array();
         foreach($appointments as $app){
-            if( $app->getState() === STATE::NEW &&
-                $app->getState() === STATE::INSERVICE &&
-                $app->getState() === STATE::DONE &&
-                $app->getState() === STATE::CANCELLED &&
+            if( $app->getState() === STATE::NEW ||
+                $app->getState() === STATE::INSERVICE ||
+                $app->getState() === STATE::DONE ||
+                $app->getState() === STATE::CANCELLED ||
                 $app->getState() === STATE::INVOICING){
 
                 $allApp[] = $app;
