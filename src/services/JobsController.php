@@ -56,6 +56,60 @@ final class JobsController {
     }
 
     /**
+     * Get an array of all new Jobs.
+     *
+     *
+     * @return array Returns an array of all new Jobs.
+     */
+    static public function getAllNewJobs():array {
+        $jobs = Job::getAll();
+        $new = array();
+        foreach($jobs as $job) {
+        	$state = $job->getState();
+            if($state === State::NEW) {
+                $new[] = $job;
+            }
+        }
+        return $new;
+    }
+
+    /**
+     * Get an array of all inspecting Jobs.
+     *
+     *
+     * @return array Returns an array of all inspecting Jobs.
+     */
+    static public function getAllInspectingJobs():array {
+        $jobs = Job::getAll();
+        $inspecting = array();
+        foreach($jobs as $job) {
+        	$state = $job->getState();
+            if($state === State::INSPECTING) {
+                $inspecting[] = $job;
+            }
+        }
+        return $inspecting;
+    }
+
+    /**
+     * Get an array of all ongoing Jobs.
+     *
+     *
+     * @return array Returns an array of all ongoing Jobs.
+     */
+    static public function getAllOngoingJobs():array {
+        $jobs = Job::getAll();
+        $ongoing = array();
+        foreach($jobs as $job) {
+        	$state = $job->getState();
+            if($state === State::ONGOING) {
+                $ongoing[] = $job;
+            }
+        }
+        return $ongoing;
+    }
+
+    /**
      * Get an array of all done Jobs.
      *
      *
