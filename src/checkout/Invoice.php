@@ -57,7 +57,7 @@ class Invoice extends StatefulEntity {
     /**
      * @var float
      */
-    public $taxRate = 0.00;
+    public $taxRate = 0.06;
     /**
      * @var float
      */

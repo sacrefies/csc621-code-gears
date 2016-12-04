@@ -71,7 +71,7 @@ final class CheckoutController {
     }
 
     /**
-     * Get an array of all invoicing Appointments.
+     * Get an array of all invoicing Appointments that do not have an associated invoice.
      *
      *
      * @return array Returns an array of all invoicing Appointments.
@@ -81,10 +81,62 @@ final class CheckoutController {
         $invoicing = array();
         foreach($appts as $appt) {
             if($appt->getState() === STATE::INVOICING) {
-                $invoicing[] = $appt;
+                if($appt->getInvoice() === null){
+                    $invoicing[] = $appt;
+                }
             }
         }
         return $invoicing;
+    }
+
+    /**
+     * Create a new invoice
+     *
+     * @param int $id The appointment's id.
+     *
+     * @param float $disc The discount to be applied.
+     *
+     * @param float $amt The amount to add to amount payed.
+     *
+     * @return int Returns 1 if update is successful; otherwise 0.
+     */
+    static public function createInvoice(int $apptId, float $disc, float $amt) {
+        $inv = Invoice::createNew();
+        $inv->appt = Appointment::getInstance($apptId);
+        $inv->discRate = $disc;
+        $inv->amtPayed = $amt;
+        $amtDue = self::getAmtDue($inv->appt, $disc);
+        $inv->amtDue = $amtDue;
+        return $inv->updatePay();
+    }
+
+    /**
+     * Calculate the amount due for the invoice
+     *
+     * @return float Returns the total amt due.
+     */
+    static public function getAmtDue(Appointment $appt, float $disc) {
+        /*$job = $appt->getJob();
+        $worksheet = $job->getWorksheet();
+        $tasks = $worksheet->getTasks();
+
+        foreach($tasks as $task){
+            $amtDue += $task->cost;
+        }*/
+        $amtDue = 20;
+        $taxRate = 0.06;
+
+        if($disc == 0) {
+            $amtOff = 0;
+        }
+        else {
+            $amtOff = $amtDue * $disc;
+        }
+        $amtDue = $amtDue - $amtOff;
+        $tax = $amtDue * $taxRate;
+
+        return $amtDue + $tax;
+
     }
 
 
