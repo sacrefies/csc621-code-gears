@@ -130,9 +130,8 @@ function toUTF8(string $val) {
             <li class="dropdown<?php echo ('in-service' === getActivatedMenuTabName($activeMenu)) ? ' active' : ''; ?>">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">In-Service<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li class="dropdown-item"><a href="/services/jobs_view.php">Jobs Servicing</a></li>
+                    <li class="dropdown-item"><a href="/services/jobs_view.php">Jobs</a></li>
                     <li><a href="/services/jobs_vehicle_view.php">Vehicles In Service</a></li>
-                    <li><a href="/checkout/history_jobs_view.php">History Jobs</a></li>
                 </ul>
             </li>
             <li class="dropdown<?php echo ('checkout' === getActivatedMenuTabName($activeMenu)) ? ' active' : ''; ?>">
