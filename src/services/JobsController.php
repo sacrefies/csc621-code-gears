@@ -16,7 +16,7 @@
  */
 
 declare(strict_types = 1);
-namespace gears\checkout;
+namespace gears\services;
 
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../conf/Settings.php';
