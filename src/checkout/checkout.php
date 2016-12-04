@@ -143,13 +143,17 @@ include __DIR__ . '/../header.php';
                 <h4 class="modal-title edit-content">Enter Amount</h4>
             </div>
             <div class="modal-body">
-                <label for="payAmt">Enter Amount Payed:</label>
-		        <input name="payAmt" type="number" id="payAmt" class="form-control" placeholder="Amount Payed"
-		                       required autofocus pattern="^[0-9]$"/>
-		        <br>
-		        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="update()">Update</button>
-		        <input name="invId" id="invId" type="number" class="form-control" style="visibility:hidden;"/>
-            </div>
+            	<form action="javascript:update()" data-toggle="validator" role="form">
+            		<div class="form-group">
+		                <label for="payAmt">Enter Amount Payed:</label>
+				        <input name="payAmt" type="text" id="payAmt" class="form-control" 
+				        		placeholder="Amount Payed" required autofocus pattern="^\d+(\.\d{1,2})?$"/>
+				        <input name="invId" id="invId" type="number" class="form-control" style="visibility:hidden;"/>
+            		</div>
+            		<div class="form-group">
+            			<input class="btn btn-primary" type="submit" name="submit" value="Update"/>
+            		</div>
+            	</form>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>

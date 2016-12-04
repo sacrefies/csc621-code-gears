@@ -95,7 +95,6 @@ include __DIR__ . '/../header.php';
 				        	pattern="^\d+(\.\d{1,2})?$" class="form-control" placeholder="Amount Payed"/>
 				        <label><input type="checkbox" value=""
 				        	onclick="enableDisable(this.checked, 'payAmt')">  Pay Later</label>
-				        <div class="help-block with-errors"></div>
 				        <input name="appId" id="appId" type="number" class="form-control" style="visibility:hidden;"/>
 			    	</div>
 			    	<div class="form-group">
