@@ -49,20 +49,26 @@ class AppointmentController {
      *
      */
     static public function getAllAppointments():array{
-        $appointments = Appointment::getAll();
-        $allApp = array();
-        foreach($appointments as $app){
-            if( $app->getState() === STATE::NEW ||
-                $app->getState() === STATE::INSERVICE ||
-                $app->getState() === STATE::DONE ||
-                $app->getState() === STATE::CANCELLED ||
-                $app->getState() === STATE::INVOICING){
+        $d = new \DateTime();
 
-                $allApp[] = $app;
-            }
+        $where = 'event_time >= ?';
+        $values = [$d->format('Y-m-d') . '00:00:00'];
+        return Appointment::getList($where, $values);
 
-        }
-        return $allApp;
+    }
+
+    /**
+     * Get an array of all Daily Appointments
+     *
+     * @return array Returns an array of all daily Appointments
+     *
+     */
+    static public function getDailyAppointments():array{
+        $d = new \DateTime();
+        $where = 'event_time >= ?'; // AND event_time <= ?
+        $values = [$d->format('Y-m-d'). ' 00:00:00']; //, '23:59:59'
+
+        return Appointment::getList($where, $values);
     }
 
     /**
