@@ -58,78 +58,88 @@ include __DIR__ . '/../header.php';
                     $invoice->amtDue = 20.00;
                     $invoice->update();*/
                     $invoices = CheckoutController::getAllPendingInvoices();
-                    echo "<table class='table table-striped'>";
-                    echo "<tr>";
-                    echo "<th>Invoice ID</th>";
-                    echo "<th>Customer</th>";
-                    echo "<th>Subject</th>";
-                    echo "<th>Time Created</th>";
-                    echo "<th>Last Updated</th>";
-                    echo "<th>Total Cost</th>";
-                    echo "<th>Amount Payed</th>";
-                    echo "<th>Discount</th>";
-                    echo "<th></th>";
-                    echo "</tr>";
-                    foreach ($invoices as $invoice) {
-                        $id = $invoice->invoiceId;
-                        $app = $invoice->appt;
-                        $subject = $app->subject;
-                        $cust = Customer::getInstance($app->customer->customerId);
-                        $custFirst = $cust->firstName;
-                        $custLast = $cust->lastName;
-                        $custName = "" . $custFirst . " " . $custLast;
-                        $amtDue = round($invoice->amtDue, 2);
-                        echo "<tr>";
-                        echo "<td>" . $id . "</td>";
-                        echo "<td><a href='/accounts/customer_individual_view.php?customerId=".$cust->customerId."'>" . 
-                    		$custName . "</a></td>";
-                        echo "<td>" . $subject . "</td>";
-                        echo "<td>" . $invoice->createTime->format('Y-m-d H:i:s') . "</td>";
-                        echo "<td>" . $invoice->updateTime->format('Y-m-d H:i:s') . "</td>";
-                        echo "<td>$" . number_format($amtDue, 2) . "</td>";
-                        echo "<td>$" . number_format($invoice->amtPayed, 2) . "</td>";
-                        echo "<td>" . $invoice->discRate . "</td>";
-                        echo "<td><button class='btn btn-info btn-sm' data-toggle='modal' data-target='#amtEnter' 
-                        		data-yourParameter='$id'>Update</button></td>";
-                        echo "</tr>";
+                    if($invoices){
+                    	echo "<table class='table table-striped'>";
+	                    echo "<tr>";
+	                    echo "<th>Invoice ID</th>";
+	                    echo "<th>Customer</th>";
+	                    echo "<th>Subject</th>";
+	                    echo "<th>Time Created</th>";
+	                    echo "<th>Last Updated</th>";
+	                    echo "<th>Total Cost</th>";
+	                    echo "<th>Amount Payed</th>";
+	                    echo "<th>Discount</th>";
+	                    echo "<th></th>";
+	                    echo "</tr>";
+	                    foreach ($invoices as $invoice) {
+	                        $id = $invoice->invoiceId;
+	                        $app = $invoice->appt;
+	                        $subject = $app->subject;
+	                        $cust = Customer::getInstance($app->customer->customerId);
+	                        $custFirst = $cust->firstName;
+	                        $custLast = $cust->lastName;
+	                        $custName = "" . $custFirst . " " . $custLast;
+	                        $amtDue = round($invoice->amtDue, 2);
+	                        echo "<tr>";
+	                        echo "<td>" . $id . "</td>";
+	                        echo "<td><a href='/accounts/customer_individual_view.php?customerId=".$cust->customerId."'>" . 
+	                    		$custName . "</a></td>";
+	                        echo "<td>" . $subject . "</td>";
+	                        echo "<td>" . $invoice->createTime->format('Y-m-d H:i:s') . "</td>";
+	                        echo "<td>" . $invoice->updateTime->format('Y-m-d H:i:s') . "</td>";
+	                        echo "<td>$" . number_format($amtDue, 2) . "</td>";
+	                        echo "<td>$" . number_format($invoice->amtPayed, 2) . "</td>";
+	                        echo "<td>" . $invoice->discRate . "</td>";
+	                        echo "<td><button class='btn btn-info btn-sm' data-toggle='modal' data-target='#amtEnter' 
+	                        		data-yourParameter='$id'>Update</button></td>";
+	                        echo "</tr>";
+	                    }
+	                    echo "</table>";
                     }
-                    echo "</table>";
+                    else {
+                    	echo "<br><p>No pending invoices to display</p>";
+                    }
                     ?>
                 </div>
                 <div id="payedTab" role="tabpanel" class="tab-pane">
                     <?php
                     $invoices = CheckoutController::getAllPayedInvoices();
-                    echo "<table class='table table-striped'>";
-                    echo "<tr>";
-                    echo "<th>Invoice ID</th>";
-                    echo "<th>Customer</th>";
-                    echo "<th>Subject</th>";
-                    echo "<th>Time Created</th>";
-                    echo "<th>Time Payed</th>";
-                    echo "<th>Total Cost</th>";
-                    echo "<th>Discount</th>";
-                    echo "</tr>";
-                    foreach ($invoices as $invoice) {
-                        $id = $invoice->invoiceId;
-                        $app = $invoice->appt;
-                        $subject = $app->subject;
-                        $cust = Customer::getInstance($app->customer->customerId);
-                        $custFirst = $cust->firstName;
-                        $custLast = $cust->lastName;
-                        $custName = "" . $custFirst . " " . $custLast;
-                        $cost = round($invoice->amtDue, 2);
-                        echo "<tr>";
-                        echo "<td>" . $id . "</td>";
-                        echo "<td><a href='/accounts/customer_individual_view.php?customerId=".$cust->customerId."'>" . 
-                    		$custName . "</a></td>";
-                        echo "<td>" . $subject . "</td>";
-                        echo "<td>" . $invoice->createTime->format('Y-m-d H:i:s') . "</td>";
-                        echo "<td>" . $invoice->updateTime->format('Y-m-d H:i:s') . "</td>";
-                        echo "<td>$" . number_format($cost, 2) . "</td>";
-                        echo "<td>" . $invoice->discRate . "</td>";
-                        echo "</tr>";
+                    if($invoices){
+                    	echo "<table class='table table-striped'>";
+	                    echo "<tr>";
+	                    echo "<th>Invoice ID</th>";
+	                    echo "<th>Customer</th>";
+	                    echo "<th>Subject</th>";
+	                    echo "<th>Time Created</th>";
+	                    echo "<th>Time Payed</th>";
+	                    echo "<th>Total Cost</th>";
+	                    echo "<th>Discount</th>";
+	                    echo "</tr>";
+	                    foreach ($invoices as $invoice) {
+	                        $id = $invoice->invoiceId;
+	                        $app = $invoice->appt;
+	                        $subject = $app->subject;
+	                        $cust = Customer::getInstance($app->customer->customerId);
+	                        $custFirst = $cust->firstName;
+	                        $custLast = $cust->lastName;
+	                        $custName = "" . $custFirst . " " . $custLast;
+	                        $cost = round($invoice->amtDue, 2);
+	                        echo "<tr>";
+	                        echo "<td>" . $id . "</td>";
+	                        echo "<td><a href='/accounts/customer_individual_view.php?customerId=".$cust->customerId."'>" . 
+	                    		$custName . "</a></td>";
+	                        echo "<td>" . $subject . "</td>";
+	                        echo "<td>" . $invoice->createTime->format('Y-m-d H:i:s') . "</td>";
+	                        echo "<td>" . $invoice->updateTime->format('Y-m-d H:i:s') . "</td>";
+	                        echo "<td>$" . number_format($cost, 2) . "</td>";
+	                        echo "<td>" . $invoice->discRate . "</td>";
+	                        echo "</tr>";
+	                    }
+	                    echo "</table>";
                     }
-                    echo "</table>";
+                    else {
+                    	echo "<br><p>No payed invoices to display</p>";
+                    }
                     ?>
                 </div>
             </div>

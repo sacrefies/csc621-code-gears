@@ -87,29 +87,34 @@ include __DIR__ . '/../header.php';
 <?php include __DIR__ . '/../footer.php'; ?>
 <?php
 	function printTable(array $jobs){
-		echo "<table class='table table-striped'>";
-        echo "<tr>";
-        echo "<th>Job</th>";
-        echo "<th>Customer</th>";
-        echo "<th>Summary</th>";
-        echo "<th>Time Created</th>";
-        echo "<th></th>";
-        echo "</tr>";
-        foreach ($jobs as $job) {
-            $key = $job->key;
-            $app = $job->appointment;
-            $summary = $job->summary;
-            $cust = Customer::getInstance($app->customer->customerId);
-            $custFirst = $cust->firstName;
-            $custLast = $cust->lastName;
-            $custName = "" . $custFirst . " " . $custLast;
-            echo "<tr>";
-            echo "<td><a href='/services/job_individual_view.php?jobId=".$job->jobId."'>" . $key . "</a></td>";
-            echo "<td><a href='/accounts/customer_individual_view.php?customerId=".$cust->customerId."'>" . $custName . "</a></td>";
-            echo "<td>" . $summary . "</td>";
-            echo "<td>" . $job->createTime->format('Y-m-d H:i:s') . "</td>";
-            echo "</tr>";
-        }
-        echo "</table>";
+		if($jobs){
+			echo "<table class='table table-striped'>";
+	        echo "<tr>";
+	        echo "<th>Job</th>";
+	        echo "<th>Customer</th>";
+	        echo "<th>Summary</th>";
+	        echo "<th>Time Created</th>";
+	        echo "<th></th>";
+	        echo "</tr>";
+	        foreach ($jobs as $job) {
+	            $key = $job->key;
+	            $app = $job->appointment;
+	            $summary = $job->summary;
+	            $cust = Customer::getInstance($app->customer->customerId);
+	            $custFirst = $cust->firstName;
+	            $custLast = $cust->lastName;
+	            $custName = "" . $custFirst . " " . $custLast;
+	            echo "<tr>";
+	            echo "<td><a href='/services/job_individual_view.php?jobId=".$job->jobId."'>" . $key . "</a></td>";
+	            echo "<td><a href='/accounts/customer_individual_view.php?customerId=".$cust->customerId."'>" . $custName . "</a></td>";
+	            echo "<td>" . $summary . "</td>";
+	            echo "<td>" . $job->createTime->format('Y-m-d H:i:s') . "</td>";
+	            echo "</tr>";
+	        }
+	        echo "</table>";
+		}
+		else{
+			echo "<br><p>	No jobs to display</p>";
+		}
 	}
 ?>

@@ -45,32 +45,37 @@ include __DIR__ . '/../header.php';
     	<div class="panel-body">
     		<?php
                 $appts = CheckoutController::getInvAppointments();
-                echo "<table class='table table-striped'>";
-                echo "<tr>";
-                echo "<th>Customer</th>";
-                echo "<th>Subject</th>";
-                echo "<th>Description</th>";
-                echo "<th>Time Created</th>";
-                echo "<th></th>";
-                echo "</tr>";
-                foreach ($appts as $appt) {
-                    $id = $appt->appId;
-                    $subject = $appt->subject;
-                    $desc = $appt->desc;
-                    $cust = Customer::getInstance($appt->customer->customerId);
-                    $custFirst = $cust->firstName;
-                    $custLast = $cust->lastName;
-                    $custName = "" . $custFirst . " " . $custLast;
-                    echo "<tr>";
-                    echo "<td><a href='/accounts/customer_individual_view.php?customerId=".$cust->customerId."'>" . 
-                    	$custName . "</a></td>";
-                    echo "<td>" . $subject . "</td>";
-                    echo "<td>" . $desc . "</td>";
-                    echo "<td>" . $appt->createTime->format('Y-m-d H:i:s') . "</td>";
-                    echo "<td><button class='btn btn-success btn-sm' data-toggle='modal' data-target='#invCreate' data-yourParameter='$id'>Checkout</button></td>";
-                    echo "</tr>";
+                if($appts){
+                	echo "<table class='table table-striped'>";
+	                echo "<tr>";
+	                echo "<th>Customer</th>";
+	                echo "<th>Subject</th>";
+	                echo "<th>Description</th>";
+	                echo "<th>Time Created</th>";
+	                echo "<th></th>";
+	                echo "</tr>";
+	                foreach ($appts as $appt) {
+	                    $id = $appt->appId;
+	                    $subject = $appt->subject;
+	                    $desc = $appt->desc;
+	                    $cust = Customer::getInstance($appt->customer->customerId);
+	                    $custFirst = $cust->firstName;
+	                    $custLast = $cust->lastName;
+	                    $custName = "" . $custFirst . " " . $custLast;
+	                    echo "<tr>";
+	                    echo "<td><a href='/accounts/customer_individual_view.php?customerId=".$cust->customerId."'>" . 
+	                    	$custName . "</a></td>";
+	                    echo "<td>" . $subject . "</td>";
+	                    echo "<td>" . $desc . "</td>";
+	                    echo "<td>" . $appt->createTime->format('Y-m-d H:i:s') . "</td>";
+	                    echo "<td><button class='btn btn-success btn-sm' data-toggle='modal' data-target='#invCreate' data-yourParameter='$id'>Checkout</button></td>";
+	                    echo "</tr>";
+	                }
+	                echo "</table>";
                 }
-                echo "</table>";
+                else{
+                	echo "<br><p>No pending appointments to display</p>";
+                }
             ?>
 
     	</div>
