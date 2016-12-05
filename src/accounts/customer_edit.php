@@ -80,7 +80,7 @@ if (isset($_POST['updateType']) && !empty($_POST['updateType'])) {
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="lastName">First Name:</label>
+                    <label class="control-label col-sm-2" for="lastName">Last Name:</label>
                     <div class="col-sm-10">
                         <input value="<?php echo $customer->lastName; ?>" type="text" class="form-control" id="lastName"
                                name="lastName" placeholder="Last Name" required/>
@@ -110,7 +110,7 @@ if (isset($_POST['updateType']) && !empty($_POST['updateType'])) {
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="lastName">First Name:</label>
+                    <label class="control-label col-sm-2" for="lastName">Last Name:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last Name"
                                required/>
