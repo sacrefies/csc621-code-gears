@@ -21,6 +21,7 @@ namespace gears;
 require_once __DIR__ . '/accounts/AccountController.php';
 require_once __DIR__ . '/accounts/Employee.php';
 require_once __DIR__ . '/services/JobsController.php';
+require_once __DIR__ . '/models/State.php';
 
 use gears\accounts\AccountController;
 use gears\models\State;
@@ -63,12 +64,6 @@ include __DIR__ . '/header.php';
                 $jobs = JobsController::getAllActiveJobs();
                 if ($jobs): ?>
                     <table class="table table-hover">
-                        <thead>
-                        <th>Summary</th>
-                        <th>Key</th>
-                        <th>Served At</th>
-                        <th>state</th>
-                        </thead>
                         <tbody>
                         <?php foreach ($jobs as $job): ?>
                             <tr>
@@ -76,11 +71,8 @@ include __DIR__ . '/header.php';
                                     <a href="/services/job_individual_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->summary ?></a>
                                 </td>
                                 <td>
-                                    <a href="/services/job_individual_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->key ?></a>
-                                </td>
-                                <td><?php echo $job->createTime->format('m/d/Y h:i A') ?></td>
-                                <td>
-                                    <a href="/accounts/mechanic_individual_view.php?empId=<?php echo $job->mechanic->empId; ?>"><?php echo $job->mechanic->fname . ' ' . $job->mechanic->lname; ?></a>
+                                    <span
+                                        class="label label-primary"><?php echo State::getName($job->getState()); ?></span>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -104,12 +96,12 @@ include __DIR__ . '/header.php';
                     foreach ($emps as $emp) {
                         // roll out the mechanics
                         echo '<tr>';
-                        echo '<td><a href="/accounts/single_employee_view.php?empId=' . $emp->empId . '">' . $emp->fname . ' ' . $emp->lname . '</a></td>';
+                        echo '<td><a href="/accounts/mechanic_individual_view.php?empId=' . $emp->empId . '">' . $emp->fname . ' ' . $emp->lname . '</a></td>';
                         // the status
                         if ($emp->getState() === State::BUSY) {
-                            echo '<td><span class="label label-default">busy</span></td>';
+                            echo '<td><span class="label label-warning">busy</span></td>';
                         } else if ($emp->getState() === State::AVAILABLE) {
-                            echo '<td><span class="label label-success">Available</span></td>';
+                            echo '<td><span class="label label-success">idle</span></td>';
                         } else {
                             echo '<td>' . $emp->getState() . '</td>';
                         }
