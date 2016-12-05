@@ -159,7 +159,7 @@ include __DIR__ . '/../header.php';
             		<div class="form-group">
 		                <label for="payAmt">Enter Amount Paid:</label>
 				        <input name="payAmt" type="text" id="payAmt" class="form-control" 
-				        		placeholder="Amount Paid" required autofocus pattern="^\d+(\.\d{1,2})?$"/>
+				        		placeholder="Amount Paid" pattern="^\d+(\.\d{1,2})?$"/>
 				        <input name="invId" id="invId" type="number" class="form-control" style="visibility:hidden;"/>
             		</div>
             		<div class="form-group">
@@ -175,7 +175,8 @@ include __DIR__ . '/../header.php';
 <p id="output"></p>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#amtEnter').on('show.bs.modal', function(e) {
+		$('#amtEnter').on('shown.bs.modal', function(e) {
+			$('#payAmt').focus();
 			var $modal = $(this);
 	  		var id = e.relatedTarget.dataset.yourparameter;
 	  		$modal.find('.edit-content').html("Update Payment for Invoice " + id);

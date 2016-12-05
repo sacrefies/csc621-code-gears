@@ -93,7 +93,7 @@ include __DIR__ . '/../header.php';
             		<div class="form-group">
 		            	<label for="discAmt">Enter Discount:</label>
 				        <input name="discAmt" type="text" id="discAmt" pattern="^1?\.\d{1,2}$" 
-				        	class="form-control" placeholder="Discount" autofocus/>
+				        	class="form-control" placeholder="Discount"/>
 				        <label><input type="checkbox" value=""
 				        	onclick="enableDisable(this.checked, 'discAmt')">  No Discount</label>
 				        <br>
@@ -118,8 +118,8 @@ include __DIR__ . '/../header.php';
 <p id="output"></p>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#invCreate').on('show.bs.modal', function(e) {
-			var $modal = $(this);
+		$('#invCreate').on('shown.bs.modal', function(e) {
+			$('#discAmt').focus();
 	  		var id = e.relatedTarget.dataset.yourparameter;
 	  		document.getElementById("appId").value = id;
 
