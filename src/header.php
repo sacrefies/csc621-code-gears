@@ -155,7 +155,7 @@ function toUTF8(string $val) {
             </li>
             <?php
             if (strtolower(AccountController::getSelfScript()) !== '/login.php') {
-                echo '<li><a href="/accounts/single_employee_view.php?empId=' . getUserId() . '"><span class="glyphicon glyphicon-user"></span> ' . getUserName() . '</a></li>' . PHP_EOL;
+                echo '<li><a href="/accounts/mechanic_individual_view.php?empId=' . getUserId() . '"><span class="glyphicon glyphicon-user"></span> ' . getUserName() . '</a></li>' . PHP_EOL;
                 echo '<li><a href="/logout.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>' . PHP_EOL;
             }
             ?>
