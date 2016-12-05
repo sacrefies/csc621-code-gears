@@ -104,7 +104,7 @@ include __DIR__ . '/../header.php';
             $custLast = $cust->lastName;
             $custName = "" . $custFirst . " " . $custLast;
             echo "<tr>";
-            echo "<td>" . $key . "</td>";
+            echo "<td><a href='/services/job_individual_view.php?jobId=".$job->jobId."'>" . $key . "</a></td>";
             echo "<td><a href='/accounts/customer_individual_view.php?customerId=".$cust->customerId."'>" . $custName . "</a></td>";
             echo "<td>" . $summary . "</td>";
             echo "<td>" . $job->createTime->format('Y-m-d H:i:s') . "</td>";

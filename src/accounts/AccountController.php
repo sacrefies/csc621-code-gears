@@ -23,6 +23,7 @@ require_once __DIR__ . '/../conf/Settings.php';
 require_once __DIR__ . '/Employee.php';
 require_once __DIR__ . '/CustomerVehicle.php';
 require_once __DIR__ . '/Customer.php';
+require_once __DIR__ . '/ConventionVehicle.php';
 
 use gears\Controller;
 use gears\conf\Settings;
@@ -223,6 +224,26 @@ final class AccountController {
         $cust->phoneNumber = $phone;
         $cust->zip = $zip;
         $rc = $cust->update();
+        return (-1 === $rc) ? false : (bool)$rc;
+    }
+
+    /**
+     * @param string $car
+     * @param string $mileage
+     * @param string $vin
+     *
+     * @return bool
+     */
+    public static function createNewVehicle(int $cust, string $carId, string $mileage, string $vin) : bool {
+        $vehicle = CustomerVehicle::createNew();
+        $cust = Customer::getInstance($cust);
+        $vehicle->customer = $cust;
+        $carId = (int)$carId;
+        $car = ConventionVehicle::getInstance($carId);
+        $vehicle->conventionVehicle = $car;
+        $vehicle->mileage = (int)$mileage;
+        $vehicle->vin = $vin;
+        $rc = $vehicle->update();
         return (-1 === $rc) ? false : (bool)$rc;
     }
 

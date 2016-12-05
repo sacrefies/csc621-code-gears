@@ -42,11 +42,15 @@ $error = '';
 $custId = (isset($_POST['customerId']) && !empty($_POST['customerId'])) ? (int)$_POST['customerId'] : -1;
 // get our beloved customer object
 $customer = AccountController::getCustomerById($custId);
+$customers = Customer::getAll();
+$customers = count($customers)+1;
 // do update or create new
 if (isset($_POST['updateType']) && !empty($_POST['updateType'])) {
     if ($_POST['updateType'] === 'new') {
         if (AccountController::createNewCustomer($_POST['firstName'], $_POST['lastName'], $_POST['phone'], $_POST['zip'])) {
-            AccountController::redirectTo('customers_view.php');
+            if(AccountController::createNewVehicle($customers, $_POST['car'], $_POST['mileage'], $_POST['vin'])) {
+                AccountController::redirectTo('customers_view.php');
+            }
         } else {
             $error = 'Saving customer information failed.';
         }
@@ -128,6 +132,35 @@ if (isset($_POST['updateType']) && !empty($_POST['updateType'])) {
                     <div class="col-sm-10">
                         <input type="text" pattern="^(\d{5}([\-]\d{4})?)$" class="form-control" name="zip" id="zip"
                                placeholder="19000 or 19000-0000" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="car">Vehicle:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="car" id="car">
+                          <option value="1">Toyota Camry LE</option>
+                          <option value="4">Toyota Camry XLE</option>
+                          <option value="2">Toyota RAV4 XE</option>
+                          <option value="3">Toyota RAV4 LE</option>
+                          <option value="5">Ford Focus S</option>
+                          <option value="6">Ford Focus SE</option>
+                          <option value="7">Ford Focus SES</option>
+                          <option value="8">Ford Focus ST</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="mileage">Mileage:</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" name="mileage" id="mileage"
+                               placeholder="30000" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="vin">VIN:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control"
+                                name="vin" id="vin" placeholder="1FAFP40634F172825" required/>
                     </div>
                 </div>
             <?php endif; ?>
