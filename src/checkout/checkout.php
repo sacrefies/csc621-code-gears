@@ -48,7 +48,7 @@ include __DIR__ . '/../header.php';
                 <li role="presentation" class="active"><a href="#pendingTab" role="tab"
                     data-toggle="tab">Pending</a></li>
                 <li role="presentation"><a href="#payedTab" role="tab"
-                    data-toggle="tab">Payed</a></li>
+                    data-toggle="tab">Paid</a></li>
             </ul>
             <div class="tab-content">
                 <div id="pendingTab" role="tabpanel" class="tab-pane active">
@@ -67,7 +67,7 @@ include __DIR__ . '/../header.php';
 	                    echo "<th>Time Created</th>";
 	                    echo "<th>Last Updated</th>";
 	                    echo "<th>Total Cost</th>";
-	                    echo "<th>Amount Payed</th>";
+	                    echo "<th>Amount Paid</th>";
 	                    echo "<th>Discount</th>";
 	                    echo "<th></th>";
 	                    echo "</tr>";
@@ -111,7 +111,7 @@ include __DIR__ . '/../header.php';
 	                    echo "<th>Customer</th>";
 	                    echo "<th>Subject</th>";
 	                    echo "<th>Time Created</th>";
-	                    echo "<th>Time Payed</th>";
+	                    echo "<th>Time Paid</th>";
 	                    echo "<th>Total Cost</th>";
 	                    echo "<th>Discount</th>";
 	                    echo "</tr>";
@@ -157,9 +157,9 @@ include __DIR__ . '/../header.php';
             <div class="modal-body">
             	<form action="javascript:update()" data-toggle="validator" role="form">
             		<div class="form-group">
-		                <label for="payAmt">Enter Amount Payed:</label>
+		                <label for="payAmt">Enter Amount Paid:</label>
 				        <input name="payAmt" type="text" id="payAmt" class="form-control" 
-				        		placeholder="Amount Payed" required autofocus pattern="^\d+(\.\d{1,2})?$"/>
+				        		placeholder="Amount Paid" required autofocus pattern="^\d+(\.\d{1,2})?$"/>
 				        <input name="invId" id="invId" type="number" class="form-control" style="visibility:hidden;"/>
             		</div>
             		<div class="form-group">

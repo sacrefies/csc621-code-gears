@@ -93,7 +93,7 @@ include __DIR__ . '/../header.php';
             		<div class="form-group">
 		            	<label for="discAmt">Enter Discount:</label>
 				        <input name="discAmt" type="text" id="discAmt" pattern="^1?\.\d{1,2}$" 
-				        	class="form-control" placeholder="Discount"/>
+				        	class="form-control" placeholder="Discount" autofocus/>
 				        <label><input type="checkbox" value=""
 				        	onclick="enableDisable(this.checked, 'discAmt')">  No Discount</label>
 				        <br>
