@@ -24,10 +24,12 @@ require_once __DIR__ . '/../models/Persisted.php';
 require_once __DIR__ . '/Job.php';
 require_once __DIR__ . '/Task.php';
 require_once __DIR__ . '/../database/DBEngine.php';
+require_once __DIR__.'/../conf/Settings.php';
 
 use gears\models\Persisted;
 use gears\models\StaticEntity;
 use gears\database\DBEngine;
+use gears\conf\Settings;
 
 
 /**
@@ -73,7 +75,7 @@ class Worksheet extends StaticEntity {
         }
         // ['job_id', 'vehicle_mileage', 'start_time', 'end_time'];
         $values = [$this->job->jobId, $this->mileage, $this->startTime->format(Settings::$MYSQL_DATETIME_FORMAT),
-            $this->endTime->format(DATE_ISO8601)];
+            $this->endTime->format(Settings::$MYSQL_DATETIME_FORMAT)];
         // check if there is one worksheet existing already
         if (!$this->job->getWorksheet()) {
             return $this->insert($values);

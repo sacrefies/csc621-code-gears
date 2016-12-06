@@ -87,32 +87,32 @@ if (!$tasks): ?>
                 <?php if ($job): ?>
                     <form class="form-horizontal" method="POST" action="job_edit_view.php">
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="key">Job Unique Key:</label>
-                            <div class="col-sm-10">
+                            <label class="control-label col-sm-3" for="key">Job key:</label>
+                            <div class="col-sm-9">
                                 <p class="form-control-static"><?php echo $job->key; ?></p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="summary">Summary:</label>
-                            <div class="col-sm-10">
+                            <label class="control-label col-sm-3" for="summary">Summary:</label>
+                            <div class="col-sm-9">
                                 <p class="form-control-static"><?php echo htmlentities($job->summary); ?></p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="desc">Description:</label>
-                            <div class="col-sm-10">
+                            <label class="control-label col-sm-3" for="desc">Description:</label>
+                            <div class="col-sm-9">
                                 <p class="form-control-static"><?php echo htmlentities($job->desc); ?></p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="createTime">Time Created:</label>
-                            <div class="col-sm-10">
+                            <label class="control-label col-sm-3" for="createTime">Time Created:</label>
+                            <div class="col-sm-9">
                                 <p class="form-control-static"><?php echo $job->createTime->format('m/d/Y h:i A'); ?></p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="appointment">For appointment:</label>
-                            <div class="col-sm-10">
+                            <label class="control-label col-sm-3" for="appointment">For appointment:</label>
+                            <div class="col-sm-9">
                                 <p class="form-control-static">
                                     <a href="/appointments/appointment_detail.php?apptId=<?php echo $job->appointment->appId; ?>">
                                         <?php echo $job->appointment->eventTime->format('m/d/Y h:i A') . ' - ' . $job->appointment->subject; ?>
@@ -150,29 +150,41 @@ if (!$tasks): ?>
                     <?php if ($sh): ?>
                         <form class="form-horizontal">
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="mileage">Current Mileage:</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static"><?php echo $sh->mileage; ?></p>
+                                <label class="control-label col-sm-3" for="mileage">Current mileage:</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-static"><?php echo number_format($sh->mileage) . ' miles'; ?></p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="startTime">Started At:</label>
-                                <div class="col-sm-10">
+                                <label class="control-label col-sm-3" for="startTime">Started at:</label>
+                                <div class="col-sm-9">
                                     <p class="form-control-static">
                                         <?php if ($sh->startTime > $minDate): ?>
                                             <?php echo $sh->startTime->format('m/d/Y h:i A'); ?>
                                         <?php else: ?>
-                                            Not started
+                                            <span class="label label-warning">Not started</span>
                                         <?php endif; ?>
                                     </p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="endTime">End At:</label>
-                                <div class="col-sm-10">
-                                    <?php if ($sh->endTime > $minDate):
-                                        echo $sh->endTime->format('m/d/Y h:i A');
-                                    endif; ?>
+                                <label class="control-label col-sm-3" for="endTime">Ended at:</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-static">
+                                        <?php if ($sh->endTime > $minDate):
+                                            echo $sh->endTime->format('m/d/Y h:i A'); ?>
+                                        <?php else: ?>
+                                            <span class="label label-success">Ongoing</span>
+                                        <?php endif; ?>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="taskCount"># of Tasks:</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-static">
+                                        <span class="badge"><?php echo number_format(count($tasks)) ?></span>
+                                    </p>
                                 </div>
                             </div>
                         </form>
@@ -185,6 +197,7 @@ if (!$tasks): ?>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Tasks
+                    <?php if ($sh): ?>
                     <div class="pull-right">
                         <form method="POST" action="task_edit.php" name="task" id="frmTask">
                             <input type="hidden" form="frmTask" value="<?php echo $sh->job->jobId; ?>"
@@ -200,6 +213,7 @@ if (!$tasks): ?>
                             </button>
                         </form>
                     </div>
+                    <?php endif; ?>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">

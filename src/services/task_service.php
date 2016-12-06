@@ -34,17 +34,9 @@ require_once __DIR__ . '/Task.php';
 $sheetId = (isset($_POST['worksheetJobId']) && !empty($_POST['worksheetJobId'])) ? (int)$_POST['worksheetJobId'] : -1;
 $itemId = (isset($_POST['action']) && !empty($_POST['action'])) ? (int)explode('_', $_POST['action'])[1] : -1;
 
-
-echo '<pre>';
-print_r($_POST);
-print_r($itemId);
-echo '</pre>';
-
-
 $sheet = JobsController::getWorkSheet($sheetId);
 $item = JobsController::getInventoryItem($itemId);
 
-if (JobsController::deleteTask($sheet, $item)) {
-    JobsController::redirectTo('job_individual_view.php?jobId=' . $sheetId);
-}
+JobsController::deleteTask($sheet, $item);
+JobsController::redirectTo('job_individual_view.php?jobId=' . $sheetId);
 ?>
