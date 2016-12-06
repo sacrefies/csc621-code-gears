@@ -67,13 +67,105 @@ final class JobsController {
      *
      * @return Worksheet|null Returns an instance of Worksheet or null if creation failed.
      */
-    public static function createWorksheet(Job $job) {
+    public static function createWorksheet(Job $job = null) {
         if (!$job || $job->getWorksheet()) {
             return null;
         }
         $sheet = Worksheet::createNew();
         $sheet->job = $job;
+        $sheet->startTime = new \DateTime();
         return $sheet;
+    }
+
+    public static function jobToInspection(Job $job = null): bool {
+        if (!$job || $job->isFinished()) {
+            return false;
+        }
+        if (State::NEW !== $job->getState()) {
+            return false;
+        }
+        // from new to inspection
+        // update job's state
+        $job->setState(State::INSPECTING);
+        return (0 < $job->update());
+    }
+
+    public static function jobToOngoing(Job $job = null): bool {
+        if (!$job || $job->isFinished()) {
+            return false;
+        }
+        if (State::INSPECTING !== $job->getState()) {
+            return false;
+        }
+        // from inspection to ongoing
+        // update job's state
+        $job->setState(State::ONGOING);
+        return (0 < $job->update());
+    }
+
+    /**
+     * Cancel a job.
+     * <p>Only the jobs in state of 'NEW' or 'INSPECTING' can be cancelled.</p>
+     *
+     * @param Job|null $job
+     *
+     * @return bool
+     */
+    public static function jobToCancel(Job $job = null): bool {
+        if (!$job || $job->isFinished()) {
+            return false;
+        }
+        $state = $job->getState();
+        if (State::INSPECTING !== $state && State::NEW !== $state) {
+            return false;
+        }
+        // from new or inspection to cancelled
+        // this cancellation is driven by appointment, so leave the appointment part
+        // but the following object states must be considered:
+        //  - Worksheet
+        //  - Tasks
+        //  - Employee
+        // customer's vehicle mileage will be changed if the current state is INSPECTING
+        // update job's state
+        $job->setState(State::CANCELLED);
+        // update worksheet if exists
+        $sheet = $job->getWorksheet();
+        $tasks = $sheet->getTasks();
+        $mechanic = $job->mechanic;
+        $cv = $job->customerVehicle;
+
+        if ($mechanic) {
+            $mechanic->setState(State::AVAILABLE);
+        }
+        if ($state === State::INSPECTING && $cv && $sheet) {
+            $cv->mileage = $sheet->mileage;
+        }
+        if ($sheet) {
+            $sheet->endTime = new \DateTime();
+        }
+        // update tasks
+        if ($tasks) {
+            foreach ($tasks as $task) {
+                $task->finishTime = new \DateTime();
+                $task->isDone = 1;
+                if (0 >= $task->update()) {
+                    return false;
+                }
+            }
+        }
+        // now, update one by one
+        if (!$sheet && 0 >= $sheet->update()) {
+            return false;
+        }
+        if ($cv && $state === State::INSPECTING) {
+            if (0 >= $job->customerVehicle->update()) {
+                return false;
+            }
+        }
+        if (!$mechanic && 0 >= $mechanic->update()) {
+            return false;
+        }
+        return (0 < $job->update());
     }
 
     /**
@@ -84,7 +176,7 @@ final class JobsController {
      *
      * @return Task|null Returns an instance of Task or null if creation failed.
      */
-    public static function createTask(Worksheet $sheet, InventoryItem $invItem) {
+    public static function createTask(Worksheet $sheet = null, InventoryItem $invItem = null) {
         if (!$sheet || !$invItem) {
             return null;
         }
@@ -104,24 +196,18 @@ final class JobsController {
      *
      * @return bool
      */
-    public static function nextStage(Job $job): bool {
+    public static function nextStage(Job $job = null): bool {
         // TODO: nextStage
         if (!$job || $job->isFinished()) {
             return false;
         }
         switch ($job->getState()) {
             case State::INSPECTING:
-                $job->setState(State::ONGOING);
-                return (0 < $job->update());
-                break;
+                return self::jobToOngoing($job);
             case State::NEW:
-                $job->setState(State::INSPECTING);
-                return (0 < $job->update());
-                break;
+                return self::jobToInspection($job);
             case State::ONGOING:
-                $job->setState(State::DONE);
-                return self::setJobDone($job);
-                break;
+                return self::jobToDone($job);
         }
         return false;
     }
@@ -140,7 +226,7 @@ final class JobsController {
      *
      * @return InventoryItem[]
      */
-    public static function getInventoryItemsForCustomerVehicle(CustomerVehicle $vehicle) {
+    public static function getInventoryItemsForCustomerVehicle(CustomerVehicle $vehicle = null) {
         if (!$vehicle) {
             return [];
         }
@@ -155,7 +241,7 @@ final class JobsController {
      *
      * @return InventoryItem[]
      */
-    public static function getAvailableInventoryItems(Worksheet $sheet, CustomerVehicle $vehicle) : array {
+    public static function getAvailableInventoryItems(Worksheet $sheet = null, CustomerVehicle $vehicle = null): array {
         if (!$vehicle || !$sheet) {
             return [];
         }
@@ -163,7 +249,7 @@ final class JobsController {
         if (!$having) {
             return self::getInventoryItemsForCustomerVehicle($vehicle);
         }
-        $where = 'convention_vehicle_id = ? AND item_id NOT IN ('.implode(',', array_fill(0, count($having), '?')).')';
+        $where = 'convention_vehicle_id = ? AND item_id NOT IN (' . implode(',', array_fill(0, count($having), '?')) . ')';
         $values = [$vehicle->conventionVehicle->vehicleId];
         foreach ($having as $h) {
             $values[] = $h->invItem->itemId;
@@ -179,20 +265,53 @@ final class JobsController {
      *
      * @return bool
      */
-    public static function setJobDone(Job $job): bool {
+    public static function jobToDone(Job $job = null): bool {
         if (!$job || $job->isFinished()) {
             return false;
         }
-        $job->setState(State::DONE);
+        $state = $job->getState();
+        if ($state !== State::ONGOING) {
+            return false;
+        }
+
+        // from ongoing to done
+        // this action is driven by job, so the appointment must be updated respectively
+        // the following object states must be considered:
+        //  - Worksheet
+        //  - Tasks
+        //  - CustomerVehicle
+        //  - Employee
+        //  - Appointment
+
         $sheet = $job->getWorksheet();
         if (!$sheet) {
             return false;
         }
-        $sheet->endTime = new \DateTime();
+        $mechanic = $job->mechanic;
+        if (!$mechanic) {
+            return false;
+        }
+        $appt = $job->appointment;
+        if ($appt) {
+            return false;
+        }
+        $cv = $job->customerVehicle;
+        if (!$cv) {
+            return false;
+        }
         $tasks = $sheet->getTasks();
         if (!$tasks) {
             return false;
         }
+
+        // update job's state
+        $job->setState(State::DONE);
+        $sheet->endTime = new \DateTime();
+        $cv->mileage = $sheet->mileage;
+        $mechanic->setState(State::AVAILABLE);
+        $appt->endTime = new \DateTime();
+        $appt->setState(State::DONE);
+        // update the tasks
         foreach ($tasks as $task) {
             $task->finishTime = new \DateTime();
             $task->isDone = 1;
@@ -200,18 +319,19 @@ final class JobsController {
                 return false;
             }
         }
-        return (0 < $sheet->update() && 0 < $job->update());
+        return (0 >= $sheet->update() && 0 >= $cv->update() && 0 >= $mechanic->update() && $appt->update()
+            && 0 >= $job->update());
     }
 
     /**
      * Delete a task.
      *
      * @param $sheet Worksheet
-     * @param $item InventoryItem
+     * @param $item  InventoryItem
      *
      * @return bool Returns true if deletion is successful; returns false otherwise.
      */
-    public static function deleteTask(Worksheet $sheet, InventoryItem $item): bool {
+    public static function deleteTask(Worksheet $sheet = null, InventoryItem $item = null): bool {
         if (!$sheet || !$item) {
             return false;
         }
