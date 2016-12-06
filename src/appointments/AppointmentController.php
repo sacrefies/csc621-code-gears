@@ -151,5 +151,27 @@ class AppointmentController {
         return $invoicingApp;
     }
 
+    /**
+     * @param int $id
+     * @return Appointment|null gets appointment by id
+     */
+    public static function getAppointmentById(int $id) {
+        return (0 > $id) ? null : Appointment::getInstance($id);
+    }
+
+    public static function createNewAppointment(string $subject, string $updateTime, string $createTime, string $desc, string $eventTime, string $startTime, string $endTime, string $customer) : bool {
+        $app = Appointment::createNew();
+        $app ->subject = $subject;
+        $app->desc = $desc;
+        $app->updateTime = $updateTime;
+        $app->createTime = $createTime;
+        $app->eventTime = $eventTime;
+        $app->eventTime = $startTime;
+        $app->eventTime = $endTime;
+        $app->customer = $customer;
+        $rc = $app->update();
+        return (-1 === $rc) ? false : (bool)$rc;
+    }
+
 }
 
