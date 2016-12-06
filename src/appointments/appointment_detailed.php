@@ -39,21 +39,23 @@ $appt = AppointmentController::getAppointmentById($apptId);
     <div class="panel-heading">Appointment Details</div>
     <div class="panel-body">
         <?php if ($appt) { ?>
-            <form class="form-horizontal">
+
+
+        <form class="form-horizontal" action="appointment_edit.php" method="POST">
 
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="appId">Appointment ID:</label>
+                    <label class="control-label col-sm-2" for="customerfname">Customer First Name:</label>
                     <div class="col-sm-10">
-                        <input value="<?php echo $appt->appId; ?>" type="text" class="form-control disabled"
-                               id="appId" placeholder="Appointment ID" disabled>
+                        <input value="<?php echo $appt->customer->firstName ?>" type="text" class="form-control disabled" id="customerfname"
+                               placeholder="First Name" disabled>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="customer">Customer:</label>
+                    <label class="control-label col-sm-2" for="customerlname">Customer Last Name:</label>
                     <div class="col-sm-10">
-                        <input value="<?php echo $appt->customer->customerId; ?>" type="text" class="form-control disabled" id="customer"
-                               placeholder="Customer" disabled>
+                    <input value="<?php echo $appt->customer->lastName ?>" type="text" class="form-control disabled" id="customerlname"
+                           placeholder="Last Name" disabled>
                     </div>
                 </div>
 
@@ -85,10 +87,10 @@ $appt = AppointmentController::getAppointmentById($apptId);
                 <form class="form-horizontal">
 
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="empCode">Create Time:</label>
+                        <label class="control-label col-sm-2" for="cTime">Create Time:</label>
                         <div class="col-sm-10">
                             <input value="<?php echo $appt->createTime->format(Settings::$MYSQL_DATETIME_FORMAT); ?>" type="text" class="form-control disabled"
-                                   id="empCode" placeholder="Employee Code" disabled>
+                                   id="cTime" placeholder="Create Time" disabled>
                         </div>
                     </div>
 
@@ -113,6 +115,13 @@ $appt = AppointmentController::getAppointmentById($apptId);
                         <div class="col-sm-10">
                             <input value="<?php echo $appt->endTime->format(Settings::$MYSQL_DATETIME_FORMAT); ?>" type="tel" class="form-control disabled" id="endTime"
                                    placeholder="End Time" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" name="submit" class="btn btn-primary">Edit Appointment</button>
+                            <input type="hidden" name="apptId" id="apptId" value="<?php echo $apptId; ?>"/>
                         </div>
                     </div>
             </form>

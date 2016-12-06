@@ -56,7 +56,9 @@ include __DIR__ . '/../header.php';
  */
 
 $appts = AppointmentController::getAllAppointments();
-$monAppts = array_filter($appts, function (Appointment $appt) {
+
+//holding off on this for now
+/*$monAppts = array_filter($appts, function (Appointment $appt) {
     return (1 === date('N', $appt->eventTime->getTimestamp()));
 });
 
@@ -138,7 +140,7 @@ if (!$sunAppts) {
     echo '<tr>';
     // tds
     echo '</tr>';
-}
+}*/
 
 ?>
 
