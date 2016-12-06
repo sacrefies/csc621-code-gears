@@ -152,11 +152,11 @@ class AppointmentController {
     }
 
     /**
-     * @param int $id
+     * @param int $appId
      * @return Appointment|null gets appointment by id
      */
-    public static function getAppointmentById(int $id) {
-        return (0 > $id) ? null : Appointment::getInstance($id);
+    public static function getAppointmentById(int $appId) {
+        return (0 > $appId) ? null : Appointment::getInstance($appId);
     }
 
     public static function createNewAppointment(string $subject, string $updateTime, string $createTime, string $desc, string $eventTime, string $startTime, string $endTime, string $customer) : bool {
