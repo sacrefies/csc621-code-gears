@@ -41,7 +41,7 @@ $appts = count($appts)+1;
 if (isset($_POST['updateType']) && !empty($_POST['updateType'])) {
     if ($_POST['updateType'] === 'new') {
 
-        if (AppointmentController::createNewAppointment($_POST['cust'], $_POST['subj'], $_POST['desc'])) {
+        if (AppointmentController::createNewAppointment($_POST['cust'], $_POST['subj'], $_POST['desc'], $_POST['date'])) {
                 AppointmentController::redirectTo('weekly_view.php');
         } else {
             $error = 'Saving appointment information failed.';
@@ -93,6 +93,14 @@ if (isset($_POST['updateType']) && !empty($_POST['updateType'])) {
                     <div class="col-sm-10">
                         <input value="" type="text"
                                name="desc" class="form-control" id="desc" placeholder="Short Description" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="date">Date:</label>
+                    <div class="col-sm-10">
+                        <input type="datetime-local" min="<?php $date = new \DateTime(); $ymd = $date->format('Y-m-d'); $time = $date->format('H:m'); echo ''.$ymd.'T'.$time; ?>"
+                                value="<?php $date = new \DateTime(); $ymd = $date->format('Y-m-d'); $time = $date->format('H:i'); echo ''.$ymd.'T'.$time; ?>"
+                               name="date" class="form-control" id="date" placeholder="00-00-00" required/>
                     </div>
                 </div>
             <div class="form-group">

@@ -160,10 +160,12 @@ class AppointmentController {
         return (0 > $appId) ? null : Appointment::getInstance($appId);
     }
 
-    public static function createNewAppointment(string $custId, string $subject, string $desc) : bool {
+    public static function createNewAppointment(string $custId, string $subject, string $desc, string $date) : bool  {
+        $dateTime = new \DateTime($date);
         $app = Appointment::createNew();
         $app ->subject = $subject;
         $app->desc = $desc;
+        $app->eventTime = $dateTime;
         $custId = (int)$custId;
         $cust = Customer::getInstance($custId);
         $app->customer = $cust;
