@@ -16,6 +16,7 @@
  */
 
 declare(strict_types = 1);
+
 namespace gears\appointments;
 
 require_once __DIR__ . '/../appointments/AppointmentController.php';
@@ -75,19 +76,21 @@ $appts = AppointmentController::getAllAppointments();
         echo "<th>Description</th>";
         echo "<th>Event Time</th>";
         echo "<th>Status</th>";
+        echo "<th>Edit</th>";
         echo "<th></th>";
         echo "</tr>";
         foreach ($appts as $appt) {
             $subject = $appt->subject;
             $desc = $appt->desc;
             $event = $appt->eventTime;
-            $state = $appt ->getState();
+            $state = $appt->getState(); //getName($appt->getState())
 
             echo "<tr>";
             echo "<td>" . $subject . "</td>";
             echo "<td>" . $desc . "</td>";
             echo "<td>" . $event->format('Y-m-d H:i:s') . "</td>";
             echo "<td>" . $state . "</td>";
+            echo "<td>". "<button>Edit</button>" . "</td>";
             echo "</tr>";
         }
         echo "</table>";
