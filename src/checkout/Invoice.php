@@ -21,7 +21,7 @@ namespace gears\checkout;
 require_once __DIR__ . '/../database/DBEngine.php';
 require_once __DIR__ . '/../models/StatefulEntity.php';
 require_once __DIR__ . '/../appointments/Appointment.php';
-require_once __DIR__.'/../conf/Settings.php';
+require_once __DIR__ . '/../conf/Settings.php';
 
 use gears\database\DBEngine;
 use gears\models\Persisted;
@@ -100,16 +100,15 @@ class Invoice extends StatefulEntity {
      *
      * @return int Returns 1 if update is successful; otherwise 0.
      */
-    public function update():int {
+    public function update(): int {
+        $this->updateTime = new DateTime();
+        $vals = [$this->appt->appId, $this->createTime->format(Settings::$MYSQL_DATETIME_FORMAT),
+            $this->updateTime->format(Settings::$MYSQL_DATETIME_FORMAT), $this->state, $this->taxRate,
+            $this->amtDue, $this->amtPayed, $this->discRate];
         if ($this->invoiceId === -1) {
-            $vals = [$this->appt->appId, $this->createTime->format(Settings::$MYSQL_DATETIME_FORMAT),
-                        $this->updateTime->format(Settings::$MYSQL_DATETIME_FORMAT), $this->state, $this->taxRate,
-                        $this->amtDue, $this->amtPayed, $this->discRate];
             return $this->insert($vals);
         }
-        $vals = [$this->appt->appId, $this->createTime->format(Settings::$MYSQL_DATETIME_FORMAT),
-                    $this->updateTime->format(Settings::$MYSQL_DATETIME_FORMAT), $this->state,
-                     $this->taxRate, $this->amtDue, $this->amtPayed, $this->discRate, $this->invoiceId];
+        $vals[] = $this->invoiceId;
         $where = 'invoice_id = ?';
         return $this->updateTable($where, $vals);
     }
@@ -119,7 +118,7 @@ class Invoice extends StatefulEntity {
      *
      * @return int Returns 1 if removal is successful; otherwise 0.
      */
-    public function remove():int {
+    public function remove(): int {
         $where = 'invoice_id = ?';
         $values = [$this->invoiceId];
         return $this->delete($where, $values);
@@ -133,7 +132,7 @@ class Invoice extends StatefulEntity {
      * @see Persisted::update()
      * @throws \LogicException
      */
-    public function copy():Invoice {
+    public function copy(): Invoice {
         throw new \LogicException('Not implemented yet');
     }
 
@@ -146,7 +145,7 @@ class Invoice extends StatefulEntity {
      * @return Invoice Returns a new object which is an in-memory copy of $persisted.
      * @throws \LogicException
      */
-    public static function copyFrom(Persisted $persisted):Invoice {
+    public static function copyFrom(Persisted $persisted): Invoice {
         throw new \LogicException('Not implemented yet');
     }
 
@@ -155,7 +154,7 @@ class Invoice extends StatefulEntity {
      *
      * @return Invoice Returns a new in-memory object of this entity.
      */
-    public static function createNew():Invoice {
+    public static function createNew(): Invoice {
         return new Invoice();
     }
 
@@ -166,7 +165,7 @@ class Invoice extends StatefulEntity {
      *
      * @return Invoice Returns an instance of this entity.
      */
-    public static function getInstance(int $id):Invoice {
+    public static function getInstance(int $id): Invoice {
         $cols = implode(',', self::getColumns());
         $table = self::getTableName();
         $sql = "SELECT $cols FROM $table WHERE invoice_id = :id";
@@ -182,14 +181,14 @@ class Invoice extends StatefulEntity {
         return $emp;
     }
 
-     /**
+    /**
      * Get a list of instances of this entity by appointment id
      *
-     * @param int $appId   The appointment id to search the table for
+     * @param int $appId The appointment id to search the table for
      *
      * @return array A list of instances of this entity.
      */
-    public static function getInvoicesByAppointment(int $appId):array {
+    public static function getInvoicesByAppointment(int $appId): array {
         $cols = implode(',', self::getColumns());
         $table = self::getTableName();
         $sql = "SELECT $cols FROM $table WHERE appointment_id = :id";
@@ -214,24 +213,24 @@ class Invoice extends StatefulEntity {
      * Get the column name of the table of this entity.
      * @return array Returns this entity's table column names
      */
-    public static function getColumns():array {
-        return ['invoice_id', 'appointment_id', 'create_time', 'update_time', 'state', 'tax_rate', 
-                    'amount_due', 'amount_payed', 'discount_rate'];
+    public static function getColumns(): array {
+        return ['invoice_id', 'appointment_id', 'create_time', 'update_time', 'state', 'tax_rate',
+            'amount_due', 'amount_payed', 'discount_rate'];
     }
 
     /**
      * Get the column names for UPDATE/INSERT SQL.
      * @return array Returns the column names for update/insertion
      */
-    public static function getUpdateColumns() : array {
-        return ['appointment_id', 'create_time', 'update_time', 'state', 'tax_rate', 
-                    'amount_due', 'amount_payed', 'discount_rate'];
+    public static function getUpdateColumns(): array {
+        return ['appointment_id', 'create_time', 'update_time', 'state', 'tax_rate',
+            'amount_due', 'amount_payed', 'discount_rate'];
     }
 
     /**
      * @inheritdoc
      */
-    protected static function createInstanceFromRow(array $row):Invoice {
+    protected static function createInstanceFromRow(array $row): Invoice {
         // ['emp_id', 'phone_number', 'first_name', 'last_name', 'emp_code', 'is_manager', 'state']
         $appId = $row['appointment_id'];
         $inv = new Invoice($appId);
@@ -242,7 +241,7 @@ class Invoice extends StatefulEntity {
         $inv->state = (int)$row['state'];
         $inv->taxRate = (float)$row['tax_rate'];
         $inv->amtDue = (float)$row['amount_due'];
-        $inv->amtPayed= (float)$row['amount_payed'];
+        $inv->amtPayed = (float)$row['amount_payed'];
         $inv->discRate = (float)$row['discount_rate'];
         return $inv;
     }
@@ -253,14 +252,14 @@ class Invoice extends StatefulEntity {
      *
      * @return int Returns 1 if update is successful; otherwise 0.
      */
-    public function updatePay():int {
-        if($this->amtDue === $this->amtPayed){
+    public function updatePay(): int {
+        if ($this->amtDue === $this->amtPayed) {
             $this->state = State::PAYED;
             $this->appt->state = State::DONE;
             $this->appt->updateTime = new \DateTime();
             $this->appt->update();
         }
-        if($this->amtDue < $this->amtPayed){
+        if ($this->amtDue < $this->amtPayed) {
             $this->amtPayed = $this->amtDue;
             $this->state = State::PAYED;
             $this->appt->state = State::DONE;

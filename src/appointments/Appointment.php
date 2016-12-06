@@ -108,6 +108,7 @@ class Appointment extends StatefulEntity {
     public function update(): int {
         // ['subject', 'update_time', 'create_time', 'description', 'event_time', 'start_time', 'end_time',
         // 'customer_id', 'state'];
+        $this->updateTime = new \DateTime();
         $values = [$this->subject,
             $this->updateTime->format(Settings::$MYSQL_DATETIME_FORMAT),
             $this->createTime->format(Settings::$MYSQL_DATETIME_FORMAT),
