@@ -71,7 +71,7 @@ if (!$tasks): ?>
                     <?php if (!$job->isFinished() && $sh && $tasks): ?>
                     <div class="btn-group pull-right">
                         <form class="form-horizontal" method="POST" action="job_service.php">
-                            <input type="hidden" value="<?php echo $job->jobId; ?>>" name="jobId"/>
+                            <input type="hidden" value="<?php echo $job->jobId; ?>" name="jobId"/>
                             <button class="btn btn-primary btn-sm" type="submit" name="btnNext" value="next">
                                 Next <span class="glyphicon glyphicon-forward"></span>
                             </button>
@@ -197,22 +197,22 @@ if (!$tasks): ?>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Tasks
-                    <?php if ($sh): ?>
-                    <div class="pull-right">
-                        <form method="POST" action="task_edit.php" name="task" id="frmTask">
-                            <input type="hidden" form="frmTask" value="<?php echo $sh->job->jobId; ?>"
-                                   name="worksheetJobId"/>
-                        </form>
-                        <form method="POST" action="task_service.php" name="taskService" id="frmTaskService">
-                            <input type="hidden" value="" name="itemId" id="itemId"/>
-                            <input type="hidden" form="frmTaskService" value="<?php echo $sh->job->jobId; ?>"
-                                   name="worksheetJobId"/>
-                            <button class="btn btn-primary btn-sm" type="submit" name="action" value="addTask"
-                                    form="frmTask">
-                                Task <span class="glyphicon glyphicon-plus"></span>
-                            </button>
-                        </form>
-                    </div>
+                    <?php if ($sh && !$job->isFinished()): ?>
+                        <div class="pull-right">
+                            <form method="POST" action="task_edit.php" name="task" id="frmTask">
+                                <input type="hidden" form="frmTask" value="<?php echo $sh->job->jobId; ?>"
+                                       name="worksheetJobId"/>
+                            </form>
+                            <form method="POST" action="task_service.php" name="taskService" id="frmTaskService">
+                                <input type="hidden" value="" name="itemId" id="itemId"/>
+                                <input type="hidden" form="frmTaskService" value="<?php echo $sh->job->jobId; ?>"
+                                       name="worksheetJobId"/>
+                                <button class="btn btn-primary btn-sm" type="submit" name="action" value="addTask"
+                                        form="frmTask">
+                                    Task <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </form>
+                        </div>
                     <?php endif; ?>
                     <div class="clearfix"></div>
                 </div>
@@ -255,11 +255,13 @@ if (!$tasks): ?>
                                         <td><?php echo $task->quantity; ?></td>
                                         <td><?php echo '$' . number_format($task->cost, 2); ?></td>
                                         <td>
-                                            <button form="frmTaskService" type="submit" name="action"
-                                                    value="delTask_<?php echo $task->invItem->itemId; ?>"
-                                                    id="delTask_<?php echo $task->invItem->itemId; ?>">
-                                                <span class="glyphicon glyphicon-trash"></span>
-                                            </button>
+                                            <?php if (!$job->isFinished()): ?>
+                                                <button form="frmTaskService" type="submit" name="action"
+                                                        value="delTask_<?php echo $task->invItem->itemId; ?>"
+                                                        id="delTask_<?php echo $task->invItem->itemId; ?>">
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </button>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach ?>
@@ -278,11 +280,13 @@ if (!$tasks): ?>
                                         <td><?php echo $task->quantity; ?></td>
                                         <td><?php echo '$' . number_format($task->cost, 2); ?></td>
                                         <td>
-                                            <button form="frmTaskService" type="submit" name="action"
-                                                    value="delTask_<?php echo $task->invItem->itemId; ?>"
-                                                    id="delTask_<?php echo $task->invItem->itemId; ?>">
-                                                <span class="glyphicon glyphicon-trash"></span>
-                                            </button>
+                                            <?php if (!$job->isFinished()): ?>
+                                                <button form="frmTaskService" type="submit" name="action"
+                                                        value="delTask_<?php echo $task->invItem->itemId; ?>"
+                                                        id="delTask_<?php echo $task->invItem->itemId; ?>">
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </button>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach ?>

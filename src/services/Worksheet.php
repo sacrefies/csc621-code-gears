@@ -84,9 +84,11 @@ class Worksheet extends StaticEntity {
         // this entity requires a different way to update other than the general updateTable()
         $columns = self::getUpdateColumns();
         // remove job_id from update columns
-        unset($columns[0]);
+        $columns = array_slice($columns, 1);
+        // unset($columns[0]);
         // move job_id values to the end of $values
-        unset($values[0]);
+        $values = array_slice($values, 1);
+        // unset($values[0]);
         $values[] = $this->job->jobId;
         $where = 'job_id = ?';
         $table = self::getTableName();

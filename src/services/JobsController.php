@@ -267,10 +267,12 @@ final class JobsController {
      */
     public static function jobToDone(Job $job = null): bool {
         if (!$job || $job->isFinished()) {
+            error_log(__FUNCTION__.': job is null or job is finished');
             return false;
         }
         $state = $job->getState();
         if ($state !== State::ONGOING) {
+            error_log(__FUNCTION__.': job state is incorrect: '. State::getName($state));
             return false;
         }
 
@@ -285,22 +287,27 @@ final class JobsController {
 
         $sheet = $job->getWorksheet();
         if (!$sheet) {
+            error_log(__FUNCTION__.': job has no worksheet');
             return false;
         }
         $mechanic = $job->mechanic;
         if (!$mechanic) {
+            error_log(__FUNCTION__.': job has no mechanic');
             return false;
         }
         $appt = $job->appointment;
-        if ($appt) {
+        if (!$appt) {
+            error_log(__FUNCTION__.': job has no appointment');
             return false;
         }
         $cv = $job->customerVehicle;
         if (!$cv) {
+            error_log(__FUNCTION__.': job has no vehicle');
             return false;
         }
         $tasks = $sheet->getTasks();
         if (!$tasks) {
+            error_log(__FUNCTION__.': worksheet has no tasks');
             return false;
         }
 
@@ -316,11 +323,31 @@ final class JobsController {
             $task->finishTime = new \DateTime();
             $task->isDone = 1;
             if (0 >= $task->update()) {
+                error_log(__FUNCTION__.': one task failed to update');
                 return false;
             }
         }
-        return (0 >= $sheet->update() && 0 >= $cv->update() && 0 >= $mechanic->update() && $appt->update()
-            && 0 >= $job->update());
+        if (0 >= $sheet->update()) {
+            error_log(__FUNCTION__.': worksheet failed to update');
+            return false;
+        }
+        if (0 >= $cv->update()) {
+            error_log(__FUNCTION__.': customer vehicle failed to update');
+            return false;
+        }
+        if (0 >= $mechanic->update()) {
+            error_log(__FUNCTION__.': mechanic failed to update');
+            return false;
+        }
+        if (0 >= $appt->update()) {
+            error_log(__FUNCTION__.': appointment failed to update');
+            return false;
+        }
+        if (0 >= $job->update()) {
+            error_log(__FUNCTION__.': job failed to update');
+            return false;
+        }
+        return true;
     }
 
     /**

@@ -146,6 +146,7 @@ class DBEngine {
         } catch (PDOException $e) {
             $msg = $this->stmt? $this->stmt->queryString: $sql;
             error_log($msg);
+            error_log(print_r($params, true));
             $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
             error_log($msg);
             $this->stmt = null;
@@ -175,6 +176,7 @@ class DBEngine {
         } catch (PDOException $e) {
             $msg = $this->stmt? $this->stmt->queryString: $sql;
             error_log($msg);
+            error_log(print_r($params, true));
             $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
             error_log($msg);
             $this->stmt = null;
@@ -205,6 +207,7 @@ class DBEngine {
         } catch (PDOException $e) {
             $msg = $this->stmt? $this->stmt->queryString: $sql;
             error_log($msg);
+            error_log(print_r($params, true));
             $msg = "{$e->getFile()}: Line {$e->getLine()}: {$e->getMessage()}\n{$e->getTraceAsString()}\n";
             error_log($msg);
             return -1;
