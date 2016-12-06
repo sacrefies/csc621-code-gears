@@ -206,11 +206,16 @@ final class JobsController {
     /**
      * Delete a task.
      *
-     * @param Task $task The task to delete
+     * @param $sheet Worksheet
+     * @param $item InventoryItem
      *
      * @return bool Returns true if deletion is successful; returns false otherwise.
      */
-    public static function deleteTask(Task $task): bool {
+    public static function deleteTask(Worksheet $sheet, InventoryItem $item): bool {
+        if (!$sheet || !$item) {
+            return false;
+        }
+        $task = Task::getTaskInstance($sheet->job->jobId, $item->itemId);
         if (!$task) {
             return false;
         }

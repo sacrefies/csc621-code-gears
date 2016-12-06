@@ -49,10 +49,6 @@ $activeMenu = 2;
 
 include __DIR__ . '/../header.php';
 
-echo '<pre>';
-print_r($_POST);
-echo '</pre>';
-
 $sheetId = (isset($_POST['worksheetJobId']) && !empty($_POST['worksheetJobId'])) ? (int)$_POST['worksheetJobId'] : -1;
 $sheet = JobsController::getWorkSheet($sheetId);
 
@@ -166,8 +162,7 @@ if (isset($_POST['action']) && !empty($_POST['action'])):
             $task->cost = $invItem->unitPrice * $task->quantity;
             $task->isDone = 0;
             $rc = $task->update();
-            var_dump($rc);
-            //JobsController::redirectTo("/services/job_individual_view.php?jobId=$sheetId");
+            JobsController::redirectTo("/services/job_individual_view.php?jobId=$sheetId");
             break;
     endswitch;
     if ('deltask' === $action):

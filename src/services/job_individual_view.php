@@ -241,7 +241,8 @@ if (!$tasks): ?>
                                         <td><?php echo $task->quantity; ?></td>
                                         <td><?php echo '$' . number_format($task->cost, 2); ?></td>
                                         <td>
-                                            <button form="frmTaskService" type="submit" name="action" value="delTask"
+                                            <button form="frmTaskService" type="submit" name="action"
+                                                    value="delTask_<?php echo $task->invItem->itemId; ?>"
                                                     id="delTask_<?php echo $task->invItem->itemId; ?>">
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </button>
@@ -263,7 +264,8 @@ if (!$tasks): ?>
                                         <td><?php echo $task->quantity; ?></td>
                                         <td><?php echo '$' . number_format($task->cost, 2); ?></td>
                                         <td>
-                                            <button form="frmTask" type="submit" name="action" value="delTask"
+                                            <button form="frmTaskService" type="submit" name="action"
+                                                    value="delTask_<?php echo $task->invItem->itemId; ?>"
                                                     id="delTask_<?php echo $task->invItem->itemId; ?>">
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </button>
@@ -272,7 +274,6 @@ if (!$tasks): ?>
                                 <?php endforeach ?>
                             <?php endif; ?>
                             </tbody>
-                            <tbody></tbody>
                         </table>
                     <?php else: ?>
                         No task found
@@ -339,7 +340,4 @@ if (!$tasks): ?>
         </div>
     </div>
 </div>
-<script language="JavaScript" type="text/javascript">
-
-</script>
 <?php include __DIR__ . '/../footer.php'; ?>

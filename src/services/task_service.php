@@ -30,15 +30,21 @@ require_once __DIR__ . '/InventoryItem.php';
 require_once __DIR__ . '/Worksheet.php';
 require_once __DIR__ . '/Task.php';
 
-use gears\models\State;
-use gears\accounts\AccountController;
 
-$minDate = new \DateTime('1970-01-01 00:00:00');
+$sheetId = (isset($_POST['worksheetJobId']) && !empty($_POST['worksheetJobId'])) ? (int)$_POST['worksheetJobId'] : -1;
+$itemId = (isset($_POST['action']) && !empty($_POST['action'])) ? (int)explode('_', $_POST['action'])[1] : -1;
+
 
 echo '<pre>';
 print_r($_POST);
+print_r($itemId);
 echo '</pre>';
 
-$sheetId = (isset($_POST['worksheetJobId']) && !empty($_POST['worksheetJobId'])) ? (int)$_POST['worksheetJobId'] : -1;
+
 $sheet = JobsController::getWorkSheet($sheetId);
+$item = JobsController::getInventoryItem($itemId);
+
+if (JobsController::deleteTask($sheet, $item)) {
+    JobsController::redirectTo('job_individual_view.php?jobId=' . $sheetId);
+}
 ?>
