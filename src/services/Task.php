@@ -24,10 +24,12 @@ require_once __DIR__ . '/../models/Persisted.php';
 require_once __DIR__ . '/InventoryItem.php';
 require_once __DIR__ . '/Worksheet.php';
 require_once __DIR__ . '/../database/DBEngine.php';
+require_once __DIR__.'/../conf/Settings.php';
 
 use gears\models\Persisted;
 use gears\models\StaticEntity;
 use gears\database\DBEngine;
+use gears\conf\Settings;
 
 
 /**
@@ -83,7 +85,7 @@ class Task extends StaticEntity {
         }
         // ['inventory_item_id', 'worksheet_job_id', 'quantity', 'is_done', 'finish_time', 'amount_cost'];
         $values = [$this->invItem->itemId, $this->worksheet->job->jobId, $this->quantity, $this->isDone,
-            $this->finishTime->format(DATE_ISO8601), $this->cost];
+            $this->finishTime->format(Settings::$MYSQL_DATETIME_FORMAT), $this->cost];
         // how do we check the existence of this task?
         if (!self::getTaskInstance($this->worksheet->job->jobId, $this->invItem->itemId)) {
             return $this->insert($values);

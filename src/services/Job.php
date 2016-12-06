@@ -27,7 +27,7 @@ require_once __DIR__ . '/../accounts/Employee.php';
 require_once __DIR__ . '/../accounts/CustomerVehicle.php';
 require_once __DIR__ . '/../accounts/CustomerVehicle.php';
 require_once __DIR__ . '/Worksheet.php';
-
+require_once __DIR__ . '/../conf/Settings.php';
 
 use gears\models\Persisted;
 use gears\models\StatefulEntity;
@@ -35,6 +35,7 @@ use gears\database\DBEngine;
 use gears\appointments\Appointment;
 use gears\accounts\Employee;
 use gears\accounts\CustomerVehicle;
+use gears\conf\Settings;
 
 
 /**
@@ -102,7 +103,7 @@ class Job extends StatefulEntity {
      *
      * @return int Returns 1 if update is successful; otherwise 0.
      */
-    public function update() : int {
+    public function update(): int {
         if (!$this->key) {
             error_log('The unique key string of this job is not set.');
             return -1;
@@ -113,8 +114,8 @@ class Job extends StatefulEntity {
         }
         // ['job_key', 'create_time', 'summary', 'description', 'state', 'appointment_id',
         // 'mechanic_id', 'customer_vehicle_id']
-        $values = [$this->key, $this->createTime, $this->summary, $this->desc, $this->state, $this->appointment->appId,
-            $this->mechanic->empId, $this->customerVehicle->customer_vehicle_id];
+        $values = [$this->key, $this->createTime->format(Settings::$MYSQL_DATETIME_FORMAT), $this->summary, $this->desc,
+            $this->state, $this->appointment->appId, $this->mechanic->empId, $this->customerVehicle->customer_vehicle_id];
         if ($this->jobId === -1) {
             return $this->insert($values);
         }
@@ -128,7 +129,7 @@ class Job extends StatefulEntity {
      *
      * @return int Returns 1 if removal is successful; otherwise 0.
      */
-    public function remove() : int {
+    public function remove(): int {
         $where = 'job_id = ? AND appointment_id = ?';
         $values = [$this->jobId, $this->appointment->appId];
         return $this->delete($where, $values);
@@ -159,7 +160,7 @@ class Job extends StatefulEntity {
      * <p>NOTE: This method does not set value to $key attribute.</p>
      * @return string A formatted serial key.
      */
-    public function getComputedKey() : string {
+    public function getComputedKey(): string {
         $parts[] = 'gears';
         $parts[] = strtolower(substr($this->appointment->customer->firstName . $this->appointment->customer->lastName, 0, 4));
         $parts[] = $this->createTime->format('YmdHisO');
@@ -193,7 +194,7 @@ class Job extends StatefulEntity {
      *
      * @return Job Returns a new in-memory object of this entity.
      */
-    public static function createNew() : Job {
+    public static function createNew(): Job {
         return new Job();
     }
 
@@ -225,7 +226,7 @@ class Job extends StatefulEntity {
      * Get the column name of the table of this entity.
      * @return array Returns this entity's table column names
      */
-    public static function getColumns() : array {
+    public static function getColumns(): array {
         return ['job_id', 'job_key', 'create_time', 'summary', 'description', 'state', 'appointment_id',
             'mechanic_id', 'customer_vehicle_id'];
     }
@@ -234,7 +235,7 @@ class Job extends StatefulEntity {
      * Get the column names for UPDATE/INSERT SQL.
      * @return array Returns the column names for update/insertion
      */
-    public static function getUpdateColumns() : array {
+    public static function getUpdateColumns(): array {
         return ['job_key', 'create_time', 'summary', 'description', 'state', 'appointment_id',
             'mechanic_id', 'customer_vehicle_id'];
     }
@@ -246,7 +247,7 @@ class Job extends StatefulEntity {
      *
      * @return Job An instance of this entity.
      */
-    protected static function createInstanceFromRow(array $row) : Job {
+    protected static function createInstanceFromRow(array $row): Job {
         // ['job_id', 'job_key', 'create_time', 'summary', 'description', 'state', 'appointment_id',
         // 'mechanic_id', 'customer_vehicle_id'];
         $job = new Job();

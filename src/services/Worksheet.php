@@ -72,7 +72,7 @@ class Worksheet extends StaticEntity {
             return -1;
         }
         // ['job_id', 'vehicle_mileage', 'start_time', 'end_time'];
-        $values = [$this->job->jobId, $this->mileage, $this->startTime->format(DATE_ISO8601),
+        $values = [$this->job->jobId, $this->mileage, $this->startTime->format(Settings::$MYSQL_DATETIME_FORMAT),
             $this->endTime->format(DATE_ISO8601)];
         // check if there is one worksheet existing already
         if (!$this->job->getWorksheet()) {

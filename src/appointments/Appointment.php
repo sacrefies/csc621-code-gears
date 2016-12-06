@@ -25,7 +25,9 @@ require_once __DIR__ . '/../models/Persisted.php';
 require_once __DIR__ . '/../models/StatefulEntity.php';
 require_once __DIR__ . '/../checkout/Invoice.php';
 require_once __DIR__ . '/../services/Job.php';
+require_once __DIR__ . '/../conf/Settings.php';
 
+use gears\conf\Settings;
 use gears\database\DBEngine;
 use gears\accounts\Customer;
 use gears\models\Persisted;
@@ -103,12 +105,17 @@ class Appointment extends StatefulEntity {
      *
      * @return int Returns 1 if update is successful; otherwise 0.
      */
-    public function update() : int {
+    public function update(): int {
         // ['subject', 'update_time', 'create_time', 'description', 'event_time', 'start_time', 'end_time',
         // 'customer_id', 'state'];
-        $values = [$this->subject, $this->updateTime->format(DATE_ISO8601), $this->createTime->format(DATE_ISO8601),
-            $this->desc, $this->eventTime->format(DATE_ISO8601), $this->startTime->format(DATE_ISO8601),
-            $this->endTime->format(DATE_ISO8601), $this->customer->customerId, $this->state];
+        $values = [$this->subject,
+            $this->updateTime->format(Settings::$MYSQL_DATETIME_FORMAT),
+            $this->createTime->format(Settings::$MYSQL_DATETIME_FORMAT),
+            $this->desc,
+            $this->eventTime->format(Settings::$MYSQL_DATETIME_FORMAT),
+            $this->startTime->format(Settings::$MYSQL_DATETIME_FORMAT),
+            $this->endTime->format(Settings::$MYSQL_DATETIME_FORMAT),
+            $this->customer->customerId, $this->state];
         if ($this->appId === -1) {
             return $this->insert($values);
         }
@@ -122,7 +129,7 @@ class Appointment extends StatefulEntity {
      *
      * @return int Returns 1 if removal is successful; otherwise 0.
      */
-    public function remove() : int {
+    public function remove(): int {
         $where = 'appointment_id = ?';
         $values = [$this->appId];
         return $this->delete($where, $values);
@@ -135,7 +142,7 @@ class Appointment extends StatefulEntity {
      * @return Appointment Returns a new object which is an in-memory copy of this object.
      * @see Persisted::update()
      */
-    public function copy() : Appointment {
+    public function copy(): Appointment {
         $app = new Appointment();
         $app->createTime = $this->createTime;
         $app->updateTime = $this->updateTime;
@@ -187,7 +194,7 @@ class Appointment extends StatefulEntity {
      *
      * @return Appointment Returns a new in-memory object of this entity.
      */
-    public static function createNew() : Appointment {
+    public static function createNew(): Appointment {
         return new Appointment();
     }
 
@@ -219,7 +226,7 @@ class Appointment extends StatefulEntity {
      * Get the column name of the table of this entity.
      * @return array Returns this entity's table column names
      */
-    public static function getColumns() : array {
+    public static function getColumns(): array {
         return ['appointment_id', 'subject', 'update_time', 'create_time', 'description', 'event_time', 'start_time',
             'end_time', 'customer_id', 'state'];
     }
@@ -228,7 +235,7 @@ class Appointment extends StatefulEntity {
      * Get the column names for UPDATE/INSERT SQL.
      * @return array Returns the column names for update/insertion
      */
-    public static function getUpdateColumns() : array {
+    public static function getUpdateColumns(): array {
         return ['subject', 'update_time', 'create_time', 'description', 'event_time', 'start_time', 'end_time',
             'customer_id', 'state'];
     }
@@ -236,7 +243,7 @@ class Appointment extends StatefulEntity {
     /**
      * @inheritdoc
      */
-    protected static function createInstanceFromRow(array $row) : Appointment {
+    protected static function createInstanceFromRow(array $row): Appointment {
         // ['appointment_id', 'subject', 'update_time', 'create_time', 'description', 'event_time', 'start_time',
         // 'end_time', 'customer_id', 'state'];
         $app = new Appointment();
