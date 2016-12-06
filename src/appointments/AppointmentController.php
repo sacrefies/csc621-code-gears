@@ -29,6 +29,7 @@ require_once __DIR__ . '/../models/State.php';
 use gears\Controller;
 use gears\conf\Settings;
 use gears\models\State;
+use gears\accounts\Customer;
 
 /* appointment states
     NEW
@@ -159,16 +160,13 @@ class AppointmentController {
         return (0 > $appId) ? null : Appointment::getInstance($appId);
     }
 
-    public static function createNewAppointment(string $subject, string $updateTime, string $createTime, string $desc, string $eventTime, string $startTime, string $endTime, string $customer) : bool {
+    public static function createNewAppointment(string $custId, string $subject, string $desc) : bool {
         $app = Appointment::createNew();
         $app ->subject = $subject;
         $app->desc = $desc;
-        $app->updateTime = $updateTime;
-        $app->createTime = $createTime;
-        $app->eventTime = $eventTime;
-        $app->eventTime = $startTime;
-        $app->eventTime = $endTime;
-        $app->customer = $customer;
+        $custId = (int)$custId;
+        $cust = Customer::getInstance($custId);
+        $app->customer = $cust;
         $rc = $app->update();
         return (-1 === $rc) ? false : (bool)$rc;
     }
