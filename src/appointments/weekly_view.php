@@ -65,7 +65,7 @@ $appts = AppointmentController::getAllAppointments();
 <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 
 <div class="panel panel-default">
-    <div class="panel-heading">Appointments List</div>
+    <div class="panel-heading">Weekly Appointments</div>
     <div class="panel-body">
 
         <?php
@@ -74,23 +74,18 @@ $appts = AppointmentController::getAllAppointments();
         echo "<tr>";
         echo "<th>Summary</th>";
         echo "<th>Description</th>";
-        echo "<th>Event Time</th>";
         echo "<th>Status</th>";
-        echo "<th>Edit</th>";
         echo "<th></th>";
         echo "</tr>";
         foreach ($appts as $appt) {
             $subject = $appt->subject;
             $desc = $appt->desc;
-            $event = $appt->eventTime;
-            $state = $appt->getState(); //getName($appt->getState())
+            $state = State::getName($appt->getState()); //getName($appt->getState())
 
             echo "<tr>";
             echo "<td>" . $subject . "</td>";
             echo "<td>" . $desc . "</td>";
-            echo "<td>" . $event->format('Y-m-d H:i:s') . "</td>";
             echo "<td>" . $state . "</td>";
-            echo "<td>". "<button>Edit</button>" . "</td>";
             echo "</tr>";
         }
         echo "</table>";
