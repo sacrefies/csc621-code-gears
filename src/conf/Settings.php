@@ -51,6 +51,8 @@ final class Settings {
      */
     public static $SESSION_TIMEOUT = 1800;
 
+    public static $MYSQL_DATETIME_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * Get the default time zone for all DateTime creation/calculation
      * @return \DateTimeZone The default time zone

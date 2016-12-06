@@ -24,6 +24,8 @@ require_once __DIR__ . '/Task.php';
 require_once __DIR__ . '/Worksheet.php';
 require_once __DIR__ . '/../appointments/Appointment.php';
 
+use gears\accounts\ConventionVehicle;
+use gears\accounts\CustomerVehicle;
 use gears\Controller;
 use gears\models\State;
 use gears\appointments\Appointment;
@@ -125,6 +127,51 @@ final class JobsController {
     }
 
     /**
+     * @param int $itemId
+     *
+     * @return InventoryItem|null
+     */
+    public static function getInventoryItem(int $itemId) {
+        return (-1 === $itemId) ? null : InventoryItem::getInstance($itemId);
+    }
+
+    /**
+     * @param CustomerVehicle $vehicle
+     *
+     * @return InventoryItem[]
+     */
+    public static function getInventoryItemsForCustomerVehicle(CustomerVehicle $vehicle) {
+        if (!$vehicle) {
+            return [];
+        }
+        $where = 'convention_vehicle_id = ?';
+        $values = [$vehicle->conventionVehicle->vehicleId];
+        return InventoryItem::getList($where, $values);
+    }
+
+    /**
+     * @param Worksheet $sheet
+     * @param CustomerVehicle $vehicle
+     *
+     * @return InventoryItem[]
+     */
+    public static function getAvailableInventoryItems(Worksheet $sheet, CustomerVehicle $vehicle) : array {
+        if (!$vehicle || !$sheet) {
+            return [];
+        }
+        $having = $sheet->getTasks();
+        if (!$having) {
+            return self::getInventoryItemsForCustomerVehicle($vehicle);
+        }
+        $where = 'convention_vehicle_id = ? AND item_id NOT IN ('.implode(',', array_fill(0, count($having), '?')).')';
+        $values = [$vehicle->conventionVehicle->vehicleId];
+        foreach ($having as $h) {
+            $values[] = $h->invItem->itemId;
+        }
+        return InventoryItem::getList($where, $values);
+    }
+
+    /**
      * Set the given job done. This action will modify states and date time attributes of all entities which associate
      * with this job.
      *
@@ -179,7 +226,7 @@ final class JobsController {
      */
     static public function getAllActiveJobs(): array {
         $where = 'state IN (?,?,?)';
-        $values = [State::NEW , State::INSPECTING, State::ONGOING ];
+        $values = [State::NEW, State::INSPECTING, State::ONGOING];
         return Job::getList($where, $values);
     }
 

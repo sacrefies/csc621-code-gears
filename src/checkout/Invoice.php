@@ -21,6 +21,7 @@ namespace gears\checkout;
 require_once __DIR__ . '/../database/DBEngine.php';
 require_once __DIR__ . '/../models/StatefulEntity.php';
 require_once __DIR__ . '/../appointments/Appointment.php';
+require_once __DIR__.'/../conf/Settings.php';
 
 use gears\database\DBEngine;
 use gears\models\Persisted;
@@ -28,6 +29,7 @@ use gears\models\State;
 use gears\models\StatefulEntity;
 use \DateTime;
 use gears\appointments\Appointment;
+use gears\conf\Settings;
 
 date_default_timezone_set('America/New_York');
 
@@ -100,13 +102,13 @@ class Invoice extends StatefulEntity {
      */
     public function update():int {
         if ($this->invoiceId === -1) {
-            $vals = [$this->appt->appId, $this->createTime->format(DATE_ISO8601), 
-                        $this->updateTime->format(DATE_ISO8601), $this->state, $this->taxRate, 
+            $vals = [$this->appt->appId, $this->createTime->format(Settings::$MYSQL_DATETIME_FORMAT),
+                        $this->updateTime->format(Settings::$MYSQL_DATETIME_FORMAT), $this->state, $this->taxRate,
                         $this->amtDue, $this->amtPayed, $this->discRate];
             return $this->insert($vals);
         }
-        $vals = [$this->appt->appId, $this->createTime->format(DATE_ISO8601), 
-                    $this->updateTime->format(DATE_ISO8601), $this->state,
+        $vals = [$this->appt->appId, $this->createTime->format(Settings::$MYSQL_DATETIME_FORMAT),
+                    $this->updateTime->format(Settings::$MYSQL_DATETIME_FORMAT), $this->state,
                      $this->taxRate, $this->amtDue, $this->amtPayed, $this->discRate, $this->invoiceId];
         $where = 'invoice_id = ?';
         return $this->updateTable($where, $vals);

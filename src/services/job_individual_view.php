@@ -187,8 +187,13 @@ if (!$tasks): ?>
                     Tasks
                     <div class="pull-right">
                         <form method="POST" action="task_edit.php" name="task" id="frmTask">
-                            <input type="hidden" value="<?php echo $sh->job->jobId; ?>" name="worksheetJobId"/>
+                            <input type="hidden" form="frmTask" value="<?php echo $sh->job->jobId; ?>"
+                                   name="worksheetJobId"/>
+                        </form>
+                        <form method="POST" action="task_service.php" name="taskService" id="frmTaskService">
                             <input type="hidden" value="" name="itemId" id="itemId"/>
+                            <input type="hidden" form="frmTaskService" value="<?php echo $sh->job->jobId; ?>"
+                                   name="worksheetJobId"/>
                             <button class="btn btn-primary btn-sm" type="submit" name="action" value="addTask"
                                     form="frmTask">
                                 Task <span class="glyphicon glyphicon-plus"></span>
@@ -236,7 +241,7 @@ if (!$tasks): ?>
                                         <td><?php echo $task->quantity; ?></td>
                                         <td><?php echo '$' . number_format($task->cost, 2); ?></td>
                                         <td>
-                                            <button form="frmTask" type="submit" name="action" value="delTask"
+                                            <button form="frmTaskService" type="submit" name="action" value="delTask"
                                                     id="delTask_<?php echo $task->invItem->itemId; ?>">
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </button>
