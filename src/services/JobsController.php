@@ -317,7 +317,7 @@ final class JobsController {
         $cv->mileage = $sheet->mileage;
         $mechanic->setState(State::AVAILABLE);
         $appt->endTime = new \DateTime();
-        $appt->setState(State::DONE);
+        $appt->setState(State::INVOICING);
         // update the tasks
         foreach ($tasks as $task) {
             $task->finishTime = new \DateTime();
