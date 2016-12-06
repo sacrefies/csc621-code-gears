@@ -109,7 +109,7 @@ $jobs = $cv ? $cv->getServicedJobs() : [];
                         <?php if ($cv->isInService()): ?>
                             <?php $job = $cv->getServicingJob(); ?>
                             <a href="/services/job_individual_view.php?jobId=<?php echo $job->jobId; ?>"><?php echo $job->summary; ?></a> by
-                            <a href="/accounts/single_employee_view.php?empId=<?php echo $job->mechanic->empId; ?>"><?php echo $job->mechanic->fname . ' ' . $job->mechanic->lname; ?></a>
+                            <a href="/accounts/mechanic_individual_view.php?empId=<?php echo $job->mechanic->empId; ?>"><?php echo $job->mechanic->fname . ' ' . $job->mechanic->lname; ?></a>
                         <?php else: ?>
                             <h4><span class="label label-default" id="jobs">NOT AT STORE</span></h4>
                         <?php endif; ?>
