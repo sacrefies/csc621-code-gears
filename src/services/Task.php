@@ -122,7 +122,7 @@ class Task extends StaticEntity {
      */
     public function remove() : int {
         $where = 'worksheet_job_id = ? AND inventory_item_id = ?';
-        $values = [$this->worksheet->job->jobId, $this->invItem->invItemId];
+        $values = [$this->worksheet->job->jobId, $this->invItem->itemId];
         return $this->delete($where, $values);
     }
 
@@ -159,10 +159,10 @@ class Task extends StaticEntity {
     /**
      * Create a new instance of this entity.
      *
-     * @return Persisted Returns a new in-memory object of this entity.
+     * @return Task Returns a new in-memory object of this entity.
      */
     public static function createNew() {
-        return new Task;
+        return new Task();
     }
 
     /**

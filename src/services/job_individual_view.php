@@ -17,7 +17,7 @@
 
 
 declare(strict_types = 1);
-namespace gears\accounts;
+namespace gears\services;
 
 require_once __DIR__ . '/../accounts/AccountController.php';
 require_once __DIR__ . '/../accounts/Customer.php';
@@ -28,9 +28,9 @@ require_once __DIR__ . '/Job.php';
 require_once __DIR__ . '/JobsController.php';
 require_once __DIR__ . '/InventoryItem.php';
 require_once __DIR__ . '/Worksheet.php';
+require_once __DIR__ . '/Task.php';
 
 use gears\models\State;
-use gears\services\JobsController;
 use gears\accounts\AccountController;
 
 /**
@@ -53,7 +53,7 @@ $jobId = (isset($_GET['jobId']) && !empty($_GET['jobId'])) ? (int)$_GET['jobId']
 $job = JobsController::getJob($jobId);
 $sh = $job ? $job->getWorksheet() : null;
 $tasks = $sh ? $sh->getTasks() : [];
-
+$minDate = new \DateTime('1970-01-01 00:00:00');
 if (!$tasks): ?>
     <div class="alert alert-info alert-dismissible">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -129,6 +129,152 @@ if (!$tasks): ?>
                 <?php endif; ?>
             </div>
         </div>
+        <?php if ($job): ?>
+            <!-- worksheet -->
+            <div class="panel panel-default">
+                <div class="panel-heading">Worksheet
+                    <div class="pull-right">
+                        <?php if (!$sh): ?>
+                            <form method="POST" action="worksheet_edit.php" name="worksheet" id="frmWorksheet">
+                                <input type="hidden" value="<?php echo $job->jobId; ?>" name="jobId"/>
+                                <button type="submit" class="btn btn-default btn-sm" name="addWorksheetSubmit"
+                                        value="addWorksheet" form="frmWorksheet">
+                                    Worksheet <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </form>
+                        <?php endif; ?>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    <?php if ($sh): ?>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="mileage">Current Mileage:</label>
+                                <div class="col-sm-10">
+                                    <p class="form-control-static"><?php echo $sh->mileage; ?></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="startTime">Started At:</label>
+                                <div class="col-sm-10">
+                                    <p class="form-control-static">
+                                        <?php if ($sh->startTime > $minDate): ?>
+                                            <?php echo $sh->startTime->format('m/d/Y h:i A'); ?>
+                                        <?php else: ?>
+                                            Not started
+                                        <?php endif; ?>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="endTime">End At:</label>
+                                <div class="col-sm-10">
+                                    <?php if ($sh->endTime > $minDate):
+                                        echo $sh->endTime->format('m/d/Y h:i A');
+                                    endif; ?>
+                                </div>
+                            </div>
+                        </form>
+                    <?php else: ?>
+                        No worksheet found.
+                    <?php endif; ?>
+                </div>
+            </div>
+            <!-- tasks -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Tasks
+                    <div class="pull-right">
+                        <form method="POST" action="task_edit.php" name="task" id="frmTask">
+                            <input type="hidden" value="<?php echo $sh->job->jobId; ?>" name="worksheetJobId"/>
+                            <input type="hidden" value="" name="itemId" id="itemId"/>
+                            <button class="btn btn-primary btn-sm" type="submit" name="action" value="addTask"
+                                    form="frmTask">
+                                Task <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    <?php if ($tasks):
+                        // group tasks to 2 groups: LABOR and PARTS
+                        $labors = array_filter($tasks, function (/**@var Task $task */
+                            $task) {
+                            return 'LABOR' === $task->invItem->category;
+                        });
+                        $parts = array_filter($tasks, function (/**@var Task $task */
+                            $task) {
+                            return 'PARTS' === $task->invItem->category;
+                        });
+                        ?>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Part</th>
+                                <th>Unit</th>
+                                <th>Unit Price</th>
+                                <th>Quantity</th>
+                                <th>Amount</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php if ($labors): ?>
+                                <tr>
+                                    <td colspan="7" class="bg-info"><strong>Labors</strong></td>
+                                </tr>
+                                <?php foreach ($labors as $task):
+                                    /** @var Task $task */ ?>
+                                    <tr>
+                                        <td><?php echo $task->invItem->code; ?></td>
+                                        <td><?php echo $task->invItem->part; ?></td>
+                                        <td><?php echo $task->invItem->unit; ?></td>
+                                        <td><?php echo '$' . number_format($task->invItem->unitPrice, 2); ?></td>
+                                        <td><?php echo $task->quantity; ?></td>
+                                        <td><?php echo '$' . number_format($task->cost, 2); ?></td>
+                                        <td>
+                                            <button form="frmTask" type="submit" name="action" value="delTask"
+                                                    id="delTask_<?php echo $task->invItem->itemId; ?>">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach ?>
+                            <?php endif; ?>
+                            <?php if ($parts): ?>
+                                <tr>
+                                    <td colspan="7" class="bg-info"><strong>Parts</strong></td>
+                                </tr>
+                                <?php foreach ($parts as $task):
+                                    /**@var $task Task */ ?>
+                                    <tr>
+                                        <td><?php echo $task->invItem->code; ?></td>
+                                        <td><?php echo $task->invItem->part; ?></td>
+                                        <td><?php echo $task->invItem->unit; ?></td>
+                                        <td><?php echo '$' . number_format($task->invItem->unitPrice, 2); ?></td>
+                                        <td><?php echo $task->quantity; ?></td>
+                                        <td><?php echo '$' . number_format($task->cost, 2); ?></td>
+                                        <td>
+                                            <button form="frmTask" type="submit" name="action" value="delTask"
+                                                    id="delTask_<?php echo $task->invItem->itemId; ?>">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach ?>
+                            <?php endif; ?>
+                            </tbody>
+                            <tbody></tbody>
+                        </table>
+                    <?php else: ?>
+                        No task found
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
     <div class="col-lg-3">
         <div class="panel-group">
@@ -188,70 +334,7 @@ if (!$tasks): ?>
         </div>
     </div>
 </div>
-<?php if ($job): ?>
-    <!-- worksheet -->
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            Worksheet
-            <div class="btn-group pull-right">
-                <form class="form-horizontal" method="POST" action="worksheet_service.php">
-                    <input type="hidden" value="<?php echo $job->jobId; ?>" name="jobId"/>
-                    <?php if (!$sh): ?>
-                        <button class="btn btn-default btn-sm" type="submit" name="btnAddWorksheet"
-                                value="addWorkSheet">
-                            Worksheet <span class="glyphicon glyphicon-plus"></span>
-                        </button>
-                    <?php else: ?>
-                        <input type="hidden" value="<?php echo $job->jobId; ?>" name="jobId"/>
-                        <?php if ($tasks): ?>
-                            <button class="btn btn-default btn-sm" type="submit" name="btnAllTasksDone"
-                                    value="allTasksDone">
-                                Done <span class="glyphicon glyphicon-ok"></span>
-                            </button>
-                        <?php endif; ?>
-                        <button class="btn btn-primary btn-sm" type="submit" name="btnAddTask" value="addTask">
-                            Task <span class="glyphicon glyphicon-plus"></span>
-                        </button>
-                    <?php endif; ?>
-                </form>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="panel-body">
-            <?php if ($sh): ?>
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="mileage">Vehicle's Current Mileage:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static"><?php echo $sh->mileage; ?></p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="startTime">Started At:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static"><?php echo $sh->startTime->format('m/d/Y h:i A'); ?></p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="endTime">End At:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static"><?php echo $sh->startTime->format('m/d/Y h:i A'); ?></p>
-                        </div>
-                    </div>
-                </form>
-            <?php else: ?>
-                No worksheet found.
-            <?php endif; ?>
-        </div>
-    </div>
-    <!-- tasks -->
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            Tasks
-        </div>
-        <div class="panel-body">
+<script language="JavaScript" type="text/javascript">
 
-        </div>
-    </div>
-<?php endif; ?>
+</script>
 <?php include __DIR__ . '/../footer.php'; ?>
