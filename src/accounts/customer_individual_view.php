@@ -188,7 +188,8 @@ $customer = AccountController::getCustomerById($custId);
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
                 var data = xhttp.responseText;
-                if(data === '0'){
+                console.log(data);
+                if(data === '-1'){
                     document.getElementById("output").click();
                 }
                 else{
