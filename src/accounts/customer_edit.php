@@ -21,6 +21,7 @@ namespace gears\accounts;
 
 require_once __DIR__ . '/AccountController.php';
 require_once __DIR__ . '/Customer.php';
+require_once __DIR__ . '/ConventionVehicle.php';
 
 /**
  * @var string A string variable to set the page title.
@@ -100,7 +101,7 @@ if (isset($_POST['updateType']) && !empty($_POST['updateType'])) {
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="zip">Zip Code:</label>
                     <div class="col-sm-10">
-                        <input value="<?php $customer->zip; ?>" pattern="^(\d{5}([\-]\d{4})?)$" type="text"
+                        <input value="<?php echo $customer->zip; ?>" pattern="^(\d{5}([\-]\d{4})?)$" type="text"
                                name="zip" class="form-control" id="zip" placeholder="19000 or 19000-0000" required/>
                     </div>
                 </div>
@@ -138,14 +139,18 @@ if (isset($_POST['updateType']) && !empty($_POST['updateType'])) {
                     <label class="control-label col-sm-2" for="car">Vehicle:</label>
                     <div class="col-sm-10">
                         <select class="form-control" name="car" id="car">
-                          <option value="1">Toyota Camry LE</option>
-                          <option value="4">Toyota Camry XLE</option>
-                          <option value="2">Toyota RAV4 XE</option>
-                          <option value="3">Toyota RAV4 LE</option>
-                          <option value="5">Ford Focus S</option>
-                          <option value="6">Ford Focus SE</option>
-                          <option value="7">Ford Focus SES</option>
-                          <option value="8">Ford Focus ST</option>
+                          <?php
+                            $vehicles = ConventionVehicle::getAll();
+                            foreach($vehicles as $vehicle){
+                                $id = $vehicle->vehicleId;
+                                $year = $vehicle->year;
+                                $make = $vehicle->make;
+                                $model = $vehicle->model;
+                                $trim = $vehicle->trim;
+                                $yrMkMdl = ''.$year.' '.$make.' '.$model.' '.$trim;
+                                echo "<option value='$id'>$yrMkMdl</option>";
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>

@@ -21,6 +21,8 @@ namespace gears\accounts;
 
 require_once __DIR__ . '/AccountController.php';
 require_once __DIR__ . '/Customer.php';
+require_once __DIR__ . '/CustomerVehicle.php';
+require_once __DIR__ . '/ConventionVehicle.php';
 
 /**
  * @var string A string variable to set the page title.
@@ -91,4 +93,78 @@ $customer = AccountController::getCustomerById($custId);
         <?php endif; ?>
     </div>
 </div>
+<div class="panel panel-default">
+    <div class="panel-heading">Customer Vehicles
+        <div class="pull-right">
+            <?php if ($customer): ?>
+                <form method="POST" action="vehicle_edit.php" name="vehicle" id="frmVehicle">
+                    <input type="hidden" value="<?php echo $custId; ?>" name="custId"/>
+                    <button type="submit" class="btn btn-default btn-sm" name="addVehicleSubmit"
+                            value="addVehicle" form="frmVehicle">
+                        New Vehicle <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </form>
+            <?php endif; ?>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+        <?php
+            $vehicles = CustomerVehicle::getList('customer_id = ?', [$custId]);
+            foreach($vehicles as $vehicle){
+                $conVehicle = $vehicle->conventionVehicle;
+                $vehicleId = $vehicle->customer_vehicle_id;
+                $year = $conVehicle->year;
+                $make = $conVehicle->make;
+                $model = $conVehicle->model;
+                $trim = $conVehicle->trim;
+                $yrMkMdl = ''.$year.' '.$make.' '.$model.' '.$trim;
+                echo "<tr>";
+                echo "<td><a href='/accounts/customer_vehicle_individual_view.php?customer_vehicle_Id=".$vehicleId."'>" . $yrMkMdl . "</a></td>";
+                echo "<td><button class='btn btn-info btn-sm btn-danger' onclick='deleteVehicle($vehicleId)'>Delete</button></td>";
+                echo "</tr>";
+            }
+        ?>
+        </table>
+        <button id="output" style='visibility:hidden;' class='btn btn-info btn-sm' type="hidden" data-toggle='modal' data-target='#errorMsg'></button>
+    </div>
+</div>
+<div id="errorMsg" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title edit-content">Error</h4>
+            </div>
+            <div class="modal-body">
+                <p> Cannot delete this vehicle. It is being serviced </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function deleteVehicle(id) {
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var data = xhttp.responseText;
+                if(data === '0'){
+                    document.getElementById("output").click();
+                }
+                else{
+                    location.reload();
+                }
+            }
+        }//end onreadystatechange
+        var link = "deleteVehicle.php?id=" + id;
+        xhttp.open("GET", link, true);
+        xhttp.send();
+    }
+</script>
 <?php include __DIR__ . '/../footer.php'; ?>

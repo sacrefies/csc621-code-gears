@@ -57,7 +57,7 @@ if (isset($_POST['updateType']) && !empty($_POST['updateType'])) {
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">
-        Appointment <?php echo $appt ? AppointmentController::getAppointmentById($apptId) : 'Unknown'; ?></div>
+        New Appointment <?php echo $appt ? AppointmentController::getAppointmentById($apptId)->appId : ''; ?></div>
     <div class="panel-body">
         <?php if ($error): ?>
             <div class="alert alert-warning alert-dismissible">
