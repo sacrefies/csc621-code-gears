@@ -45,12 +45,11 @@ $state = $appt->getState();
     <div class="panel-heading">Appointment Details
         <div class="pull-right">
             <?php if ($state === State::NEW) { ?>
-                <form class="form-horizontal" method="POST" action="/services/job_edit_view.php">
-                    <input type="hidden" value="<?php echo $apptId; ?>" name="apptId"/>
-                    <button class="btn btn-primary btn-sm" type="submit" name="addJob" value="addJob">
+                <button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#deleteMsg' 
+                        data-yourParameter=<?php echo $apptId; ?>>Delete Appointment</button>
+                <button form="addJobForm" class="btn btn-primary btn-sm" type="submit" name="addJob" value="addJob">
                         Add Job <span class="glyphicon glyphicon-plus">
                     </button>
-                </form>
             <?php }else if($state === State::INVOICING && $appt->getInvoice() === null){ ?>
                 <button class='btn btn-success btn-sm' data-toggle='modal' data-target='#invCreate' 
                     data-yourParameter=<?php echo $apptId ?>>Checkout</button>
@@ -60,6 +59,9 @@ $state = $appt->getState();
         </div>
         <div class="clearfix"></div>
     </div>
+    <form id="addJobForm" class="form-horizontal" method="POST" action="/services/job_edit_view.php">
+                    <input type="hidden" value="<?php echo $apptId; ?>" name="apptId"/>
+    </form>
     <div class="panel-body">
         <?php if ($appt) { ?>
 
@@ -192,17 +194,45 @@ $state = $appt->getState();
         </div>
     </div>
 </div>
+<div id="deleteMsg" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title edit-content">Delete Appointment</h4>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:deleteAppointment()" role="form">
+                    <div class="form-group">
+                        <p> Are you sure you want to delete this appointment? </p>
+                        <input name="appId_dlt" id="appId_dlt" type="number" class="form-control" style="visibility:hidden;"/>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="submit" name="submit" value="Yes"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 <p id="output"></p>
+
 <script type="text/javascript">
     $(document).ready(function(){
         $('#invCreate').on('shown.bs.modal', function(e) {
             $('#discAmt').focus();
             var id = e.relatedTarget.dataset.yourparameter;
             document.getElementById("appId").value = id;
-
             amtUpdate(id, 0);
         });
-
+        $('#deleteMsg').on('shown.bs.modal', function(e) {
+            var id = e.relatedTarget.dataset.yourparameter;
+            document.getElementById("appId_dlt").value = id;
+        });
         $('#discAmt').on('blur', function() {
             var $modal = $(this);
             var id = document.getElementById("appId").value;
@@ -211,7 +241,6 @@ $state = $appt->getState();
             amtUpdate(id, disc);
         });
     });
-
     function amtUpdate(id, disc){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -225,19 +254,16 @@ $state = $appt->getState();
         xhttp.open("GET", link, true);
         xhttp.send();
     }
-
     function enableDisable(enable, textBoxID)
     {
          document.getElementById(textBoxID).disabled = enable;
     }
-
     function create() {
         console.log("hello");
         $('#invCreate').modal('hide');
         var id = document.getElementById("appId").value;
         var disc = document.getElementById("discAmt").value;
         var amt = document.getElementById("payAmt").value;
-
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -247,6 +273,26 @@ $state = $appt->getState();
             }
         }//end onreadystatechange
         var link = "/checkout/createInv.php?id=" + id + "&disc=" + disc + "&amt=" + amt;
+        xhttp.open("GET", link, true);
+        xhttp.send();
+    }
+
+    function deleteAppointment(id) {
+        var id = document.getElementById("appId_dlt").value;
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var data = xhttp.responseText;
+                if(data === '0'){
+                    document.getElementById("output").click();
+                }
+                else{
+                    window.location.replace('/appointments/weekly_view.php');
+                }
+            }
+        }//end onreadystatechange
+        var link = "deleteAppointment.php?id=" + id;
         xhttp.open("GET", link, true);
         xhttp.send();
     }
