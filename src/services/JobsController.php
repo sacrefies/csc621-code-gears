@@ -267,12 +267,12 @@ final class JobsController {
      */
     public static function jobToDone(Job $job = null): bool {
         if (!$job || $job->isFinished()) {
-            error_log(__FUNCTION__.': job is null or job is finished');
+            error_log(__FUNCTION__ . ': job is null or job is finished');
             return false;
         }
         $state = $job->getState();
         if ($state !== State::ONGOING) {
-            error_log(__FUNCTION__.': job state is incorrect: '. State::getName($state));
+            error_log(__FUNCTION__ . ': job state is incorrect: ' . State::getName($state));
             return false;
         }
 
@@ -287,27 +287,27 @@ final class JobsController {
 
         $sheet = $job->getWorksheet();
         if (!$sheet) {
-            error_log(__FUNCTION__.': job has no worksheet');
+            error_log(__FUNCTION__ . ': job has no worksheet');
             return false;
         }
         $mechanic = $job->mechanic;
         if (!$mechanic) {
-            error_log(__FUNCTION__.': job has no mechanic');
+            error_log(__FUNCTION__ . ': job has no mechanic');
             return false;
         }
         $appt = $job->appointment;
         if (!$appt) {
-            error_log(__FUNCTION__.': job has no appointment');
+            error_log(__FUNCTION__ . ': job has no appointment');
             return false;
         }
         $cv = $job->customerVehicle;
         if (!$cv) {
-            error_log(__FUNCTION__.': job has no vehicle');
+            error_log(__FUNCTION__ . ': job has no vehicle');
             return false;
         }
         $tasks = $sheet->getTasks();
         if (!$tasks) {
-            error_log(__FUNCTION__.': worksheet has no tasks');
+            error_log(__FUNCTION__ . ': worksheet has no tasks');
             return false;
         }
 
@@ -323,28 +323,28 @@ final class JobsController {
             $task->finishTime = new \DateTime();
             $task->isDone = 1;
             if (0 >= $task->update()) {
-                error_log(__FUNCTION__.': one task failed to update');
+                error_log(__FUNCTION__ . ': one task failed to update');
                 return false;
             }
         }
         if (0 >= $sheet->update()) {
-            error_log(__FUNCTION__.': worksheet failed to update');
+            error_log(__FUNCTION__ . ': worksheet failed to update');
             return false;
         }
         if (0 >= $cv->update()) {
-            error_log(__FUNCTION__.': customer vehicle failed to update');
+            error_log(__FUNCTION__ . ': customer vehicle failed to update');
             return false;
         }
         if (0 >= $mechanic->update()) {
-            error_log(__FUNCTION__.': mechanic failed to update');
+            error_log(__FUNCTION__ . ': mechanic failed to update');
             return false;
         }
         if (0 >= $appt->update()) {
-            error_log(__FUNCTION__.': appointment failed to update');
+            error_log(__FUNCTION__ . ': appointment failed to update');
             return false;
         }
         if (0 >= $job->update()) {
-            error_log(__FUNCTION__.': job failed to update');
+            error_log(__FUNCTION__ . ': job failed to update');
             return false;
         }
         return true;
@@ -369,6 +369,26 @@ final class JobsController {
         return (0 < $task->remove());
     }
 
+    /**
+     * @param Appointment|null $appt
+     *
+     * @return Job|null
+     */
+    public static function createNewJob(Appointment $appt = null) {
+        if (!$appt || $appt->getJob()) {
+            return null;
+        }
+        $job = Job::createNew();
+        $job->appointment = $appt;
+        $job->createTime = new \DateTime();
+        $job->key = $job->getComputedKey();
+        $job->setState(State::NEW);
+        $job->customerVehicle = null;
+        $job->summary = $appt->subject;
+        $job->desc = $appt->desc;
+        $job->mechanic = null;
+        return $job;
+    }
 
     /**
      * Get an array of all active Jobs.
@@ -398,6 +418,55 @@ final class JobsController {
             }
         }
         return $new;
+    }
+
+    /**
+     * Delete a existing job and also delete the objects associated with it.
+     * <p>Note: A job that is only </p>
+     *
+     * @param Job $job
+     *
+     * @return bool
+     */
+    static public function deleteJob(Job $job): bool {
+        if (!$job || $job->getState() !== State::NEW) {
+            return false;
+        }
+
+        // change the status of mechanic
+        // change the status of appointment
+        $job->mechanic->setState(State::AVAILABLE);
+        $job->appointment->setState(State::NEW);
+        // delete the child objects
+        $sh = $job->getWorksheet();
+        $tasks = $sh ? $sh->getTasks() : [];
+        foreach ($tasks as $task) {
+            if (0 > $task->remove()) {
+                error_log(__FUNCTION__ . ': Failed to delete task');
+                return false;
+            }
+        }
+        if ($sh) {
+            if (0 > $sh->remove()) {
+                error_log(__FUNCTION__ . ': Failed to delete worksheet');
+                return false;
+            }
+        }
+        // do update
+        if (0 > $job->mechanic->update()) {
+            error_log(__FUNCTION__ . ': Failed to update employee state');
+            return false;
+        }
+        if (0 > $job->remove()) {
+            error_log(__FUNCTION__ . ': Failed to delete job');
+            return false;
+        }
+
+        if (0 > $job->appointment->update()) {
+            error_log(__FUNCTION__ . ': Failed to update employee state');
+            return false;
+        }
+        return true;
     }
 
     /**

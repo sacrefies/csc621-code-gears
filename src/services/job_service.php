@@ -23,14 +23,35 @@ require_once __DIR__ . '/Job.php';
 require_once __DIR__ . '/JobsController.php';
 
 $jobId = (isset($_POST['jobId']) && !empty($_POST['jobId'])) ? (int)$_POST['jobId'] : -1;
+$toDel = (isset($_POST['btnDelete']) && !empty($_POST['btnDelete']) && $_POST['btnDelete'] === 'delete');
+$toNext = (isset($_POST['btnNext']) && !empty($_POST['btnNext']) && $_POST['btnNext'] === 'next');
 $job = JobsController::getJob($jobId);
 
-if ($job):
+if ($job && $toNext):
     JobsController::nextStage($job);
     JobsController::redirectTo("job_individual_view.php?jobId=$jobId");
+elseif ($job && $toDel):
+    $apptId = $job->appointment->appId;
+    JobsController::deleteJob($job);
+    JobsController::redirectTo("/appointments/appointment_detailed.php?apptId=$apptId");
 else:
-    include __DIR__ . '/../header.php';
-    ?>
+
+/**
+ * @var string A string variable to set the page title.
+ */
+$title = 'Services';
+/**
+ * @var string A string variable to set the nav bar header.
+ */
+$pageHeader = 'Services';
+/**
+ * @var int An integer which indicates the current active nav menu tab.
+ *          0: dashboard, 1: appointment, 2: in-service, 3: checkout, 4: mechanics
+ */
+$activeMenu = 2;
+
+include __DIR__ . '/../header.php';
+?>
 <div class="panel panel-default">
     <div class="panel-heading">Job: Unknown</div>
     <div class="panel-body">
@@ -39,7 +60,7 @@ else:
             <strong>Failed!</strong> Jobs not found.
         </div>
     </div>
-<?php
+    <?php
     include __DIR__ . '/../footer.php';
-endif; ?>
+    endif; ?>
 

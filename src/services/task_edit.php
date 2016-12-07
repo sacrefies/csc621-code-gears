@@ -105,7 +105,7 @@ if (isset($_POST['action']) && !empty($_POST['action'])):
                                 <div class="col-sm-10">
                                     <?php if ($avails): ?>
                                         <select class="form-control" name="itemId" id="itemId" required>
-                                            <option value="-1">Select one item</option>
+                                            <option value disabled selected>Select one item</option>
                                             <?php if ($labors): ?>
                                                 <optgroup label="Labor">
                                                     <?php foreach ($labors as $item): /** @var InventoryItem $item */ ?>

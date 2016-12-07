@@ -27,6 +27,7 @@ require_once __DIR__ . '/ConventionVehicle.php';
 
 use gears\Controller;
 use gears\conf\Settings;
+use gears\models\State;
 
 
 /**
@@ -116,6 +117,17 @@ final class AccountController {
      */
     static public function getAllEmployees() : array {
         return Employee::getAll('state');
+    }
+
+    /**
+     * @param State $state
+     *
+     * @return Employee[]
+     */
+    public static function getEmployeesByState(int $state) : array {
+        $where = 'state = ?';
+        $values = [$state];
+        return Employee::getList($where, $values);
     }
 
     /**

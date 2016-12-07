@@ -68,17 +68,22 @@ if (!$tasks): ?>
                 <?php if ($job):
                     $state = $job->getState(); ?>
                     <span class="label label-primary"><?php echo State::getName($state); ?></span>
-                    <?php if (!$job->isFinished() && $sh && $tasks): ?>
                     <div class="btn-group pull-right">
                         <form class="form-horizontal" method="POST" action="job_service.php">
                             <input type="hidden" value="<?php echo $job->jobId; ?>" name="jobId"/>
+                            <?php if ($job->getState() === State::NEW): ?>
+                            <button class="btn btn-primary btn-sm" type="submit" name="btnDelete" value="delete">
+                                Delete <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                            <?php endif; ?>
+                            <?php if (!$job->isFinished() && $sh && $tasks): ?>
                             <button class="btn btn-primary btn-sm" type="submit" name="btnNext" value="next">
                                 Next <span class="glyphicon glyphicon-forward"></span>
                             </button>
+                            <?php endif; ?>
                         </form>
                     </div>
                     <div class="clearfix"></div>
-                <?php endif; ?>
                 <?php else: ?>
                     Unknown Job
                 <?php endif; ?>
@@ -114,7 +119,7 @@ if (!$tasks): ?>
                             <label class="control-label col-sm-3" for="appointment">For appointment:</label>
                             <div class="col-sm-9">
                                 <p class="form-control-static">
-                                    <a href="/appointments/appointment_detail.php?apptId=<?php echo $job->appointment->appId; ?>">
+                                    <a href="/appointments/appointment_detailed.php?apptId=<?php echo $job->appointment->appId; ?>">
                                         <?php echo $job->appointment->eventTime->format('m/d/Y h:i A') . ' - ' . $job->appointment->subject; ?>
                                     </a>
                                 </p>
