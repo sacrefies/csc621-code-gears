@@ -21,12 +21,16 @@ namespace gears\appointments;
 
 require_once __DIR__ . '/Appointment.php';
 
+use gears\models\State;
+
 if(isset($_GET["id"])){
 	$id = (int)$_GET["id"];
 }
 
 $app = Appointment::getInstance($id);
 
-echo $app->remove();
+$app->setState(State::CANCELLED);
+
+echo $app->update();
 
 ?>

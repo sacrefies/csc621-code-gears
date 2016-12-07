@@ -39,6 +39,7 @@ $apptId = (isset($_GET['apptId']) && !empty($_GET['apptId'])) ? (int)$_GET['appt
 
 $appt = AppointmentController::getAppointmentById($apptId);
 $state = $appt->getState();
+$cust = $appt->customer;
 ?>
 <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 <div class="panel panel-default">
@@ -58,6 +59,8 @@ $state = $appt->getState();
                 <button class='btn btn-success btn-sm' data-toggle='modal' data-target='#invCreate' 
                     data-yourParameter=<?php echo $apptId ?>>Checkout <span class="glyphicon glyphicon-usd"></span>
                 </button>
+            <?php } else if($state === State::CANCELLED){ ?>
+                <span class="label label-danger"><?php echo State::getName($state); ?></span>
             <?php } else {?>
                 <span class="label label-primary"><?php echo State::getName($state); ?></span>
             <?php } ?>
@@ -74,86 +77,76 @@ $state = $appt->getState();
         <form id="editForm" class="form-horizontal" action="appointment_new.php" method="POST">
 
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="customerfname">Customer First Name:</label>
-                    <div class="col-sm-10">
-                        <input value="<?php echo $appt->customer->firstName ?>" type="text" class="form-control disabled" id="customerfname"
-                               placeholder="First Name" disabled>
+                    <label class="control-label col-sm-3" for="key">Customer:</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">
+                            <a href="/accounts/customer_individual_view.php?customerId=<?php echo $appt->customer->customerId?>">
+                                <?php echo AccountController::getCustomerFullName($cust) ?>
+                            </a> 
+                        </p>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="customerlname">Customer Last Name:</label>
-                    <div class="col-sm-10">
-                    <input value="<?php echo $appt->customer->lastName ?>" type="text" class="form-control disabled" id="customerlname"
-                           placeholder="Last Name" disabled>
+                    <label class="control-label col-sm-3" for="key">Subject:</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static"><?php echo $appt->subject; ?></p>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="subject">Subject:</label>
-                    <div class="col-sm-10">
-                        <input value="<?php echo $appt->subject; ?>" type="text" class="form-control disabled" id="subject"
-                               placeholder="subject" disabled>
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="description">Description:</label>
-                    <div class="col-sm-10">
-                        <input value="<?php echo $appt->desc; ?>" type="text" class="form-control disabled" id="description"
-                               placeholder="description" disabled>
+                    <label class="control-label col-sm-3" for="key">Description:</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static"><?php echo $appt->desc; ?></p>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="upTime">Update Time:</label>
-                    <div class="col-sm-10">
-                        <input value="<?php echo $appt->updateTime->format(Settings::$MYSQL_DATETIME_FORMAT); ?>" type="tel" class="form-control disabled" id="upTime"
-                               placeholder="upTime" disabled>
+                    <label class="control-label col-sm-3" for="key">Booked For:</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static"><?php echo $appt->eventTime->format('m/d/Y h:i A'); ?></p>
                     </div>
                 </div>
 
-                <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="key">Created On:</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static"><?php echo $appt->createTime->format('m/d/Y h:i A'); ?></p>
+                    </div>
+                </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="cTime">Create Time:</label>
-                        <div class="col-sm-10">
-                            <input value="<?php echo $appt->createTime->format(Settings::$MYSQL_DATETIME_FORMAT); ?>" type="text" class="form-control disabled"
-                                   id="cTime" placeholder="Create Time" disabled>
-                        </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="key">Last Updated:</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static"><?php echo $appt->updateTime->format('m/d/Y h:i A'); ?></p>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="evTime">Event Time:</label>
-                        <div class="col-sm-10">
-                            <input value="<?php echo $appt->eventTime->format(Settings::$MYSQL_DATETIME_FORMAT); ?>" type="text" class="form-control disabled" id="evTime"
-                                   placeholder="Event Time" disabled>
-                        </div>
-                    </div>
+                <?php if($state !== State::NEW) { ?>
 
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="sTime">Start Time:</label>
-                        <div class="col-sm-10">
-                            <input value="<?php echo $appt->startTime->format(Settings::$MYSQL_DATETIME_FORMAT); ?>" type="text" class="form-control disabled" id="sTime"
-                                   placeholder="Start Time" disabled>
-                        </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="key">Started:</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static"><?php echo $appt->startTime->format('m/d/Y h:i A'); ?></p>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="endTime">End Time:</label>
-                        <div class="col-sm-10">
-                            <input value="<?php echo $appt->endTime->format(Settings::$MYSQL_DATETIME_FORMAT); ?>" type="tel" class="form-control disabled" id="endTime"
-                                   placeholder="End Time" disabled>
-                        </div>
+                <?php } if($state === State::DONE) {?>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="key">Ended:</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static"><?php echo $appt->endTime->format('m/d/Y h:i A'); ?></p>
                     </div>
-                    <?php if ($state === 1): ?>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <input type="hidden" name="appId" id="appId" value="<?php echo $apptId; ?>"/>
-                        </div>
+                </div>
+
+                <?php } if ($state === 1): ?>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="hidden" name="appId" id="appId" value="<?php echo $apptId; ?>"/>
                     </div>
-                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
             </form>
         <?php } else { ?>
             <div class="alert alert-warning alert-dismissible">
@@ -292,7 +285,7 @@ $state = $appt->getState();
                     document.getElementById("output").click();
                 }
                 else{
-                    window.location.replace('/appointments/weekly_view.php');
+                    location.reload();
                 }
             }
         }//end onreadystatechange

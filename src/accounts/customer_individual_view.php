@@ -49,6 +49,7 @@ $custId = (isset($_GET['customerId']) && $_GET['customerId']) ? (int)$_GET['cust
 // get our beloved customer object
 $customer = AccountController::getCustomerById($custId);
 ?>
+<script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 <div class="panel panel-default">
     <div class="panel-heading">
         Customer <?php echo $customer ? AccountController::getCustomerFullName($customer) : 'Unknown'; ?></div>
@@ -127,12 +128,39 @@ $customer = AccountController::getCustomerById($custId);
                 $yrMkMdl = ''.$year.' '.$make.' '.$model.' '.$trim;
                 echo "<tr>";
                 echo "<td><a href='/accounts/customer_vehicle_individual_view.php?customer_vehicle_Id=".$vehicleId."'>" . $yrMkMdl . "</a></td>";
-                echo "<td><button class='btn btn-info btn-sm btn-danger' onclick='deleteVehicle($vehicleId)'>Delete</button></td>";
+                echo "<td><button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#deleteMsg' 
+                            data-yourParameter='$vehicleId'>Delete <span class='glyphicon glyphicon-remove'>
+                        </button></td>";
                 echo "</tr>";
             }
         ?>
         </table>
         <button id="output" style='visibility:hidden;' class='btn btn-info btn-sm' type="hidden" data-toggle='modal' data-target='#errorMsg'></button>
+    </div>
+</div>
+<div id="deleteMsg" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title edit-content">Delete Vehicle</h4>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:deleteVehicle()" role="form">
+                    <div class="form-group">
+                        <p> Are you sure you want to delete this vehicle? </p>
+                        <input name="vehicleId" id="vehicleId" type="number" class="form-control" style="visibility:hidden;"/>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-danger" type="submit" name="submit" value="Yes, Delete"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">No, Close</button>
+            </div>
+        </div>
     </div>
 </div>
 <div id="errorMsg" class="modal fade" role="dialog">
@@ -182,7 +210,15 @@ $customer = AccountController::getCustomerById($custId);
     </div>
 </div>
 <script type="text/javascript">
-    function deleteVehicle(id) {
+    $(document).ready(function(){
+        $('#deleteMsg').on('shown.bs.modal', function(e) {
+            var id = e.relatedTarget.dataset.yourparameter;
+            document.getElementById("vehicleId").value = id;
+        });
+    });
+
+    function deleteVehicle() {
+        var id = document.getElementById("vehicleId").value;
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {

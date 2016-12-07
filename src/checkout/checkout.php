@@ -159,7 +159,7 @@ include __DIR__ . '/../header.php';
             		<div class="form-group">
 		                <label for="payAmt">Enter Amount Paid:</label>
 				        <input name="payAmt" type="text" id="payAmt" class="form-control" 
-				        		placeholder="Amount Paid" pattern="^\d+(\.\d{1,2})?$"/>
+				        		placeholder="Amount Paid" pattern="^-?\d+(\.\d{1,2})?$"/>
 				        <input name="invId" id="invId" type="number" class="form-control" style="visibility:hidden;"/>
             		</div>
             		<div class="form-group">
@@ -181,6 +181,7 @@ include __DIR__ . '/../header.php';
 	  		var id = e.relatedTarget.dataset.yourparameter;
 	  		$modal.find('.edit-content').html("Update Payment for Invoice " + id);
 	  		document.getElementById("invId").value = id;
+	  		amtUpdate(id, 0);
 		});
 	});
 
