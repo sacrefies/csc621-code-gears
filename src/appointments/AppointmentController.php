@@ -67,17 +67,12 @@ class AppointmentController {
             $date = new \DateTime();
         }
         $start = $date->format('Y-m-d') . ' 00:00:00';
-        $end = $date->add(new \DateInterval('P1D'))->format('Y-m-d') . '00:00:00';
+        $end = $date->add(new \DateInterval('P1D'))->format('Y-m-d') . ' 00:00:00';
         $where = 'event_time >= ? AND event_time < ?';
         $values = [$start, $end];
         $order = 'event_time';
         return Appointment::getList($where, $values, $order);
     }
-
-    /**
-     * Get all appointments for one week
-     * @return array
-     */
 
     /**
      * Get all appointments for the week in which the specified date is. If $date is given null, this method returns
@@ -183,6 +178,21 @@ class AppointmentController {
         $order = 'event_time';
         return Appointment::getList($where, $values, $order);
     }
+
+    /**
+     * Get appointments which has the given state.
+     *
+     * @param int $state
+     *
+     * @return Appointment[]
+     */
+    public static function getAppointmentsByState(int $state): array {
+        $where = 'state = ?';
+        $values = [$state];
+        $order = 'event_time';
+        return Appointment::getList($where, $values, $order);
+    }
+
 
     /**
      * Get an array of all new Appointments.

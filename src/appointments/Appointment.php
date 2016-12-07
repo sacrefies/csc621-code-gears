@@ -145,11 +145,11 @@ class Appointment extends StatefulEntity {
      */
     public function copy(): Appointment {
         $app = new Appointment();
-        $app->createTime = $this->createTime;
-        $app->updateTime = $this->updateTime;
-        $app->startTime = $this->startTime;
-        $app->endTime = $this->endTime;
-        $app->eventTime = $this->eventTime;
+        $app->createTime = new \DateTime($this->createTime->format(Settings::$MYSQL_DATETIME_FORMAT));
+        $app->updateTime = new \DateTime($this->updateTime->format(Settings::$MYSQL_DATETIME_FORMAT));
+        $app->startTime = new \DateTime($this->startTime->format(Settings::$MYSQL_DATETIME_FORMAT));
+        $app->endTime = new \DateTime($this->endTime->format(Settings::$MYSQL_DATETIME_FORMAT));
+        $app->eventTime = new \DateTime($this->eventTime->format(Settings::$MYSQL_DATETIME_FORMAT));
         $app->desc = $this->desc;
         $app->subject = $this->subject;
         $app->customer = $this->customer;
