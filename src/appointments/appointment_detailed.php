@@ -45,14 +45,19 @@ $state = $appt->getState();
     <div class="panel-heading">Appointment Details
         <div class="pull-right">
             <?php if ($state === State::NEW) { ?>
+                <button form="editForm" type="submit" name="submit" class="btn btn-primary btn-sm">Edit 
+                        <span class="glyphicon glyphicon-pencil">
+                </button>
                 <button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#deleteMsg' 
-                        data-yourParameter=<?php echo $apptId; ?>>Delete Appointment</button>
-                <button form="addJobForm" class="btn btn-primary btn-sm" type="submit" name="addJob" value="addJob">
+                        data-yourParameter=<?php echo $apptId; ?>>Cancel <span class="glyphicon glyphicon-remove">
+                </button>
+                <button form="addJobForm" class="btn btn-success btn-sm" type="submit" name="addJob" value="addJob">
                         Add Job <span class="glyphicon glyphicon-plus">
-                    </button>
+                </button>
             <?php }else if($state === State::INVOICING && $appt->getInvoice() === null){ ?>
                 <button class='btn btn-success btn-sm' data-toggle='modal' data-target='#invCreate' 
-                    data-yourParameter=<?php echo $apptId ?>>Checkout</button>
+                    data-yourParameter=<?php echo $apptId ?>>Checkout <span class="glyphicon glyphicon-usd"></span>
+                </button>
             <?php } else {?>
                 <span class="label label-primary"><?php echo State::getName($state); ?></span>
             <?php } ?>
@@ -66,7 +71,7 @@ $state = $appt->getState();
         <?php if ($appt) { ?>
 
 
-        <form class="form-horizontal" action="appointment_new.php" method="POST">
+        <form id="editForm" class="form-horizontal" action="appointment_new.php" method="POST">
 
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="customerfname">Customer First Name:</label>
@@ -145,7 +150,6 @@ $state = $appt->getState();
                     <?php if ($state === 1): ?>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" name="submit" class="btn btn-primary">Edit Appointment</button>
                             <input type="hidden" name="appId" id="appId" value="<?php echo $apptId; ?>"/>
                         </div>
                     </div>
@@ -200,21 +204,21 @@ $state = $appt->getState();
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title edit-content">Delete Appointment</h4>
+                <h4 class="modal-title edit-content">Cancel Appointment</h4>
             </div>
             <div class="modal-body">
                 <form action="javascript:deleteAppointment()" role="form">
                     <div class="form-group">
-                        <p> Are you sure you want to delete this appointment? </p>
+                        <p> Are you sure you want to cancel this appointment? </p>
                         <input name="appId_dlt" id="appId_dlt" type="number" class="form-control" style="visibility:hidden;"/>
                     </div>
                     <div class="form-group">
-                        <input class="btn btn-primary" type="submit" name="submit" value="Yes"/>
+                        <input class="btn btn-danger" type="submit" name="submit" value="Yes, Cancel"/>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">No, Close</button>
             </div>
         </div>
     </div>
