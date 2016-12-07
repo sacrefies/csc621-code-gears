@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace gears\appointments;
 
 require_once __DIR__ . '/../Controller.php';
@@ -25,6 +25,7 @@ require_once __DIR__ . '/../accounts/Customer.php';
 require_once __DIR__ . '/../models/StatefulEntity.php';
 require_once __DIR__ . '/../models/StaticEntity.php';
 require_once __DIR__ . '/../models/State.php';
+require_once __DIR__.'/../conf/Settings.php';
 
 use gears\Controller;
 use gears\conf\Settings;
@@ -40,62 +41,72 @@ use gears\accounts\Customer;
 */
 
 class AppointmentController {
-    
+
     use Controller;
 
     /**
-     * Get an array of all Appointments
+     * Get an array of all Appointments order by event time
      *
-     * @return array Returns an array of all Appointments
+     * @return Appointment[] Returns an array of all Appointments
      *
      */
-    static public function getAllAppointments():array{
-        //so this is the one that gets all the appointments and works in weekly_view
-        $d = new \DateTime();
-
-        $where = 'event_time >= ?';
-        $values = [$d->format('Y-m-d') . '00:00:00'];
-        return Appointment::getList($where, $values);
-
+    static public function getAllAppointments(): array {
+        $order = 'event_time';
+        return Appointment::getAll($order);
     }
 
     /**
-     * Get an array of all Daily Appointments
+     * Get all appointments of one specific date. If $date is given null, this method returns the appointments of today.
      *
-     * @return array Returns an array of all daily Appointments
+     * @param \DateTime|null $date
      *
+     * @return array Appointment[] Returns an array of one day's Appointments
      */
-    static public function getDailyAppointments():array{
-        $d = new \DateTime();
-
-        /*
-         * comments to the right are what I was messing around with to try and get daily appointments working
-         * they seem to work correctly on dashboard but this method is the same as the first, I am not
-         * sure why they work differently
-        */
-        $where = 'event_time >= ?'; // AND event_time <= ?
-        $values = [$d->format('Y-m-d'). ' 00:00:00']; //, '23:59:59'
-
-        return Appointment::getList($where, $values);
+    static public function getDailyAppointments(\DateTime $date = null): array {
+        if (!$date) {
+            $date = new \DateTime();
+        }
+        $start = $date->format('Y-m-d') . ' 00:00:00';
+        $end = $date->add(new \DateInterval('P1D'))->format('Y-m-d') . '00:00:00';
+        $where = 'event_time >= ? AND event_time < ?';
+        $values = [$start, $end];
+        $order = 'event_time';
+        return Appointment::getList($where, $values, $order);
     }
 
-    static public function getWeeklyAppointments():array{
-        $d = new \DateTime();
+    /**
+     * Get all appointments for one week
+     * @return array
+     */
 
-        /*
-         * for event time it needs to view the week
-         * I tried to create variables like
-         * $mon = date('Y-m-d', strtotime('monday this week')); which would be represented as a one
-         * $sun = date('Y-m-d', strtotime('sunday this week')); which would be represented as a seven
-         * everything between 1 and 7 would be that current week, I tried a to mess around with a few things
-         * but had no luck
-         *
-         *could possibly use date('W') to get week number and approach it that way
-         *
-         */
-        $where = 'event_time >= ?';
-        $values = [$d->format('W') . '00:00:00'];
-        return Appointment::getList($where, $values);
+    /**
+     * Get all appointments for the week in which the specified date is. If $date is given null, this method returns
+     * the appointments of the week where today is.
+     *
+     * @param \DateTime|null $date
+     *
+     * @return array
+     */
+    static public function getWeeklyAppointments(\DateTime $date = null): array {
+        if (!$date) {
+            $date = new \DateTime();
+        }
+        // date: 1 - Monday, 7 - Sunday
+        $sunday = 7;
+        $monday = 1;
+        $dayOfWeek = (int)date('N', $date);
+        // always create a clone of the current date to do the calculation
+        $dt = new \DateInterval($dayOfWeek - $monday);
+        $start = (new \DateTime($date->format(Settings::$MYSQL_DATETIME_FORMAT)))->sub($dt);
+        $startDate = $start->format('Y-m-d'). ' 00:00:00';
+        $dt = new \DateInterval($sunday - $dayOfWeek);
+        $end = (new \DateTime($date->format(Settings::$MYSQL_DATETIME_FORMAT)))->add($dt);
+        $endDate = $end->format('Y-m-d'). ' 00:00:00';
+
+        $where = 'event_time >= ? AND event_time < ?';
+        $values = [$startDate, $endDate];
+        $order = 'event_time';
+        return Appointment::getList($where, $values, $order);
     }
 
     /**
@@ -103,31 +114,27 @@ class AppointmentController {
      *
      * @return array Returns an array of all new Appointments.
      */
-    static public function getNewAppointments():array {
+    static public function getNewAppointments(): array {
         $appointments = Appointment::getAll();
         $new = array();
-        foreach($appointments as $app) {
-            if($app->getState() === STATE::NEW) {
+        foreach ($appointments as $app) {
+            if ($app->getState() === STATE::NEW) {
                 $new[] = $app;
             }
         }
         return $new;
     }
-    
+
     /**
      * Get an array of all inservice Appointments.
      *
      * @return array Returns an array of all inservice Appointments.
      */
-    static public function getInserviceAppointments():array {
+    static public function getInserviceAppointments(): array {
         $appointments = Appointment::getAll();
-        $inservice = array();
-        foreach($appointments as $app) {
-            if($app->getState() === STATE::INSERVICE) {
-                $inservice[] = $app;
-            }
-        }
-        return $inservice;
+        return array_filter($appointments, function(Appointment $appt) {
+            return $appt->getState() === State::INSERVICE;
+        });
     }
 
     /**
@@ -135,77 +142,66 @@ class AppointmentController {
      *
      * @return array Returns an array of all done Appointments.
      */
-    static public function getDoneAppointments():array {
+    static public function getDoneAppointments(): array {
         $appointments = Appointment::getAll();
-        $done = array();
-        foreach($appointments as $app) {
-            if($app->getState() === STATE::DONE) {
-                $done[] = $app;
-            }
-        }
-        return $done;
+        return array_filter($appointments, function(Appointment $appt) {
+            return $appt->getState() === State::DONE;
+        });
     }
-    
+
     /**
      * Get an array of all cancelled Appointments.
      *
      * @return array Returns an array of all cancelled Appointments.
      */
-    static public function getCancelledAppointments():array {
+    static public function getCancelledAppointments(): array {
         $appointments = Appointment::getAll();
-        $cancelled = array();
-        foreach($appointments as $app) {
-            if($app->getState() === STATE::CANCELLED) {
-                $cancelled[] = $app;
-            }
-        }
-        return $cancelled;
+        return array_filter($appointments, function(Appointment $appt) {
+            return $appt->getState() === State::CANCELLED;
+        });
     }
-    
+
     /**
      * Get an array of all invoicing Appointments.
      *
      * @return array Returns an array of all invoicing Appointments.
      */
-    static public function getInvoicingAppointments():array {
+    static public function getInvoicingAppointments(): array {
         $appointments = Appointment::getAll();
-        $invoicingApp = array();
-        foreach($appointments as $appointment) {
-            if($appointment->getState() === STATE::INVOICING) {
-                $invoicingApp[] = $appointment;
-            }
-        }
-        return $invoicingApp;
+        return array_filter($appointments, function(Appointment $appt) {
+            return $appt->getState() === State::INVOICING;
+        });
     }
 
     /**
      * @param int $appId
+     *
      * @return Appointment|null gets appointment by id
      */
     public static function getAppointmentById(int $appId) {
         return (0 > $appId) ? null : Appointment::getInstance($appId);
     }
 
-    public static function createNewAppointment(string $custId, string $subject, string $desc, string $date) : bool  {
+    public static function createNewAppointment(string $custId, string $subject, string $desc, string $date): bool {
         $dateTime = new \DateTime($date);
         $app = Appointment::createNew();
-        $app ->subject = $subject;
+        $app->subject = $subject;
         $app->desc = $desc;
         $app->eventTime = $dateTime;
         $custId = (int)$custId;
         $cust = Customer::getInstance($custId);
         $app->customer = $cust;
         $rc = $app->update();
-        return (-1 === $rc) ? false : (bool)$rc;
+        return (-1 !== $rc);
     }
 
-    public static function updateAppointment(Appointment $app, string $subject, string $desc, string $date) : bool {
+    public static function updateAppointment(Appointment $app, string $subject, string $desc, string $date): bool {
         $dateTime = new \DateTime($date);
         $app->subject = $subject;
         $app->desc = $desc;
         $app->eventTime = $dateTime;
         $rc = $app->update();
-        return (-1 === $rc) ? false : (bool)$rc;
+        return (-1 !== $rc);
     }
 
 }
