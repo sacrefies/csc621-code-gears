@@ -58,6 +58,7 @@ include __DIR__ . '/header.php';
             <div class="panel-body">
                 <?php
                 $appts = AppointmentController::getDailyAppointments();
+                error_log(print_r($appts, true));
                 if ($appts): ?>
                     <table class="table table-condensed">
                         <tbody>
