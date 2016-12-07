@@ -26,6 +26,7 @@ require_once __DIR__ . '/appointments/Appointment.php';
 require_once __DIR__ . '/appointments/AppointmentController.php';
 
 use gears\accounts\AccountController;
+use gears\appointments\Appointment;
 use gears\models\State;
 use gears\services\JobsController;
 use gears\appointments\AppointmentController;
@@ -60,10 +61,11 @@ include __DIR__ . '/header.php';
                 if ($appts): ?>
                     <table class="table table-condensed">
                         <tbody>
-                        <?php foreach ($appts as $appt): ?>
+                        <?php foreach ($appts as $appt): /** @var $appt Appointment */ ?>
                             <tr>
-                                <td><?php echo $appt->eventTime->format('h:i A'); ?></td>
-                                <td><?php echo $appt->subject; ?></td>
+                                <td><?php echo $appt->eventTime->format('h:i A'); ?></a></td>
+                                <td><a href="appointments/appointment_detailed.php?apptId=<?php echo $appt->appId; ?>">
+                                    <?php echo $appt->subject; ?></td>
                                 <td>
                                     <span class="label label-info">
                                         <?php echo State::getName($appt->getState()); ?></span>
