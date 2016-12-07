@@ -25,7 +25,7 @@ require_once __DIR__ . '/../accounts/Customer.php';
 require_once __DIR__ . '/../models/StatefulEntity.php';
 require_once __DIR__ . '/../models/StaticEntity.php';
 require_once __DIR__ . '/../models/State.php';
-require_once __DIR__.'/../conf/Settings.php';
+require_once __DIR__ . '/../conf/Settings.php';
 
 use gears\Controller;
 use gears\conf\Settings;
@@ -94,15 +94,90 @@ class AppointmentController {
         // date: 1 - Monday, 7 - Sunday
         $sunday = 7;
         $monday = 1;
-        $dayOfWeek = (int)date('N', $date);
-        // always create a clone of the current date to do the calculation
-        $dt = new \DateInterval($dayOfWeek - $monday);
-        $start = (new \DateTime($date->format(Settings::$MYSQL_DATETIME_FORMAT)))->sub($dt);
-        $startDate = $start->format('Y-m-d'). ' 00:00:00';
-        $dt = new \DateInterval($sunday - $dayOfWeek);
-        $end = (new \DateTime($date->format(Settings::$MYSQL_DATETIME_FORMAT)))->add($dt);
-        $endDate = $end->format('Y-m-d'). ' 00:00:00';
+        $dayOfWeek = (int)date('N', $date->getTimestamp());
 
+        // always create a clone of the current date to do the calculation
+        // Monday:
+        $dt = $dayOfWeek - $monday;
+        $interval = new \DateInterval("P{$dt}D");
+        $start = (new \DateTime($date->format(Settings::$MYSQL_DATETIME_FORMAT)))->sub($interval);
+        $startDate = $start->format('Y-m-d') . ' 00:00:00';
+        // Sunday + 1 to make sure sunday itself is included:
+        $dt = $sunday - $dayOfWeek + 1;
+        $interval = new \DateInterval("P{$dt}D");
+        $end = (new \DateTime($date->format(Settings::$MYSQL_DATETIME_FORMAT)))->add($interval);
+        $endDate = $end->format('Y-m-d') . ' 00:00:00';
+
+        $where = 'event_time >= ? AND event_time < ?';
+        $values = [$startDate, $endDate];
+        $order = 'event_time';
+        return Appointment::getList($where, $values, $order);
+    }
+
+    /**
+     * Get all appointments registered for one particular date's month. If $date is not given, this method returns the
+     * appointments of the month where today's date
+     *
+     * @param \DateTime|null $date The date which indicates the month
+     *
+     * @return Appointment[]
+     */
+    public static function getMonthlyAppointment(\DateTime $date = null): array {
+        if (!$date) {
+            $date = new \DateTime();
+        }
+
+        // Looking at PHP manual for date():
+        //     'j' - Day of the month without leading zeros: 1 to 31
+        // But 'j' returns the day number of the month for a specified date.
+        // When given a random date, this method has to figure what the month is, and how many days in the month
+        // in which case we have to use param 't' - Last day of the month
+
+        // so clear
+        $firstDayOfMonth = 1;
+        // get the last day number of the month
+        $lastDayOfMonth = (int)date('t', $date->getTimestamp());
+        // get the day number of month for the given date
+        $dayOfMonth = (int)date('j', $date->getTimestamp());
+
+        // always create a clone of the current date to do the calculation
+        // the date of the 1st day of the month:
+        $dt = $dayOfMonth - $firstDayOfMonth;
+        $interval = new \DateInterval("P{$dt}D");
+        $start = (new \DateTime($date->format(Settings::$MYSQL_DATETIME_FORMAT)))->sub($interval);
+        $startDate = $start->format('Y-m-d') . ' 00:00:00';
+        // the date of the last day of the month:
+        $dt = $lastDayOfMonth - $dayOfMonth;
+        $interval = new \DateInterval("P{$dt}D");
+        $end = (new \DateTime($date->format(Settings::$MYSQL_DATETIME_FORMAT)))->add($interval);
+        $endDate = $end->format('Y-m-d') . ' 00:00:00';
+
+        // shoot the query
+        $where = 'event_time >= ? AND event_time < ?';
+        $values = [$startDate, $endDate];
+        $order = 'event_time';
+        return Appointment::getList($where, $values, $order);
+    }
+
+    /**
+     * Get all appointments whose event times fall in the same year with the given date's year. If $date is given null,
+     * today's date is used.
+     *
+     * @param \DateTime|null $date If given null, today's date is used.
+     *
+     * @return Appointment[]
+     */
+    public static function getAnnualAppointments(\DateTime $date = null): array {
+        if (!$date) {
+            $date = new \DateTime();
+        }
+
+        // This one is simple: get the year number and construct the first day's date and the last day's date
+        $year = date('Y', $date->getTimestamp());
+        $startDate = $year . '-01-01 00:00:00';
+        $endDate = (new \DateTime($year . '-12-31'))->add(new \DateInterval('P1D'))->format('Y-m-d') . ' 00.00.00';
+
+        // shoot the query
         $where = 'event_time >= ? AND event_time < ?';
         $values = [$startDate, $endDate];
         $order = 'event_time';
@@ -115,14 +190,10 @@ class AppointmentController {
      * @return array Returns an array of all new Appointments.
      */
     static public function getNewAppointments(): array {
-        $appointments = Appointment::getAll();
-        $new = array();
-        foreach ($appointments as $app) {
-            if ($app->getState() === STATE::NEW) {
-                $new[] = $app;
-            }
-        }
-        return $new;
+        $where = 'state = ?';
+        $values = [State::NEW];
+        $order = 'event_time';
+        return Appointment::getList($where, $values, $order);
     }
 
     /**
@@ -132,7 +203,7 @@ class AppointmentController {
      */
     static public function getInserviceAppointments(): array {
         $appointments = Appointment::getAll();
-        return array_filter($appointments, function(Appointment $appt) {
+        return array_filter($appointments, function (Appointment $appt) {
             return $appt->getState() === State::INSERVICE;
         });
     }
@@ -144,7 +215,7 @@ class AppointmentController {
      */
     static public function getDoneAppointments(): array {
         $appointments = Appointment::getAll();
-        return array_filter($appointments, function(Appointment $appt) {
+        return array_filter($appointments, function (Appointment $appt) {
             return $appt->getState() === State::DONE;
         });
     }
@@ -156,7 +227,7 @@ class AppointmentController {
      */
     static public function getCancelledAppointments(): array {
         $appointments = Appointment::getAll();
-        return array_filter($appointments, function(Appointment $appt) {
+        return array_filter($appointments, function (Appointment $appt) {
             return $appt->getState() === State::CANCELLED;
         });
     }
@@ -168,7 +239,7 @@ class AppointmentController {
      */
     static public function getInvoicingAppointments(): array {
         $appointments = Appointment::getAll();
-        return array_filter($appointments, function(Appointment $appt) {
+        return array_filter($appointments, function (Appointment $appt) {
             return $appt->getState() === State::INVOICING;
         });
     }

@@ -55,10 +55,7 @@ include __DIR__ . '/../header.php';
  * state
  */
 
-$appts = AppointmentController::getAllAppointments();
-
-
-
+$appts = AppointmentController::getWeeklyAppointments();
 ?>
 
 
