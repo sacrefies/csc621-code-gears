@@ -153,7 +153,7 @@ $customer = AccountController::getCustomerById($custId);
     </div>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading">Past Appointmnets</div>
+    <div class="panel-heading">Appointmnets</div>
     <div class="panel-body">
         <table class="table">
             <tr>
