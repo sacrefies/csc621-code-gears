@@ -173,15 +173,11 @@ class AppointmentController {
         return (-1 === $rc) ? false : (bool)$rc;
     }
 
-    public static function updateAppointment(Appointment $app, string $subject, string $updateTime, string $createTime, string $desc, string $eventTime, string $startTime, string $endTime, string $customer) : bool {
+    public static function updateAppointment(Appointment $app, string $subject, string $desc, string $date) : bool {
+        $dateTime = new \DateTime($date);
         $app->subject = $subject;
         $app->desc = $desc;
-        $app->updateTime = $updateTime;
-        $app->createTime = $createTime;
-        $app->eventTime = $eventTime;
-        $app->eventTime = $startTime;
-        $app->eventTime = $endTime;
-        $app->customer = $customer;
+        $app->eventTime = $dateTime;
         $rc = $app->update();
         return (-1 === $rc) ? false : (bool)$rc;
     }

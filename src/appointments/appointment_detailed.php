@@ -33,6 +33,7 @@ include __DIR__ . '/../header.php';
 $apptId = (isset($_GET['apptId']) && !empty($_GET['apptId'])) ? (int)$_GET['apptId'] : -1;
 
 $appt = AppointmentController::getAppointmentById($apptId);
+$state = $appt->getState();
 ?>
 
 <div class="panel panel-default">
@@ -41,7 +42,7 @@ $appt = AppointmentController::getAppointmentById($apptId);
         <?php if ($appt) { ?>
 
 
-        <form class="form-horizontal" action="appointment_edit.php" method="POST">
+        <form class="form-horizontal" action="appointment_new.php" method="POST">
 
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="customerfname">Customer First Name:</label>
@@ -117,13 +118,14 @@ $appt = AppointmentController::getAppointmentById($apptId);
                                    placeholder="End Time" disabled>
                         </div>
                     </div>
-
+                    <?php if ($state === 1): ?>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" name="submit" class="btn btn-primary">Edit Appointment</button>
-                            <input type="hidden" name="apptId" id="apptId" value="<?php echo $apptId; ?>"/>
+                            <input type="hidden" name="appId" id="appId" value="<?php echo $apptId; ?>"/>
                         </div>
                     </div>
+                    <?php endif; ?>
             </form>
         <?php } else { ?>
             <div class="alert alert-warning alert-dismissible">

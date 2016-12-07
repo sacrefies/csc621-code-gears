@@ -106,7 +106,7 @@ $customer = AccountController::getCustomerById($custId);
                     <input type="hidden" value="<?php echo $custId; ?>" name="custId"/>
                     <button type="submit" class="btn btn-default btn-sm" name="addVehicleSubmit"
                             value="addVehicle" form="frmVehicle">
-                        New Vehicle <span class="glyphicon glyphicon-plus"></span>
+                        Add Vehicle <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </form>
             <?php endif; ?>
@@ -153,7 +153,7 @@ $customer = AccountController::getCustomerById($custId);
     </div>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading">Appointmnets</div>
+    <div class="panel-heading">Customer Appointmnets</div>
     <div class="panel-body">
         <table class="table">
             <tr>
