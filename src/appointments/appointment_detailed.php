@@ -4,13 +4,18 @@ declare(strict_types = 1);
 namespace gears\appointments;
 
 
-require_once __DIR__ . '/../appointments/AppointmentController.php';
-require_once __DIR__ . '/../appointments/Appointment.php';
+require_once __DIR__ . '/AppointmentController.php';
+require_once __DIR__ . '/Appointment.php';
 require_once __DIR__ . '/../accounts/AccountController.php';
 require_once __DIR__ . '/../accounts/Customer.php';
 require_once __DIR__ . '/../conf/Settings.php';
+require_once __DIR__ . '/../accounts/Employee.php';
 
 use gears\conf\Settings;
+use gears\accounts\AccountController;
+use gears\accounts\Customer;
+use gears\accounts\Employee;
+use gears\models\State;
 
 /**
  * @var string A string variable to set the page title.
@@ -35,9 +40,26 @@ $apptId = (isset($_GET['apptId']) && !empty($_GET['apptId'])) ? (int)$_GET['appt
 $appt = AppointmentController::getAppointmentById($apptId);
 $state = $appt->getState();
 ?>
-
+<script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 <div class="panel panel-default">
-    <div class="panel-heading">Appointment Details</div>
+    <div class="panel-heading">Appointment Details
+        <div class="pull-right">
+            <?php if ($state === State::NEW) { ?>
+                <form class="form-horizontal" method="POST" action="/services/job_edit_view.php">
+                    <input type="hidden" value="<?php echo $apptId; ?>" name="apptId"/>
+                    <button class="btn btn-primary btn-sm" type="submit" name="addJob" value="addJob">
+                        Add Job <span class="glyphicon glyphicon-plus">
+                    </button>
+                </form>
+            <?php }else if($state === State::INVOICING && $appt->getInvoice() === null){ ?>
+                <button class='btn btn-success btn-sm' data-toggle='modal' data-target='#invCreate' 
+                    data-yourParameter=<?php echo $apptId ?>>Checkout</button>
+            <?php } else {?>
+                <span class="label label-primary"><?php echo State::getName($state); ?></span>
+            <?php } ?>
+        </div>
+        <div class="clearfix"></div>
+    </div>
     <div class="panel-body">
         <?php if ($appt) { ?>
 
@@ -135,5 +157,98 @@ $state = $appt->getState();
         <?php } ?>
     </div>
 </div>
+<div id="invCreate" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title edit-content">Create Invoice</h4>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:create()" data-toggle="validator" role="form">
+                    <div class="form-group">
+                        <label for="discAmt">Enter Discount:</label>
+                        <input name="discAmt" type="text" id="discAmt" pattern="^1?\.\d{1,2}$" 
+                            class="form-control" placeholder="Discount"/>
+                        <label><input type="checkbox" value=""
+                            onclick="enableDisable(this.checked, 'discAmt')">  No Discount</label>
+                        <br>
+                        <label id="label" for="payAmt">Enter Payment:</label>
+                        <input name="payAmt" type="text" id="payAmt"
+                            pattern="^\d+(\.\d{1,2})?$" class="form-control" placeholder="Amount Payed"/>
+                        <label><input type="checkbox" value=""
+                            onclick="enableDisable(this.checked, 'payAmt')">  Pay Later</label>
+                        <input name="appId" id="appId" type="number" class="form-control" style="visibility:hidden;"/>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="submit" name="submit" value="Submit"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<p id="output"></p>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#invCreate').on('shown.bs.modal', function(e) {
+            $('#discAmt').focus();
+            var id = e.relatedTarget.dataset.yourparameter;
+            document.getElementById("appId").value = id;
 
+            amtUpdate(id, 0);
+        });
+
+        $('#discAmt').on('blur', function() {
+            var $modal = $(this);
+            var id = document.getElementById("appId").value;
+            var disc = document.getElementById("discAmt").value;
+            
+            amtUpdate(id, disc);
+        });
+    });
+
+    function amtUpdate(id, disc){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var data = xhttp.responseText;
+                document.getElementById('label').innerHTML = 
+                    "Enter Payment ($" + data + " due):";
+            }
+        }//end onreadystatechange
+        var link = "/checkout/amtUpdate.php?id=" + id + "&disc=" + disc;
+        xhttp.open("GET", link, true);
+        xhttp.send();
+    }
+
+    function enableDisable(enable, textBoxID)
+    {
+         document.getElementById(textBoxID).disabled = enable;
+    }
+
+    function create() {
+        console.log("hello");
+        $('#invCreate').modal('hide');
+        var id = document.getElementById("appId").value;
+        var disc = document.getElementById("discAmt").value;
+        var amt = document.getElementById("payAmt").value;
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var data = xhttp.responseText;
+                //document.getElementById("output").innerHTML = data;
+                location.reload();
+            }
+        }//end onreadystatechange
+        var link = "/checkout/createInv.php?id=" + id + "&disc=" + disc + "&amt=" + amt;
+        xhttp.open("GET", link, true);
+        xhttp.send();
+    }
+</script>
 <?php include __DIR__ . '/../footer.php'; ?>

@@ -82,6 +82,7 @@ if (!$appt || $appt->getJob()): ?>
         $job->mechanic->setState(State::BUSY);
         $job->mechanic->update();
         $job->appointment->setState(State::INSERVICE);
+        $job->appointment->startTime = new \DateTime();
         $job->appointment->update();
         // refresh the job object
         $job = $appt->getJob();
@@ -105,7 +106,7 @@ if (!$appt || $appt->getJob()): ?>
                     <label class="control-label col-sm-2" for="createTime">Time Created:</label>
                     <div class="col-sm-10">
                         <input type="datetime" name="createTime" id="createTime" readonly class="form-control disabled"
-                               value="<?php echo $job->createTime->format('m/d/Y h:i:s A'); ?>"
+                               value="<?php echo $job->createTime->format('m/d/Y h:i:s A'); ?>">
                     </div>
                 </div>
                 <div class="form-group">
