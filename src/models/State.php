@@ -101,14 +101,25 @@ abstract class State {
     }
 
     /**
+     * Validate whether a given integer is a state.
+     *
+     * @param int $state
+     *
+     * @return bool Returns true if the given number is a state; returns false otherwise.
+     */
+    public static function validate(int $state): bool {
+        return (0 >= ($state - 1) && ($state - 1) < count(self::$DICT));
+    }
+
+    /**
      * Get the state's value from it's name.
      *
      * @param string $name The name of the state.
      *
      * @return int|-1 Returns the value of the name; returns -1 if the given name is invalid.
      */
-    public static function getState(string $name) {
+    public static function getState(string $name): int {
         $index = array_search(strtoupper($name), self::$DICT, true);
-        return ($index ? $index - 1: -1);
+        return ($index ? $index - 1 : -1);
     }
 }

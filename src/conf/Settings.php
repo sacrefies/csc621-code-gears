@@ -58,6 +58,6 @@ final class Settings {
      * @return \DateTimeZone The default time zone
      */
     public static function timeZone() : \DateTimeZone {
-        new \DateTimeZone('America/New_York');
+        return new \DateTimeZone('America/New_York');
     }
 }

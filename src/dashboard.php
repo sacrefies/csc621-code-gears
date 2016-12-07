@@ -24,9 +24,11 @@ require_once __DIR__ . '/services/JobsController.php';
 require_once __DIR__ . '/models/State.php';
 require_once __DIR__ . '/appointments/Appointment.php';
 require_once __DIR__ . '/appointments/AppointmentController.php';
+require_once __DIR__.'/conf/Settings.php';
 
 use gears\accounts\AccountController;
 use gears\appointments\Appointment;
+use gears\conf\Settings;
 use gears\models\State;
 use gears\services\JobsController;
 use gears\appointments\AppointmentController;
@@ -47,6 +49,9 @@ $pageHeader = 'Dashboard';
 $activeMenu = 0;
 
 include __DIR__ . '/header.php';
+
+$today = new \DateTime();
+$today->setTimezone(Settings::timeZone());
 ?>
 <!-- main content starts here -->
 
@@ -54,7 +59,10 @@ include __DIR__ . '/header.php';
 <div class="row">
     <div class="col-lg-5" id="pnlApps">
         <div class="panel panel-default">
-            <div class="panel-heading">Today's Appointments</div>
+            <div class="panel-heading"><strong><?php echo date('l', $today->getTimestamp()); ?></strong>
+                <span class="pull-right"><strong><?php echo $today->format('F d, Y'); ?></strong></span>
+                <div class="clearfix"></div>
+            </div>
             <div class="panel-body">
                 <?php
                 $appts = AppointmentController::getDailyAppointments();
