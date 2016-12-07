@@ -23,6 +23,11 @@ require_once __DIR__ . '/AccountController.php';
 require_once __DIR__ . '/Customer.php';
 require_once __DIR__ . '/CustomerVehicle.php';
 require_once __DIR__ . '/ConventionVehicle.php';
+require_once __DIR__ . '/../appointments/Appointment.php';
+require_once __DIR__ . '/../models/State.php';
+
+use gears\appointments\Appointment;
+use gears\models\State;
 
 /**
  * @var string A string variable to set the page title.
@@ -145,6 +150,35 @@ $customer = AccountController::getCustomerById($custId);
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Past Appointmnets</div>
+    <div class="panel-body">
+        <table class="table">
+            <tr>
+                <th>Subject</th>
+                <th>Description</th>
+                <th>Date Made</th>
+                <th>Status</th>
+        <?php
+            $appts = Appointment::getList('customer_id = ?', [$custId]);
+            foreach($appts as $appt){
+                $id = $appt->appId;
+                $subject = $appt->subject;
+                $desc = $appt->desc;
+                $endTime = $appt->endTime->format('m/d/Y h:i A');
+                $state = State::getName($appt->getState());
+                $cust = Customer::getInstance($appt->customer->customerId);
+                echo "<tr>";
+                echo "<td><a href='/appointments/appointment_detailed.php?apptId=$id'> $subject </a></td>";
+                echo "<td>$desc</td>";
+                echo "<td>$endTime</td>";
+                echo "<td>$state</td>";
+                echo "</tr>";
+            }
+        ?>
+        </table>
     </div>
 </div>
 <script type="text/javascript">
