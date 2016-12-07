@@ -50,6 +50,7 @@ class AppointmentController {
      *
      */
     static public function getAllAppointments():array{
+        //so this is the one that gets all the appointments and works in weekly_view
         $d = new \DateTime();
 
         $where = 'event_time >= ?';
@@ -66,9 +67,34 @@ class AppointmentController {
      */
     static public function getDailyAppointments():array{
         $d = new \DateTime();
+
+        /*
+         * comments to the right are what I was messing around with to try and get daily appointments working
+         * they seem to work correctly on dashboard but this method is the same as the first, I am not
+         * sure why they work differently
+        */
         $where = 'event_time >= ?'; // AND event_time <= ?
         $values = [$d->format('Y-m-d'). ' 00:00:00']; //, '23:59:59'
 
+        return Appointment::getList($where, $values);
+    }
+
+    static public function getWeeklyAppointments():array{
+        $d = new \DateTime();
+
+        /*
+         * for event time it needs to view the week
+         * I tried to create variables like
+         * $mon = date('Y-m-d', strtotime('monday this week')); which would be represented as a one
+         * $sun = date('Y-m-d', strtotime('sunday this week')); which would be represented as a seven
+         * everything between 1 and 7 would be that current week, I tried a to mess around with a few things
+         * but had no luck
+         *
+         *could possibly use date('W') to get week number and approach it that way
+         *
+         */
+        $where = 'event_time >= ?';
+        $values = [$d->format('W') . '00:00:00'];
         return Appointment::getList($where, $values);
     }
 

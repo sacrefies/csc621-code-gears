@@ -57,90 +57,7 @@ include __DIR__ . '/../header.php';
 
 $appts = AppointmentController::getAllAppointments();
 
-//holding off on this for now
-/*$monAppts = array_filter($appts, function (Appointment $appt) {
-    return (1 === date('N', $appt->eventTime->getTimestamp()));
-});
 
-$tuesAppts = array_filter($appts, function (Appointment $appt) {
-    return (2 === date('N', $appt->eventTime->getTimestamp()));
-});
-
-$wedAppts = array_filter($appts, function (Appointment $appt) {
-    return (3 === date('N', $appt->eventTime->getTimestamp()));
-});
-
-$thursAppts = array_filter($appts, function (Appointment $appt) {
-    return (4 === date('N', $appt->eventTime->getTimestamp()));
-});
-
-$friAppts = array_filter($appts, function (Appointment $appt) {
-    return (5 === date('N', $appt->eventTime->getTimestamp()));
-});
-
-$satAppts = array_filter($appts, function (Appointment $appt) {
-    return (6 === date('N', $appt->eventTime->getTimestamp()));
-});
-
-$sunAppts = array_filter($appts, function (Appointment $appt) {
-    return (7 === date('N', $appt->eventTime->getTimestamp()));
-});
-
-if (!$monAppts) {
-    echo '<tr class="bg-info"><td colspan="4">Monday</td></tr>';
-    // echo columns
-    echo '<tr>';
-    // tds
-    echo '</tr>';
-}
-
-if (!$tuesAppts) {
-    echo '<tr class="bg-info"><td colspan="4">Tuesday</td></tr>';
-    // echo columns
-    echo '<tr>';
-    // tds
-    echo '</tr>';
-}
-
-if (!$wedAppts) {
-    echo '<tr class="bg-info"><td colspan="4">Wednesday</td></tr>';
-    // echo columns
-    echo '<tr>';
-    // tds
-    echo '</tr>';
-}
-
-if (!$thursAppts) {
-    echo '<tr class="bg-info"><td colspan="4">Thursday</td></tr>';
-    // echo columns
-    echo '<tr>';
-    // tds
-    echo '</tr>';
-}
-
-if (!$friAppts) {
-    echo '<tr class="bg-info"><td colspan="4">Friday</td></tr>';
-    // echo columns
-    echo '<tr>';
-    // tds
-    echo '</tr>';
-}
-
-if (!$satAppts) {
-    echo '<tr class="bg-info"><td colspan="4">Saturday</td></tr>';
-    // echo columns
-    echo '<tr>';
-    // tds
-    echo '</tr>';
-}
-
-if (!$sunAppts) {
-    echo '<tr class="bg-info"><td colspan="4">Sunday</td></tr>';
-    // echo columns
-    echo '<tr>';
-    // tds
-    echo '</tr>';
-}*/
 
 ?>
 
@@ -150,7 +67,7 @@ if (!$sunAppts) {
     <div class="panel-body">
 
         <?php
-        $appts = AppointmentController::getAllAppointments();
+        $appts = AppointmentController::getAllAppointments(); //will need to change to get weekly appointments method in controller
         echo "<table class='table table-striped'>";
         echo "<tr>";
         echo "<th>Summary</th>";
@@ -164,13 +81,13 @@ if (!$sunAppts) {
             $apptId = $appt->appId;
             $subject = $appt->subject;
             $desc = $appt->desc;
-            $event = $appt->eventTime;
-            $state = State::getName($appt->getState()); //getName($appt->getState())
+            $event = $appt->eventTime; //eventTime
+            $state = State::getName($appt->getState());
 
             echo "<tr>";
             echo "<td><a href=\"appointment_detailed.php?apptId=$apptId\"> $subject </a></td>";
             echo "<td>" . $desc . "</td>";
-            echo "<td>" . $event->format('l') . "</td>"; //format('Y-m-d H:i:s')
+            echo "<td>" . $event->format('l-m-d-W') . "</td>";
             echo "<td>" . $state . "</td>";
             echo "</tr>";
         }
