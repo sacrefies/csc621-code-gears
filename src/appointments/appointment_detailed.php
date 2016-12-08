@@ -10,8 +10,8 @@ require_once __DIR__ . '/../accounts/AccountController.php';
 require_once __DIR__ . '/../accounts/Customer.php';
 require_once __DIR__ . '/../conf/Settings.php';
 require_once __DIR__ . '/../accounts/Employee.php';
-require_once __DIR__.'/../services/Task.php';
-require_once __DIR__.'/../services/Job.php';
+require_once __DIR__ . '/../services/Task.php';
+require_once __DIR__ . '/../services/Job.php';
 
 use gears\conf\Settings;
 use gears\accounts\AccountController;
@@ -158,13 +158,22 @@ $invoice = $appt ? $appt->getInvoice() : null;
                             <div class="form-group">
                                 <label class="control-label col-lg-3" for="invPayed">Payed:</label>
                                 <div class="col-sm-9 form-control-static">
-                                    <p><strong><?php echo '$'.number_format($invoice->amtPayed, 2); ?></strong></p>
+                                    <p><strong><?php echo '$' . number_format($invoice->amtPayed, 2); ?></strong></p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-lg-3" for="invDue">Due:</label>
+                                <label class="control-label col-lg-3" for="invActualDue">Due (taxed, w/
+                                    discount):</label>
                                 <div class="col-sm-9 form-control-static">
-                                    <p><strong><?php echo '$'.number_format($invoice->amtDue, 2); ?></strong></p>
+                                    <p>
+                                        <strong><?php echo '$' . number_format($invoice->amtDue * (1 + $invoice->taxRate) * (1 - $invoice->discRate), 2); ?></strong>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-3" for="invDue">Due (w/o tax):</label>
+                                <div class="col-sm-9 form-control-static">
+                                    <p><strong><?php echo '$' . number_format($invoice->amtDue, 2); ?></strong></p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -195,7 +204,7 @@ $invoice = $appt ? $appt->getInvoice() : null;
                                 foreach ($chargedItems as $task) {
                                     $total += $task->cost;
                                 }
-                                echo '$'.number_format($total, 2);
+                                echo '$' . number_format($total, 2);
                                 ?>
                             </strong>
                         </div>
@@ -236,9 +245,10 @@ $invoice = $appt ? $appt->getInvoice() : null;
             <?php if ($job): ?>
                 <!-- the job -->
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span class="label label-primary"><?php echo State::getName($job->getState()); ?></span>
-                        <div class="pull-right">Service Job</div>
+                    <div class="panel-heading">Service Job
+                        <div class="pull-right">
+                            <span class="label label-primary"><?php echo State::getName($job->getState()); ?></span>
+                        </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="panel-body">
@@ -282,13 +292,13 @@ $invoice = $appt ? $appt->getInvoice() : null;
                 <div class="panel panel-default">
                     <?php $mech = $job->mechanic;
                     $mState = State::getName($mech->getState()); ?>
-                    <div class="panel-heading">
-                        <?php if ($mech->getState() === State::AVAILABLE): ?>
-                            <span class="label label-success"><?php echo $mState; ?></span>
-                        <?php else: ?>
-                            <span class="label label-warning"><?php echo $mState; ?></span>
-                        <?php endif; ?>
-                        <div class="pull-right">Mechanic</div>
+                    <div class="panel-heading">Mechanic
+                        <div class="pull-right">
+                            <?php if ($mech->getState() === State::AVAILABLE): ?>
+                                <span class="label label-success"><?php echo $mState; ?></span>
+                            <?php else: ?>
+                                <span class="label label-warning"><?php echo $mState; ?></span>
+                            <?php endif; ?></div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="panel-body">
@@ -316,10 +326,7 @@ $invoice = $appt ? $appt->getInvoice() : null;
             <?php endif; ?>
             <!-- customer -->
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="pull-right">Customer</div>
-                    <div class="clearfix"></div>
-                </div>
+                <div class="panel-heading">Customer</div>
                 <div class="panel-body">
                     <form>
                         <div class="form-group">
