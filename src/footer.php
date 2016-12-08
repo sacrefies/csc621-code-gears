@@ -67,8 +67,6 @@ namespace gears;
         <p class="text-muted">Copyright &copy; team2@course_database, Saint Joseph's University.</p>
     </div>
 </footer>
-<!-- jquery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- Bootstrap core JS -->
 <script src="/js/bootstrap.min.js" type="text/javascript"></script>
 <script type="javascript" language="JavaScript">

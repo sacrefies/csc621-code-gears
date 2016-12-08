@@ -57,41 +57,82 @@ include __DIR__ . '/../header.php';
 
 $appts = AppointmentController::getWeeklyAppointments();
 ?>
-
-
+<!-- calendar view -->
+<script src="/fullcalendar/lib/moment.min.js" type="text/javascript"></script>
+<script src="/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+    // prepare fullcalendar dependencies
+    function prep_fullcalendar_files() {
+        $('head').append('<link href="/fullcalendar/fullcalendar.css" rel="stylesheet"/>')
+            .append('<link href="/fullcalendar/fullcalendar.print.css" rel="stylesheet" media="print"/>');
+    }
+    $(document).ready(prep_fullcalendar_files);
+    $(document).ready(function () {
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay,listWeek'
+            },
+            weekNumbers: true,
+            weekNumbersWithinDays: true,
+            weekNumberCalculation: 'ISO',
+            defaultView: 'agendaWeek',
+            defaultDate: '<?php echo (new \DateTime())->format('Y-m-d'); ?>',
+            editable: false,
+            navLinks: true, // can click day/week names to navigate views
+            eventLimit: true, // allow "more" link when too many events
+            events: {
+                url: 'appointment_data_all_api.php',
+                error: function () {
+                    $('#script-warning').show();
+                }
+            },
+            loading: function (bool) {
+                $('#loading').toggle(bool);
+            },
+            eventRender: function (event, el) {
+                // render the appointment description below the event title
+                // el.find('.fc-title').after($('<span class="small">' + event.desc + '</span>'));
+                $('.fc-event-content, .fc-event-time, .fc-event-title').css('font-size', '1.85em');
+                el.tooltip({
+                    title: event.desc,
+                    placement: new Date(event.start).getHours() > 12 ? 'top' : 'bottom',
+                    html: true
+                });
+            }
+        });
+    });
+</script>
 <div class="panel panel-default">
-    <div class="panel-heading">Weekly Appointments</div>
+    <div class="panel-heading">Appointment Calendar</div>
     <div class="panel-body">
-
-        <?php
-        $appts = AppointmentController::getAllAppointments(); //will need to change to get weekly appointments method in controller
-        echo "<table class='table table-striped'>";
-        echo "<tr>";
-        echo "<th>Summary</th>";
-        echo "<th>Description</th>";
-        echo "<th>Week Day</th>";
-        echo "<th>Status</th>";
-        echo "<th></th>";
-        echo "</tr>";
-        foreach ($appts as $appt) {
-            /** @var $appt Appointment */
-            $apptId = $appt->appId;
-            $subject = $appt->subject;
-            $desc = $appt->desc;
-            $event = $appt->eventTime; //eventTime
-            $state = State::getName($appt->getState());
-
-            echo "<tr>";
-            echo "<td><a href=\"appointment_detailed.php?apptId=$apptId\"> $subject </a></td>";
-            echo "<td>" . $desc . "</td>";
-            echo "<td>" . $event->format('l-m-d-W') . "</td>";
-            echo "<td>" . $state . "</td>";
-            echo "</tr>";
-        }
-        echo "</table>";
-        ?>
-
+        <div id='script-warning'>
+            <code>The Appointment API</code> must be running.
+        </div>
+        <div id='loading'>loading...</div>
+        <div id='calendar'></div>
     </div>
 </div>
+<style type="text/css">
+    #loading {
+        display: none;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
 
+    #script-warning {
+        display: none;
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        padding: 0 10px;
+        line-height: 40px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 12px;
+        color: red;
+    }
+</style>
+<!-- end calendar view -->
 <?php include __DIR__ . '/../footer.php'; ?>

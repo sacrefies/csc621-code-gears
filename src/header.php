@@ -109,6 +109,8 @@ function toUTF8(string $val) {
     <title><?php echo $title; ?></title>
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
 <!-- Page header: navigation bar-->
