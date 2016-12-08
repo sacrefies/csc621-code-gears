@@ -102,11 +102,11 @@ final class Event {
         }
 
         // Parse dates
-        $this->start = parseDateTime($appt->eventTime->format('Y-m-d H:i:s'), $timezone);
+        $this->start = parseDateTime($appt->eventTime->format(DATE_ATOM), $timezone);
         // Record misc properties
-        $this->properties['startTime'] = $appt->startTime->format('Y-m-d H:i:s');
-        $this->properties['endTime'] = $appt->endTime->format('Y-m-d H:i:s');
-        $this->properties['updateTime'] = $appt->updateTime->format('Y-m-d H:i:s');
+        $this->properties['startTime'] = $appt->startTime->format(DATE_ATOM);
+        $this->properties['endTime'] = $appt->endTime->format(DATE_ATOM);
+        $this->properties['updateTime'] = $appt->updateTime->format(DATE_ATOM);
         $this->properties['customer'] = AccountController::getCustomerFullName($appt->customer);
         $this->properties['desc'] = $appt->desc;
     }
