@@ -23,6 +23,7 @@ require_once __DIR__ . '/../appointments/AppointmentController.php';
 require_once __DIR__ . '/../models/State.php';
 require_once __DIR__ . '/../models/StaticEntity.php';
 require_once __DIR__ . '/../appointments/Appointment.php';
+require_once __DIR__ . '/../conf/Settings.php';
 
 use gears\appointments\Appointment;
 use gears\accounts\Customer;
@@ -30,6 +31,7 @@ use gears\accounts\Customer;
 use gears\appointments\AppointmentController;
 use gears\checkout\checkoutController;
 use gears\models\State;
+use gears\conf\Settings;
 
 
 /**
@@ -70,18 +72,19 @@ $appts = AppointmentController::getWeeklyAppointments();
     $(document).ready(function () {
         $('#calendar').fullCalendar({
             header: {
-                left: 'prev,next today',
+                left: 'prevYear, prev, next, nextYear today',
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay,listWeek'
             },
             weekNumbers: true,
             weekNumbersWithinDays: true,
             weekNumberCalculation: 'ISO',
-            defaultView: 'agendaWeek',
+            defaultView: 'listWeek',
             defaultDate: '<?php echo (new \DateTime())->format('Y-m-d'); ?>',
             editable: false,
             navLinks: true, // can click day/week names to navigate views
             eventLimit: true, // allow "more" link when too many events
+            timezone: '<?php echo Settings::timeZone()->getName();?>',
             events: {
                 url: 'appointment_data_all_api.php',
                 error: function () {
