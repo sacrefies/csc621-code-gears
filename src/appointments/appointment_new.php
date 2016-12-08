@@ -72,7 +72,7 @@ if (isset($_POST['updateType']) && !empty($_POST['updateType'])) {
             <?php if (!$appt): ?>
                 <input type="hidden" name="updateType" id="updateType" value="new"/>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="cust">Cusomer:</label>
+                    <label class="control-label col-sm-2" for="cust">Customer:</label>
                     <div class="col-sm-10">
                         <select class="form-control" name="cust" id="cust">
                             <?php

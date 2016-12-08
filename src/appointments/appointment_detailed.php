@@ -162,21 +162,6 @@ $invoice = $appt ? $appt->getInvoice() : null;
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-lg-3" for="invActualDue">Due (taxed, w/
-                                    discount):</label>
-                                <div class="col-sm-9 form-control-static">
-                                    <p>
-                                        <strong><?php echo '$' . number_format($invoice->amtDue * (1 + $invoice->taxRate) * (1 - $invoice->discRate), 2); ?></strong>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-lg-3" for="invDue">Due (w/o tax):</label>
-                                <div class="col-sm-9 form-control-static">
-                                    <p><strong><?php echo '$' . number_format($invoice->amtDue, 2); ?></strong></p>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="control-label col-lg-3" for="invTaxRate">Tax Rate:</label>
                                 <div class="col-sm-9 form-control-static">
                                     <p><?php echo number_format($invoice->taxRate, 2); ?></p>
