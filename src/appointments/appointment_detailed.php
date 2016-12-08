@@ -94,7 +94,7 @@ $invoice = $appt ? $appt->getInvoice() : null;
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="desc">Description:</label>
                                 <div class="col-sm-9">
-                                    <p class="form-control-static"><?php echo $appt->desc; ?></p>
+                                    <p class="form-control-static"><?php echo nl2br($appt->desc); ?></p>
                                 </div>
                             </div>
                             <div class="form-group">

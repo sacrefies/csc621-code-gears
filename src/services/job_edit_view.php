@@ -128,15 +128,14 @@ if (!$appt || $appt->getJob()): ?>
                     <div class="col-sm-10">
                         <input placeholder="Input job summary" class="form-control" type="text" id="summary"
                                name="summary"
-                               value="<?php echo htmlentities($job->summary); ?>" required/>
+                               value="<?php echo $job->summary; ?>" required/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="desc">Description:</label>
                     <div class="col-sm-10">
                         <textarea placeholder="Input job description" class="form-control" id="desc"
-                                  name="desc"><?php echo htmlentities($job->desc); ?>
-                        </textarea>
+                                  name="desc"><?php echo $job->desc; ?></textarea>
                     </div>
                 </div>
                 <div class="form-group">

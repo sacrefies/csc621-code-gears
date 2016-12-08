@@ -102,13 +102,13 @@ if (!$tasks): ?>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="summary">Summary:</label>
                                 <div class="col-sm-9">
-                                    <p class="form-control-static"><?php echo htmlentities($job->summary); ?></p>
+                                    <p class="form-control-static"><?php echo $job->summary; ?></p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="desc">Description:</label>
                                 <div class="col-sm-9">
-                                    <p class="form-control-static"><?php echo htmlentities($job->desc); ?></p>
+                                    <p class="form-control-static"><?php echo nl2br($job->desc); ?></p>
                                 </div>
                             </div>
                             <div class="form-group">

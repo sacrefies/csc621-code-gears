@@ -95,8 +95,10 @@ if (isset($_POST['updateType']) && !empty($_POST['updateType'])) {
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="desc">Description:</label>
                     <div class="col-sm-10">
+                        <textarea required name="desc" id="desc" class="form-control" placeholder="Short Description"></textarea>
+                        <!--
                         <input value="" type="text"
-                               name="desc" class="form-control" id="desc" placeholder="Short Description" required/>
+                               name="desc" class="form-control" id="desc" placeholder="Short Description" required/> -->
                     </div>
                 </div>
                 <div class="form-group">
@@ -119,8 +121,10 @@ if (isset($_POST['updateType']) && !empty($_POST['updateType'])) {
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="desc">Description:</label>
                     <div class="col-sm-10">
-                        <input value="<?php echo $appt->desc; ?>" type="text"
-                               name="desc" class="form-control" id="desc" placeholder="Short Description" required/>
+                        <textarea required name="desc" id="desc" class="form-control" placeholder="Short Description"></textarea>
+                        <!--
+                        <input value="" type="text"
+                               name="desc" class="form-control" id="desc" placeholder="Short Description" required/> -->
                     </div>
                 </div>
                 <div class="form-group">
